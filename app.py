@@ -615,13 +615,17 @@ def send_static(path):
     decoded_path = urllib.parse.unquote(path)
     
     # 在Vercel环境下，静态文件可能在多个位置
-    # 尝试多个可能的路径
+    # 尝试多个可能的路径（包括public目录）
     possible_dirs = [
+        Path('public'),  # Vercel自动服务的public目录
         Path(app.static_folder or 'static'),
         Path('static'),
         Path(os.getcwd()) / 'static',
+        Path(os.getcwd()) / 'public',
         Path('/var/task/static'),
+        Path('/var/task/public'),
         Path('/vercel/path0/static'),
+        Path('/vercel/path0/public'),
     ]
     
     file_path = None
