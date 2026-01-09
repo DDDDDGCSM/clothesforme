@@ -16,122 +16,108 @@
         }
 
         :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --primary-light: #818cf8;
-            --secondary: #ec4899;
-            --accent: #f59e0b;
+            --primary: #ff6b9d;
+            --primary-dark: #ff4d7a;
+            --primary-light: #ff8fb3;
+            --secondary: #c44569;
+            --accent: #f8b500;
             --success: #10b981;
-            --text-primary: #111827;
-            --text-secondary: #6b7280;
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --glass-bg: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.18);
-            --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.1);
-            --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.15);
-            --shadow-large: 0 8px 32px rgba(0, 0, 0, 0.2);
-            --shadow-xl: 0 16px 64px rgba(0, 0, 0, 0.25);
+            --text-primary: #1a1a1a;
+            --text-secondary: #666;
+            --bg-light: #fafafa;
+            --white: #ffffff;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.16);
+            --shadow-xl: 0 16px 64px rgba(0, 0, 0, 0.2);
         }
 
         body {
             font-family: 'Inter', 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
+            background: linear-gradient(135deg, #ffeef7 0%, #fff5f8 50%, #ffeef7 100%);
             min-height: 100vh;
             color: var(--text-primary);
             line-height: 1.6;
-            padding-bottom: 120px;
+            padding-bottom: 100px;
             position: relative;
             overflow-x: hidden;
         }
 
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* 动态背景装饰 */
+        /* 优雅的背景装饰 */
         body::before {
             content: '';
             position: fixed;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
-            animation: float 25s ease-in-out infinite;
+            top: -200px;
+            right: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 107, 157, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
             pointer-events: none;
             z-index: 0;
+            animation: float 20s ease-in-out infinite;
         }
 
         body::after {
             content: '';
             position: fixed;
-            bottom: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(236, 72, 153, 0.2) 0%, transparent 70%);
-            animation: float 30s ease-in-out infinite reverse;
+            bottom: -200px;
+            left: -200px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(196, 69, 105, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
             pointer-events: none;
             z-index: 0;
+            animation: float 25s ease-in-out infinite reverse;
         }
 
         @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.5; }
-            50% { transform: translate(100px, -100px) rotate(180deg); opacity: 0.8; }
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(50px, -50px) scale(1.1); }
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 30px 20px;
             position: relative;
             z-index: 1;
         }
 
-        /* 超现代语言切换器 */
+        /* 优雅的语言切换器 */
         .lang-switcher {
             position: fixed;
-            top: 30px;
-            right: 30px;
+            top: 25px;
+            right: 25px;
             z-index: 1001;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(30px) saturate(180%);
-            -webkit-backdrop-filter: blur(30px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 14px 28px;
-            border-radius: 50px;
+            background: var(--white);
+            padding: 12px 24px;
+            border-radius: 30px;
             text-decoration: none;
-            color: white;
+            color: var(--primary);
             font-weight: 700;
-            font-size: 15px;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            font-size: 14px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-md);
+            border: 2px solid transparent;
         }
 
         .lang-switcher:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-4px) scale(1.05);
-            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
+            background: var(--primary);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
 
-        /* 超现代头部 */
+        /* 精美的头部 */
         .header {
             text-align: center;
-            padding: 80px 50px;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(40px) saturate(180%);
-            -webkit-backdrop-filter: blur(40px) saturate(180%);
-            border: 2px solid rgba(255, 255, 255, 0.25);
-            border-radius: 40px;
-            margin-bottom: 50px;
-            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.3),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            padding: 60px 40px;
+            background: var(--white);
+            border-radius: 30px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-lg);
             position: relative;
             overflow: hidden;
         }
@@ -142,8 +128,8 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 6px;
-            background: linear-gradient(90deg, #6366f1, #ec4899, #f59e0b, #10b981, #6366f1);
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--primary));
             background-size: 200% 100%;
             animation: shimmer 3s linear infinite;
         }
@@ -154,138 +140,109 @@
         }
 
         .header h1 {
-            font-size: 64px;
+            font-size: 56px;
             font-weight: 900;
-            color: white;
-            margin-bottom: 20px;
-            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.3),
-                         0 2px 10px rgba(255, 255, 255, 0.2);
-            letter-spacing: -2px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            letter-spacing: -1.5px;
             line-height: 1.1;
         }
 
         .header p {
-            color: rgba(255, 255, 255, 0.95);
-            font-size: 22px;
+            color: var(--text-secondary);
+            font-size: 20px;
             font-weight: 500;
-            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
         }
 
-        /* 超现代导航 */
+        /* 导航控制 */
         .nav-controls {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
             padding: 0 20px;
         }
 
         .nav-arrow {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            width: 72px;
-            height: 72px;
+            background: var(--white);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 36px;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            font-size: 28px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow-md);
             font-weight: 300;
         }
 
         .nav-arrow:hover:not(:disabled) {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.15) translateY(-4px);
-            box-shadow: 0 16px 64px rgba(0, 0, 0, 0.3);
+            background: var(--primary);
+            color: var(--white);
+            transform: scale(1.1) translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
 
         .item-counter {
-            font-size: 24px;
-            color: white;
+            font-size: 20px;
+            color: var(--text-primary);
             font-weight: 800;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 20px 40px;
-            border-radius: 50px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            background: var(--white);
+            padding: 14px 28px;
+            border-radius: 30px;
+            box-shadow: var(--shadow-md);
         }
 
-        /* 超现代卡片 - 混合Neumorphism和Glassmorphism */
+        /* 惊艳的卡片设计 - 大图展示 */
         .clothes-card {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(40px) saturate(180%);
-            -webkit-backdrop-filter: blur(40px) saturate(180%);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 40px;
+            background: var(--white);
+            border-radius: 30px;
             padding: 0;
-            margin-bottom: 50px;
-            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.25),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-xl);
             overflow: hidden;
             position: relative;
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .clothes-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 8px;
-            background: linear-gradient(90deg, #6366f1, #ec4899, #f59e0b, #10b981);
-            background-size: 200% 100%;
-            opacity: 0;
-            transition: opacity 0.3s;
-            animation: shimmer 3s linear infinite;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .clothes-card:hover {
-            transform: translateY(-12px) scale(1.01);
-            box-shadow: 0 32px 120px rgba(0, 0, 0, 0.35),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.6);
-        }
-
-        .clothes-card:hover::before {
-            opacity: 1;
+            transform: translateY(-8px);
+            box-shadow: 0 24px 80px rgba(255, 107, 157, 0.25);
         }
 
         .clothes-header {
             display: grid;
-            grid-template-columns: 400px 1fr;
+            grid-template-columns: 500px 1fr;
             gap: 50px;
             padding: 50px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 100%);
+            background: linear-gradient(135deg, #fff 0%, #fafafa 100%);
         }
 
         .clothes-image-wrapper {
             position: relative;
-            border-radius: 30px;
+            border-radius: 25px;
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            box-shadow: var(--shadow-lg);
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
         }
 
         .clothes-cover {
             width: 100%;
-            height: 500px;
+            height: 600px;
             object-fit: cover;
-            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             display: block;
         }
 
         .clothes-card:hover .clothes-cover {
-            transform: scale(1.12);
+            transform: scale(1.05);
         }
 
         .clothes-info {
@@ -296,28 +253,25 @@
         }
 
         .clothes-title {
-            font-size: 48px;
+            font-size: 52px;
             font-weight: 900;
-            background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--text-primary);
             margin-bottom: 16px;
             line-height: 1.2;
-            letter-spacing: -1px;
+            letter-spacing: -2px;
         }
 
         .clothes-category {
             display: inline-block;
             padding: 10px 24px;
-            background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
-            color: white;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
             border-radius: 50px;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 700;
             margin-bottom: 30px;
             width: fit-content;
-            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+            box-shadow: var(--shadow-md);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -325,21 +279,20 @@
         .user-info {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 16px;
             margin-top: auto;
             padding-top: 30px;
-            border-top: 2px solid rgba(0, 0, 0, 0.06);
+            border-top: 2px solid #f0f0f0;
         }
 
         .user-avatar {
-            width: 64px;
-            height: 64px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid;
-            border-image: linear-gradient(135deg, #6366f1, #ec4899) 1;
+            border: 3px solid var(--primary);
             flex-shrink: 0;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--shadow-md);
         }
 
         .user-details {
@@ -354,53 +307,50 @@
         }
 
         .trust-badge {
-            font-size: 14px;
-            padding: 8px 16px;
+            font-size: 13px;
+            padding: 6px 14px;
             border-radius: 50px;
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-            color: #92400e;
+            background: linear-gradient(135deg, #fff3cd 0%, #ffe69c 100%);
+            color: #856404;
             font-weight: 700;
             display: inline-block;
-            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+            box-shadow: var(--shadow-sm);
         }
 
         .whatsapp-icon {
-            width: 64px;
-            height: 64px;
+            width: 60px;
+            height: 60px;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
             border-radius: 50%;
             padding: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+            box-shadow: var(--shadow-md);
         }
 
         .whatsapp-icon:hover {
-            transform: scale(1.2) rotate(10deg);
-            box-shadow: 0 16px 48px rgba(37, 211, 102, 0.6);
+            transform: scale(1.15) rotate(5deg);
+            box-shadow: 0 12px 32px rgba(37, 211, 102, 0.4);
         }
 
         .whatsapp-icon svg {
-            width: 32px;
-            height: 32px;
-            fill: white;
+            width: 28px;
+            height: 28px;
+            fill: var(--white);
         }
 
         .why-release {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.06) 0%, rgba(236, 72, 153, 0.06) 100%);
+            background: linear-gradient(135deg, #fff5f8 0%, #ffeef7 100%);
             padding: 50px;
-            border-top: 2px solid rgba(0, 0, 0, 0.06);
+            border-top: 2px solid #f0f0f0;
         }
 
         .why-release h4 {
             font-size: 18px;
-            background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--primary);
             margin-bottom: 20px;
             text-transform: uppercase;
             font-weight: 800;
@@ -414,48 +364,44 @@
             font-weight: 400;
         }
 
-        /* 超现代分享按钮 */
+        /* 分享按钮 */
         .share-btn {
             position: absolute;
             top: 40px;
             left: 40px;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: white;
+            background: var(--white);
+            color: var(--primary);
+            border: 2px solid var(--primary);
             border-radius: 50px;
-            padding: 16px 32px;
-            font-size: 16px;
+            padding: 14px 28px;
+            font-size: 15px;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 12px;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            gap: 10px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 10;
             font-weight: 700;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow-md);
         }
 
         .share-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-4px) scale(1.05);
-            box-shadow: 0 16px 64px rgba(0, 0, 0, 0.3);
+            background: var(--primary);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
 
-        /* 超现代底部按钮 */
+        /* 底部按钮 */
         .fixed-bottom-btn {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(40px) saturate(180%);
-            -webkit-backdrop-filter: blur(40px) saturate(180%);
-            border-top: 2px solid rgba(255, 255, 255, 0.25);
-            padding: 30px;
-            box-shadow: 0 -16px 64px rgba(0, 0, 0, 0.2);
+            background: var(--white);
+            border-top: 2px solid #f0f0f0;
+            padding: 25px;
+            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.1);
             z-index: 1000;
         }
 
@@ -463,27 +409,26 @@
             width: 100%;
             max-width: 1400px;
             margin: 0 auto;
-            padding: 24px;
-            background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
-            color: white;
+            padding: 22px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
             border: none;
             border-radius: 50px;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 800;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: block;
-            box-shadow: 0 12px 48px rgba(99, 102, 241, 0.5);
+            box-shadow: var(--shadow-lg);
             letter-spacing: 0.5px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
         .request-btn:hover {
-            transform: translateY(-6px) scale(1.02);
-            box-shadow: 0 20px 80px rgba(99, 102, 241, 0.6);
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(255, 107, 157, 0.4);
         }
 
-        /* 超现代模态框 */
+        /* 模态框 */
         .modal {
             display: none;
             position: fixed;
@@ -491,9 +436,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             z-index: 2000;
             overflow-y: auto;
             padding: 20px;
@@ -506,31 +451,28 @@
         }
 
         .modal-content {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(40px) saturate(180%);
-            -webkit-backdrop-filter: blur(40px) saturate(180%);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 40px;
-            max-width: 650px;
+            background: var(--white);
+            border-radius: 30px;
+            max-width: 600px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
             position: relative;
-            padding: 60px 50px;
-            box-shadow: 0 32px 120px rgba(0, 0, 0, 0.4);
+            padding: 50px 40px;
+            box-shadow: var(--shadow-xl);
         }
 
         .modal-close {
             position: absolute;
-            top: 30px;
-            left: 30px;
-            background: rgba(0, 0, 0, 0.05);
-            border: 2px solid rgba(0, 0, 0, 0.1);
-            font-size: 36px;
+            top: 25px;
+            left: 25px;
+            background: #f5f5f5;
+            border: none;
+            font-size: 32px;
             cursor: pointer;
             color: var(--text-secondary);
-            width: 56px;
-            height: 56px;
+            width: 50px;
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -539,129 +481,122 @@
         }
 
         .modal-close:hover {
-            background: rgba(0, 0, 0, 0.1);
+            background: var(--primary);
+            color: var(--white);
             transform: rotate(90deg) scale(1.1);
         }
 
         .modal-title {
-            font-size: 36px;
-            background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+            font-size: 32px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
             text-align: center;
             font-weight: 900;
             letter-spacing: -1px;
         }
 
         .form-group {
-            margin-bottom: 32px;
+            margin-bottom: 28px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             font-weight: 800;
             color: var(--text-primary);
-            font-size: 17px;
+            font-size: 16px;
         }
 
         .form-group textarea {
             width: 100%;
-            min-height: 160px;
-            padding: 20px;
-            border: 2px solid rgba(0, 0, 0, 0.1);
-            border-radius: 20px;
+            min-height: 150px;
+            padding: 18px;
+            border: 2px solid #e0e0e0;
+            border-radius: 16px;
             font-family: inherit;
             font-size: 16px;
             resize: vertical;
             transition: all 0.3s;
-            background: rgba(255, 255, 255, 0.9);
+            background: var(--bg-light);
         }
 
         .form-group textarea:focus {
             outline: none;
-            border-color: #6366f1;
-            box-shadow: 0 0 0 6px rgba(99, 102, 241, 0.1);
-            background: white;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(255, 107, 157, 0.1);
+            background: var(--white);
         }
 
         .image-upload-area {
-            border: 3px dashed rgba(99, 102, 241, 0.3);
-            border-radius: 24px;
-            padding: 50px;
+            border: 3px dashed #e0e0e0;
+            border-radius: 20px;
+            padding: 45px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
-            margin-bottom: 24px;
-            background: rgba(99, 102, 241, 0.05);
+            margin-bottom: 20px;
+            background: var(--bg-light);
         }
 
         .image-upload-area:hover {
-            border-color: #6366f1;
-            background: rgba(99, 102, 241, 0.1);
+            border-color: var(--primary);
+            background: #fff5f8;
         }
 
         .uploaded-image {
             max-width: 100%;
-            max-height: 350px;
-            border-radius: 20px;
-            margin-top: 24px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            max-height: 320px;
+            border-radius: 16px;
+            margin-top: 20px;
+            box-shadow: var(--shadow-md);
         }
 
         .upload-icon {
-            font-size: 64px;
-            background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 20px;
+            font-size: 60px;
+            color: var(--primary);
+            margin-bottom: 16px;
         }
 
         .submit-btn {
             width: 100%;
-            padding: 24px;
-            background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
-            color: white;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
             border: none;
             border-radius: 50px;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 800;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            margin-top: 40px;
-            box-shadow: 0 12px 48px rgba(99, 102, 241, 0.5);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 32px;
+            box-shadow: var(--shadow-lg);
             letter-spacing: 0.5px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
         .submit-btn:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 20px 80px rgba(99, 102, 241, 0.6);
+            transform: translateY(-3px);
+            box-shadow: 0 16px 48px rgba(255, 107, 157, 0.4);
         }
 
-        /* 超现代历史交换区 */
+        /* 历史交换区 */
         .history-section {
-            margin-top: 60px;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(40px) saturate(180%);
-            -webkit-backdrop-filter: blur(40px) saturate(180%);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 40px;
-            padding: 50px;
-            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.25),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            margin-top: 50px;
+            background: var(--white);
+            border-radius: 30px;
+            padding: 45px;
+            box-shadow: var(--shadow-xl);
         }
 
         .history-section h2 {
-            font-size: 40px;
-            background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+            font-size: 36px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
             text-align: center;
             font-weight: 900;
             letter-spacing: -1px;
@@ -669,9 +604,9 @@
 
         .exchange-list {
             display: flex;
-            gap: 30px;
+            gap: 28px;
             overflow-x: auto;
-            padding: 24px 0;
+            padding: 20px 0;
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
         }
@@ -680,14 +615,14 @@
             display: flex;
             align-items: center;
             gap: 24px;
-            padding: 36px;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(236, 72, 153, 0.08) 100%);
-            border-radius: 30px;
-            min-width: 450px;
+            padding: 32px;
+            background: linear-gradient(135deg, #fff5f8 0%, #ffeef7 100%);
+            border-radius: 25px;
+            min-width: 420px;
             flex-shrink: 0;
             scroll-snap-align: start;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            border: 2px solid rgba(99, 102, 241, 0.15);
+            box-shadow: var(--shadow-md);
+            border: 2px solid #ffe0e8;
         }
 
         .exchange-clothes {
@@ -696,12 +631,12 @@
         }
 
         .exchange-clothes img {
-            width: 120px;
-            height: 180px;
+            width: 110px;
+            height: 165px;
             object-fit: cover;
-            border-radius: 20px;
-            margin-bottom: 16px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            border-radius: 18px;
+            margin-bottom: 14px;
+            box-shadow: var(--shadow-md);
         }
 
         .exchange-clothes p {
@@ -712,18 +647,18 @@
         }
 
         .exchange-icon {
-            font-size: 48px;
-            background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+            font-size: 44px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
         .exchange-date {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-secondary);
             text-align: center;
-            margin-top: 16px;
+            margin-top: 14px;
             font-weight: 600;
         }
 
@@ -735,51 +670,51 @@
             }
 
             .clothes-cover {
-                height: 400px;
+                height: 450px;
             }
 
             .header h1 {
-                font-size: 48px;
+                font-size: 42px;
             }
 
             .clothes-title {
-                font-size: 36px;
+                font-size: 38px;
             }
         }
 
         @media (max-width: 768px) {
             .container {
-                padding: 30px 15px;
+                padding: 20px 15px;
             }
 
             .header {
-                padding: 50px 30px;
+                padding: 40px 25px;
             }
 
             .header h1 {
-                font-size: 40px;
+                font-size: 36px;
             }
 
             .clothes-header {
-                padding: 40px 30px;
+                padding: 35px 25px;
             }
 
             .share-btn {
                 position: static;
                 width: 100%;
-                margin-top: 24px;
+                margin-top: 20px;
             }
 
             .exchange-item {
                 flex-direction: column;
-                min-width: 320px;
+                min-width: 300px;
             }
 
             .lang-switcher {
-                top: 20px;
-                right: 20px;
-                padding: 12px 24px;
-                font-size: 14px;
+                top: 15px;
+                right: 15px;
+                padding: 10px 20px;
+                font-size: 13px;
             }
         }
     </style>
@@ -836,17 +771,17 @@
                 <label>اضغط لرفع صورة:</label>
                 <div class="image-upload-area" id="imageUploadArea" onclick="document.getElementById('itemImageInput').click()">
                     <div class="upload-icon">📷</div>
-                    <p style="color: var(--text-secondary); font-size: 17px;">اضغط لرفع صورة</p>
+                    <p style="color: var(--text-secondary); font-size: 16px;">اضغط لرفع صورة</p>
                     <img id="uploadedImagePreview" class="uploaded-image" style="display: none;">
                 </div>
                 <input type="file" id="itemImageInput" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
             </div>
             
-            <div class="whatsapp-display" id="whatsappDisplay" style="display: none; margin-top: 32px; padding: 32px; background: linear-gradient(135deg, rgba(37, 211, 102, 0.1) 0%, rgba(37, 211, 102, 0.05) 100%); border-radius: 24px; text-align: center;">
-                <p style="color: #155724; font-weight: 800; margin-bottom: 16px; font-size: 20px;">تم إرسال الطلب بنجاح!</p>
-                <p style="color: var(--text-secondary); font-size: 16px;">اتصل بصاحب العنصر:</p>
-                <a href="https://wa.me/971509216685" target="_blank" class="whatsapp-link" id="whatsappLink" onclick="openWhatsApp(items[currentItemIndex].id); return true;" style="display: inline-flex; align-items: center; gap: 14px; color: #25D366; text-decoration: none; font-weight: 800; font-size: 22px; margin-top: 20px; padding: 20px 40px; background: white; border-radius: 50px; transition: all 0.3s; box-shadow: 0 8px 32px rgba(37, 211, 102, 0.3);">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+            <div class="whatsapp-display" id="whatsappDisplay" style="display: none; margin-top: 28px; padding: 28px; background: linear-gradient(135deg, rgba(37, 211, 102, 0.1) 0%, rgba(37, 211, 102, 0.05) 100%); border-radius: 20px; text-align: center;">
+                <p style="color: #155724; font-weight: 800; margin-bottom: 14px; font-size: 18px;">تم إرسال الطلب بنجاح!</p>
+                <p style="color: var(--text-secondary); font-size: 15px;">اتصل بصاحب العنصر:</p>
+                <a href="https://wa.me/971509216685" target="_blank" class="whatsapp-link" id="whatsappLink" onclick="openWhatsApp(items[currentItemIndex].id); return true;" style="display: inline-flex; align-items: center; gap: 12px; color: #25D366; text-decoration: none; font-weight: 800; font-size: 20px; margin-top: 18px; padding: 18px 36px; background: var(--white); border-radius: 50px; transition: all 0.3s; box-shadow: var(--shadow-md);">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
                     </svg>
                     +971 50 921 6685
@@ -857,7 +792,7 @@
                 🤝 إرسال الطلب
             </button>
 
-            <div class="success-message" id="successMessage" style="display: none; margin-top: 32px; padding: 32px; background: linear-gradient(135deg, rgba(37, 211, 102, 0.1) 0%, rgba(37, 211, 102, 0.05) 100%); border-radius: 24px; color: #155724; text-align: center; font-size: 18px; font-weight: 700;">
+            <div class="success-message" id="successMessage" style="display: none; margin-top: 28px; padding: 28px; background: linear-gradient(135deg, rgba(37, 211, 102, 0.1) 0%, rgba(37, 211, 102, 0.05) 100%); border-radius: 20px; color: #155724; text-align: center; font-size: 17px; font-weight: 700;">
                 ✅ تم إرسال الطلب! سنخطرك عندما يرد المستخدم.
             </div>
         </div>
@@ -869,7 +804,7 @@
                                 "id": 1,
                                 "title": "Elegant Evening Dress",
                                 "category": "Dress",
-                                "cover": "/static/clothes-middle-east/衣服1.png",
+                                "cover": "/static/clothes-middle-east/item1.png",
                                 "condition": "Like New",
                                 "size": "M",
                                 "why_release": "This stunning evening dress has been my go-to for special occasions. The elegant design and perfect fit made me feel confident at every event. I'm letting it go because my style has evolved, but I know it will bring someone else the same joy it brought me. Perfect for weddings, galas, or any special night out in Dubai.",
@@ -886,7 +821,7 @@
                                 "id": 2,
                                 "title": "Casual Summer Outfit",
                                 "category": "Casual",
-                                "cover": "/static/clothes-middle-east/衣服2.png",
+                                "cover": "/static/clothes-middle-east/item2.png",
                                 "condition": "Excellent",
                                 "size": "S",
                                 "why_release": "This comfortable and stylish casual outfit has been perfect for Dubai's warm weather. Lightweight fabric that breathes well, perfect for shopping trips or casual brunches. I'm passing it on because I've found my new favorite style, but this piece deserves to be worn and loved by someone else.",
@@ -903,7 +838,7 @@
                                 "id": 3,
                                 "title": "Professional Business Attire",
                                 "category": "Business",
-                                "cover": "/static/clothes-middle-east/衣服3.png",
+                                "cover": "/static/clothes-middle-east/item3.png",
                                 "condition": "Like New",
                                 "size": "L",
                                 "why_release": "This professional outfit helped me land my dream job interview. The classic design and perfect tailoring gave me the confidence I needed. Now that I've built my professional wardrobe, I want to pass this lucky piece to someone who needs that same confidence boost. Perfect for interviews, meetings, or any professional setting.",
@@ -920,7 +855,7 @@
                                 "id": 4,
                                 "title": "Trendy Street Style Outfit",
                                 "category": "Casual",
-                                "cover": "/static/clothes-middle-east/衣服4.png",
+                                "cover": "/static/clothes-middle-east/item4.png",
                                 "condition": "Good",
                                 "size": "M",
                                 "why_release": "This trendy outfit was my statement piece for weekend outings. It always got compliments and made me feel fashionable. I'm sharing it because fashion should be shared, and someone else deserves to feel as stylish as I did wearing this.",
@@ -937,7 +872,7 @@
                                 "id": 5,
                                 "title": "Comfortable Home Wear",
                                 "category": "Casual",
-                                "cover": "/static/clothes-middle-east/衣服5.png",
+                                "cover": "/static/clothes-middle-east/item5.png",
                                 "condition": "Excellent",
                                 "size": "S",
                                 "why_release": "This cozy outfit has been my comfort companion during lazy weekends and work-from-home days. Soft fabric that feels like a hug, perfect for relaxing at home or running errands. I'm letting it go because I have too many similar pieces, but I know it will bring comfort to someone else.",
@@ -954,7 +889,7 @@
                                 "id": 6,
                                 "title": "Elegant Formal Dress",
                                 "category": "Dress",
-                                "cover": "/static/clothes-middle-east/衣服6.png",
+                                "cover": "/static/clothes-middle-east/item6.png",
                                 "condition": "Like New",
                                 "size": "M",
                                 "why_release": "This beautiful formal dress has been with me through many celebrations. The elegant design and flattering cut made me feel like a princess at every event. I'm sharing it because I believe every woman deserves to feel beautiful, and this dress has that magic.",
@@ -971,7 +906,7 @@
                                 "id": 7,
                                 "title": "Stylish Casual Top",
                                 "category": "Casual",
-                                "cover": "/static/clothes-middle-east/衣服7.png",
+                                "cover": "/static/clothes-middle-east/item7.png",
                                 "condition": "Good",
                                 "size": "L",
                                 "why_release": "This versatile top has been a wardrobe staple. It pairs well with everything and always looks put-together. I'm passing it on because I want to make room for new pieces, but this top deserves to continue being someone's go-to piece.",
@@ -988,7 +923,7 @@
                                 "id": 8,
                                 "title": "Chic Modern Outfit",
                                 "category": "Casual",
-                                "cover": "/static/clothes-middle-east/衣服8.png",
+                                "cover": "/static/clothes-middle-east/item8.png",
                                 "condition": "Excellent",
                                 "size": "M",
                                 "why_release": "This modern outfit represents my journey into contemporary fashion. It's versatile, comfortable, and always makes me feel confident. I'm sharing it because fashion is about expressing yourself, and I want someone else to experience that same feeling.",
@@ -1005,7 +940,7 @@
                                 "id": 9,
                                 "title": "Classic Timeless Piece",
                                 "category": "Casual",
-                                "cover": "/static/clothes-middle-east/衣服9.png",
+                                "cover": "/static/clothes-middle-east/item9.png",
                                 "condition": "Like New",
                                 "size": "S",
                                 "why_release": "This timeless piece has been in my wardrobe for years because it never goes out of style. Classic design that works for any occasion. I'm letting it go to make space, but I know it will serve someone else just as well as it served me.",
@@ -1022,7 +957,7 @@
                                 "id": 10,
                                 "title": "Fashion-Forward Statement Outfit",
                                 "category": "Casual",
-                                "cover": "/static/clothes-middle-east/衣服10.png",
+                                "cover": "/static/clothes-middle-east/item10.png",
                                 "condition": "Excellent",
                                 "size": "L",
                                 "why_release": "This bold outfit helped me step out of my comfort zone and embrace my unique style. It always turns heads and makes me feel like I'm walking a fashion runway. I'm sharing it because I want someone else to experience that confidence boost.",
@@ -1039,7 +974,7 @@
                                 "id": 11,
                                 "title": "Versatile Everyday Outfit",
                                 "category": "Casual",
-                                "cover": "/static/clothes-middle-east/衣服11.png",
+                                "cover": "/static/clothes-middle-east/item11.png",
                                 "condition": "Good",
                                 "size": "M",
                                 "why_release": "This versatile outfit has been my reliable choice for countless days. It works for work, casual outings, and everything in between. I'm passing it on because I believe in sustainable fashion and want this piece to continue its journey with someone new.",
@@ -1056,7 +991,7 @@
                                 "id": 12,
                                 "title": "Elegant Special Occasion Outfit",
                                 "category": "Dress",
-                                "cover": "/static/clothes-middle-east/衣服12.png",
+                                "cover": "/static/clothes-middle-east/item12.png",
                                 "condition": "Like New",
                                 "size": "S",
                                 "why_release": "This elegant outfit has been my choice for special celebrations. The beautiful design and perfect fit made every occasion memorable. I'm sharing it because I want someone else to create their own beautiful memories wearing this piece.",
@@ -1073,7 +1008,7 @@
                                 "id": 13,
                                 "title": "Comfortable Sleepwear Set",
                                 "category": "Sleepwear",
-                                "cover": "/static/clothes-middle-east/睡衣.png",
+                                "cover": "/static/clothes-middle-east/sleepwear.png",
                                 "condition": "Excellent",
                                 "size": "M",
                                 "why_release": "This cozy sleepwear set has been my comfort companion for peaceful nights. Soft, breathable fabric that feels luxurious. I'm sharing it because I believe everyone deserves a good night's sleep in comfortable clothing, and this set provides just that.",
@@ -1090,7 +1025,7 @@
                                 "id": 14,
                                 "title": "Fashion Magazine Collection",
                                 "category": "Magazine",
-                                "cover": "/static/clothes-middle-east/杂志.png",
+                                "cover": "/static/clothes-middle-east/magazine1.png",
                                 "condition": "Like New",
                                 "size": "N/A",
                                 "why_release": "This collection of fashion magazines has been my inspiration source for years. Full of style tips, trends, and beautiful photography. I'm sharing it because knowledge and inspiration should be shared. Perfect for anyone looking to stay updated with fashion trends in the Middle East.",
@@ -1107,7 +1042,7 @@
                                 "id": 15,
                                 "title": "Fashion Exchange Magazine",
                                 "category": "Magazine",
-                                "cover": "/static/clothes-middle-east/杂志交换.png",
+                                "cover": "/static/clothes-middle-east/magazine2.png",
                                 "condition": "Excellent",
                                 "size": "N/A",
                                 "why_release": "This special edition magazine is all about sustainable fashion and clothing exchange. It opened my eyes to the importance of circular fashion. I'm sharing it because I want others to discover the joy of exchanging clothes and building a sustainable wardrobe.",
@@ -1154,7 +1089,7 @@
                 viewedItemsInSession.add(item.id);
             }
 
-            // 使用绝对URL确保图片能加载
+            // 确保使用正确的图片路径
             const imageUrl = item.cover.startsWith('http') ? item.cover : 
                            (item.cover.startsWith('/') ? window.location.origin + item.cover : 
                            window.location.origin + '/static/' + item.cover.replace('/static/', ''));
@@ -1163,8 +1098,7 @@
                 <div class="clothes-card">
                     <div class="clothes-header">
                         <div class="clothes-image-wrapper">
-                            <img src="${encodeURI(imageUrl)}" alt="${item.title}" class="clothes-cover" loading="lazy" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='block';">
-                            <div style="display: none; width: 100%; height: 500px; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); border-radius: 30px; display: flex; align-items: center; justify-content: center; color: #6b7280; font-size: 24px; font-weight: 600;">图片加载中...</div>
+                            <img src="${imageUrl}" alt="${item.title}" class="clothes-cover" loading="lazy" onerror="handleImageError(this, '${imageUrl}')">
                         </div>
                         <div class="clothes-info">
                             <div>
@@ -1172,7 +1106,7 @@
                                 <span class="clothes-category">${item.category}</span>
                             </div>
                             <div class="user-info">
-                                <img src="${item.user.avatar}" alt="${item.user.name}" class="user-avatar" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\'%3E%3Crect width=\'64\' height=\'64\' fill=\'%236366f1\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' fill=\'white\' text-anchor=\'middle\' dominant-baseline=\'central\' font-size=\'28\' font-weight=\'bold\'>${item.user.name.charAt(0)}</text%3E%3C/svg%3E';">
+                                <img src="${item.user.avatar}" alt="${item.user.name}" class="user-avatar" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\'%3E%3Crect width=\'60\' height=\'60\' fill=\'%23ff6b9d\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' fill=\'white\' text-anchor=\'middle\' dominant-baseline=\'central\' font-size=\'28\' font-weight=\'bold\'>${item.user.name.charAt(0)}</text%3E%3C/svg%3E';">
                                 <div class="user-details">
                                     <div class="user-name">${item.user.name}</div>
                                     <span class="trust-badge">${item.user.trust_badge}</span>
@@ -1192,6 +1126,19 @@
                 </div>
             `;
             updateCounter();
+        }
+
+        function handleImageError(img, url) {
+            console.error('Image load failed:', url);
+            img.style.display = 'none';
+            const wrapper = img.parentElement;
+            if (wrapper && !wrapper.querySelector('.error-placeholder')) {
+                const placeholder = document.createElement('div');
+                placeholder.className = 'error-placeholder';
+                placeholder.style.cssText = 'width: 100%; height: 600px; background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%); border-radius: 25px; display: flex; align-items: center; justify-content: center; color: #999; font-size: 20px; font-weight: 600;';
+                placeholder.textContent = '图片加载失败';
+                wrapper.appendChild(placeholder);
+            }
         }
 
         function updateCounter() {
@@ -1217,16 +1164,16 @@
                               (ex.item2.cover.startsWith('/') ? window.location.origin + ex.item2.cover : 
                               window.location.origin + '/static/' + ex.item2.cover.replace('/static/', ''));
                 return `
-                <div style="min-width: 450px; flex-shrink: 0;">
+                <div style="min-width: 420px; flex-shrink: 0;">
                     <div class="exchange-item">
                         <div class="exchange-clothes">
-                            <img src="${encodeURI(img1Url)}" alt="${ex.item1.title}" loading="lazy" onerror="this.onerror=null; this.style.display='none';">
+                            <img src="${img1Url}" alt="${ex.item1.title}" loading="lazy" onerror="this.style.display='none';">
                             <p>${ex.item1.title}</p>
                             <p style="font-size: 13px; color: var(--text-secondary); margin-top: 8px; font-weight: 600;">${ex.item1.user}</p>
                         </div>
                         <div class="exchange-icon">🤝</div>
                         <div class="exchange-clothes">
-                            <img src="${encodeURI(img2Url)}" alt="${ex.item2.title}" loading="lazy" onerror="this.onerror=null; this.style.display='none';">
+                            <img src="${img2Url}" alt="${ex.item2.title}" loading="lazy" onerror="this.style.display='none';">
                             <p>${ex.item2.title}</p>
                             <p style="font-size: 13px; color: var(--text-secondary); margin-top: 8px; font-weight: 600;">${ex.item2.user}</p>
                         </div>
