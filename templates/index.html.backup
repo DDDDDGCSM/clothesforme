@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookForMX - Intercambio de Libros</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #F5E6D3;
+            color: #3E2723;
+            line-height: 1.6;
+            padding-bottom: 80px; /* 为底部按钮留空间 */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        /* 头部 */
+        .header {
+            text-align: center;
+            padding: 20px 15px;
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #2C5F2D;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            color: #6D4C41;
+            font-size: 14px;
+        }
+
+        /* 图书卡片 */
+        .book-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .book-header {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .book-cover {
+            width: 100px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
+
+        .book-info {
+            flex: 1;
+        }
+
+        .book-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2C5F2D;
+            margin-bottom: 5px;
+        }
+
+        .book-author {
+            color: #6D4C41;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .user-name {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .trust-badge {
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            background: #E8D5B7;
+        }
+
+        .why-release {
+            background: #FAF5ED;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #2C5F2D;
+            margin-top: 15px;
+        }
+
+        .why-release h4 {
+            font-size: 13px;
+            color: #2C5F2D;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .why-release p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #3E2723;
+        }
+
+        /* 导航箭头 */
+        .nav-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+
+        .nav-arrow {
+            background: #2C5F2D;
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-arrow:hover:not(:disabled) {
+            background: #4A7C59;
+            transform: scale(1.1);
+        }
+
+        .nav-arrow:disabled {
+            background: #95A5A6;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .book-counter {
+            font-size: 14px;
+            color: #6D4C41;
+            font-weight: 600;
+        }
+
+        /* 底部固定按钮 */
+        .fixed-bottom-btn {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 15px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .request-btn {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px;
+            background: #2C5F2D;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+        }
+
+        .request-btn:hover {
+            background: #4A7C59;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(44, 95, 45, 0.3);
+        }
+
+        /* 模态框 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            padding: 30px 20px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #6D4C41;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            background: #F5E6D3;
+        }
+
+        .modal-title {
+            font-size: 22px;
+            color: #2C5F2D;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #3E2723;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 12px;
+            border: 2px solid #E8D5B7;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            resize: vertical;
+        }
+
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2C5F2D;
+        }
+
+        .book-selector {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .book-option {
+            border: 2px solid #E8D5B7;
+            border-radius: 8px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .book-option:hover {
+            border-color: #2C5F2D;
+            transform: translateY(-2px);
+        }
+
+        .book-option.selected {
+            border-color: #2C5F2D;
+            background: #FAF5ED;
+        }
+
+        .book-option img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 8px;
+        }
+
+        .book-option p {
+            font-size: 11px;
+            margin-top: 5px;
+            line-height: 1.3;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: #2C5F2D;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background: #4A7C59;
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:disabled {
+            background: #95A5A6;
+            cursor: not-allowed;
+        }
+
+        .success-message {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: #E8F5E9;
+            border-radius: 8px;
+            color: #2C5F2D;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        /* 历史交换区 */
+        .history-section {
+            margin-top: 30px;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .history-section h2 {
+            font-size: 20px;
+            color: #2C5F2D;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .exchange-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .exchange-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: #FAF5ED;
+            border-radius: 10px;
+        }
+
+        .exchange-book {
+            text-align: center;
+            flex: 1;
+        }
+
+        .exchange-book img {
+            width: 60px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+
+        .exchange-book p {
+            font-size: 11px;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .exchange-icon {
+            font-size: 20px;
+        }
+
+        .exchange-date {
+            font-size: 11px;
+            color: #6D4C41;
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .book-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .book-cover {
+                width: 120px;
+                height: 180px;
+            }
+
+            .book-selector {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                margin: 10px;
+                padding: 20px 15px;
+            }
+
+            .exchange-item {
+                flex-direction: column;
+            }
+
+            .exchange-icon {
+                transform: rotate(90deg);
+            }
+        }
+
+        /* 空状态 */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6D4C41;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <div class="header">
+            <h1>📚 BookForMX</h1>
+            <p>Intercambia libros, comparte historias</p>
+        </div>
+
+        <!-- 导航控制 -->
+        <div class="nav-controls">
+            <button class="nav-arrow" onclick="prevBook()" id="prevBtn">‹</button>
+            <div class="book-counter">
+                <span id="currentIndex">1</span> / <span id="totalBooks">20</span>
+            </div>
+            <button class="nav-arrow" onclick="nextBook()" id="nextBtn">›</button>
+        </div>
+
+        <!-- 图书展示 -->
+        <div id="bookDisplay">
+            <!-- 图书卡片将在这里动态加载 -->
+        </div>
+
+        <!-- 历史交换区 -->
+        <div class="history-section">
+            <h2>🤝 Intercambios Realizados</h2>
+            <div class="exchange-list" id="exchangeList">
+                <!-- 交换记录将在这里动态加载 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部固定按钮 -->
+    <div class="fixed-bottom-btn">
+        <button class="request-btn" onclick="openModal()">
+            📖 Solicitar Intercambio
+        </button>
+    </div>
+
+    <!-- 申请交换模态框 -->
+    <div class="modal" id="exchangeModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h2 class="modal-title">Solicitar Intercambio</h2>
+            
+            <div class="form-group">
+                <label>¿Por qué este libro te llama? Cuéntale tu historia:</label>
+                <textarea id="userStory" placeholder="Escribe aquí por qué quieres este libro y qué libro quieres intercambiar..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Elige tu libro para intercambiar:</label>
+                <div class="book-selector" id="bookSelector">
+                    <!-- 图书选项将在这里动态加载 -->
+                </div>
+            </div>
+
+            <button class="submit-btn" onclick="submitExchange()" id="submitBtn">
+                🤝 Enviar Solicitud
+            </button>
+
+            <div class="success-message" id="successMessage">
+                ✅ ¡Solicitud enviada! Te notificaremos cuando el usuario responda.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 图书数据（20本真实图书）
+        const books = [
+            {
+                id: 1,
+                title: 'Cien años de soledad',
+                author: 'Gabriel García Márquez',
+                cover: 'https://images-na.ssl-images-amazon.com/images/I/81dQwQlmAXL.jpg',
+                why_release: 'Mi abuela falleció durante esa lluvia interminable, y finalmente abrí este libro que había comprado años atrás. Cuando leí sobre Úrsula viendo el destino de la familia en su ceguera, estaba sentado en el ático de mi casa escuchando la lluvia, y de repente entendí qué significa "la memoria no es para olvidar, sino para volverse más fuerte en el silencio". Cada página de este libro es húmeda y pesada como esa temporada de lluvias.',
+                user: { name: 'María González', avatar: 'https://i.pravatar.cc/150?img=1', trust_badge: '🦉 Compañero Confiable' }
+            },
+            {
+                id: 2,
+                title: 'Pedro Páramo',
+                author: 'Juan Rulfo',
+                cover: 'https://images-na.ssl-images-amazon.com/images/I/81Y5Z8KJZJL.jpg',
+                why_release: 'Lo terminé en un autobús nocturno hacia Guanajuato, completamente solo. Fuera había sombras de montañas negras, dentro estaban las almas errantes de Comala. Cuando leí "la tierra está caliente, como sangre fresca", el autobús pasó junto a un letrero desolado. En ese momento, la línea entre ficción y realidad se desdibujó, y sentí que también estaba en ese pueblo sin eco, buscando a un padre que tal vez ya no existía.',
+                user: { name: 'Carlos Ramírez', avatar: 'https://i.pravatar.cc/150?img=12', trust_badge: '📖 Bibliófilo Truequero' }
+            },
+            {
+                id: 3,
+                title: 'Niña bonita',
+                author: 'Carolina de Robertis',
+                cover: 'https://images-na.ssl-images-amazon.com/images/I/71QKQ9KJZJL.jpg',
+                why_release: 'Lo leí escondido debajo del mostrador en una tiendita donde siempre sonaba una radio ruidosa. La rabia de la protagonista era como fuego, quemando mi entumecimiento día tras día. Al cerrar el libro, miré mi reflejo en la puerta de vidrio y por primera vez sentí que tal vez también tenía derecho a romper algo, en lugar de mantener siempre la sonrisa. La portada de ese libro todavía tiene manchas de café y un poco de coraje rebelde.',
+                user: { name: 'Ana Martínez', avatar: 'https://i.pravatar.cc/150?img=5', trust_badge: '🌵 Lector Novato' }
+            },
+            {
+                id: 4,
+                title: 'Del amor y otros demonios',
+                author: 'Gabriel García Márquez',
+                cover: 'https://images-na.ssl-images-amazon.com/images/I/81dQwQlmAXL.jpg',
+                why_release: 'Este libro lo dejó mi primera novia en nuestra "biblioteca compartida". Años después de separarnos, lo terminé en una noche de insomnio. Cuando leí sobre la joven de cabello largo encerrada en una jaula, muriendo por el malentendido y el miedo de la gente al amor, de repente entendí cuál era el demonio no dicho entre nosotros. No es una historia, es un espejo tardío y desgarrador.',
+                user: { name: 'Sofía Herrera', avatar: 'https://i.pravatar.cc/150?img=9', trust_badge: '🦉 Compañero Confiable' }
+            },
+            {
+                id: 5,
+                title: 'Los detectives salvajes',
+                author: 'Roberto Bolaño',
+                cover: 'https://images-na.ssl-images-amazon.com/images/I/71QKQ9KJZJL.jpg',
+                why_release: 'A los veintiséis años, sintiéndome capaz de todo y de nada, seguí este libro vagando por el desierto literario. Escribí en los márgenes de las páginas fantasías y planes inmaduros, como si también fuera uno de esos jóvenes buscando al poeta desaparecido. Ahora al releerlo, esas palabras me dan vergüenza y nostalgia: nostalgia de ese yo torpe que realmente creía que la poesía podía cambiar el mundo.',
+                user: { name: 'Luis Fernández', avatar: 'https://i.pravatar.cc/150?img=15', trust_badge: '📖 Bibliófilo Truequero' }
+            },
+            {
+                id: 6,
+                title: 'Los ingrávidos',
+                author: 'Valeria Luiselli',
+                cover: 'https://images-na.ssl-images-amazon.com/images/I/81Y5Z8KJZJL.jpg',
+                why_release: 'Compré este libro cuando mi insomnio era más severo. Sus frases están fragmentadas, sus pensamientos son erráticos, pero encajan perfectamente con mi atención que no podía enfocarse. No cuenta una historia, sino que simula un estado de conciencia "sin peso". Al leerlo, por primera vez sentí que la confusión también podía escribirse con tanta precisión y elegancia.',
+                user: { name: 'Patricia López', avatar: 'https://i.pravatar.cc/150?img=20', trust_badge: '🌵 Lector Novato' }
+            },
+            {
+                id: 7,
+                title: 'El principito',
+                author: 'Antoine de Saint-Exupéry',
+                cover: 'https://images-na.ssl-images-amazon.com/images/I/81dQwQlmAXL.jpg',
+                why_release: 'La primera "versión" de mi vida fue cuando mi papá me lo leyó, entonces solo pensaba que la rosa era molesta. Después, se lo leí a él en su cama de hospital, y cuando leí "lo esencial es invisible a los ojos", me apretó la mano. Ahora el libro sigue aquí, pero él ya no. Cada vez que lo abro, veo simultáneamente las estrellas de la infancia y la luz tenue de la habitación del hospital.',
+                user: { name: 'Diego Sánchez', avatar: 'https://i.pravatar.cc/150?img=33', trust_badge: '🦉 Compañero Confiable' }
+            },
+            {
+                id: 8,
+                title: 'Ficciones',
+                author: 'Jorge Luis Borges',
+                cover: 'https://images-na.ssl-images-amazon.com/images/I/71QKQ9KJZJL.jpg',
+                why_release: 'Fue mi lectura de introducción en la clase de filosofía de la universidad, y también mi primer "mareo" intelectual. Entre los estantes viejos de la biblioteca, intenté seguirlo hacia las ruinas circulares, la biblioteca de Babel... pero siempre terminaba dando vueltas. Esa sensación de fracaso y atracción era igualmente fuerte. No me enseñó respuestas, sino a mantener una humildad y curiosidad eternas hacia el "infinito" y lo "posible".',
+                user: { name: 'Elena Torres', avatar: 'https://i.pravatar.cc/150?img=47', trust_badge: '📖 Bibliófilo Truequero' }
+            },
+            {
+                id: 9,
+                title: 'Organízate con eficacia',
+                author: 'David Allen',
+                cover: 'https://images-na.ssl-images-amazon.com/images/I/81Y5Z8KJZJL.jpg',
+                why_release: 'La portada está nueva, pero las páginas están llenas de rastros de ansiedad: fue el último año de mi maestría, marqué con resaltador todas las "prioridades", llené de etiquetas de colores. Fue testigo de mi intento de controlarlo todo y mi eventual colapso. Ahora al verlo, es más como un espécimen de "arqueología de la ansiedad", registrando a ese joven apresurado perseguido por los deadlines.',
+                user: { name: 'Roberto Méndez', avatar: 'https://i.pravatar.cc/150?img=52', trust_badge: '🌵 Lector Novato' }
+            },
+            {
+                id: 10,
+                title: 'Los hijos de Sánchez',
+                author: 'Oscar Lewis',
+                cover: 'https://images-na.ssl-images-amazon.com/images/I/81dQwQlmAXL.jpg',
+                why_release: 'Al leer este libro, no podía evitar compararlo con las conversaciones en la mesa de mi familia. Esas descripciones académicas sobre pobreza, dignidad y destino se convirtieron de repente en las quejas de mi tío, los suspiros de mi tía y la espalda silenciosa de mi abuela. Fue la primera vez que salí del filtro del cariño familiar y usé una claridad dolorosa para entender el mundo del que vengo.',
+                user: { name: 'Carmen Ruiz', avatar: 'https://i.pravatar.cc/150?img=68', trust_badge: '🦉 Compañero Confiable' }
+            },
+            {
+                id: 11,
+                title: 'Aura',
+                author: 'Carlos Fuentes',
+                cover: 'https://images-na.ssl-images-amazon.com/images/I/71QKQ9KJZJL.jpg',
+                why_release: 'Empecé a leerlo en una casa de huéspedes convertida de una mansión colonial supuestamente embrujada, para darme valor. Bajo la luz amarillenta, la humedad de la casa en el libro, la obsesión del joven historiador, lo extraño de la anciana, se mezclaron completamente con el crujido del piso de madera y el viento fuera de la ventana. Esa noche no estaba leyendo una historia gótica, estaba viviendo en ella. Hasta el amanecer, las sombras se dispersaron.',
+                user: { name: 'Fernando Morales', avatar: 'https://i.pravatar.cc/150?img=70', trust_badge: '📖 Bibliófilo Truequero' }
+            },
+            {
+                id: 12,
+                title: 'Como agua para chocolate',
+                author: 'Laura Esquivel',
+                cover: 'https://images-na.ssl-images-amazon.com/images/I/81Y5Z8KJZJL.jpg',
+                why_release: 'Mi mamá no habla mucho, su amor está en la cocina. Este libro me hizo "entender" su magia por primera vez. Intenté hacer "nogada" según la receta del libro, fue un desastre, pero ella se rió, tomó las riendas y lo terminó en silencio. En ese momento entendí que algunas fórmulas emocionales no se pueden copiar, fluyen en la sangre, como el agua para el chocolate, natural y necesaria.',
+                user: { name: 'Isabel Gutiérrez', avatar: 'https://i.pravatar.cc/150?img=25', trust_badge: '🦉 Compañero Confiable' }
+            },
+            {
+                id: 13,
+                title: 'Hábitos atómicos',
+                author: 'James Clear',
+                cover: 'https://images-na.ssl-images-amazon.com/images/I/81dQwQlmAXL.jpg',
+                why_release: 'Una vez creí devotamente que podría construir un yo perfecto. Levantarme temprano, marcar, rastrear cada pequeño progreso... hasta que me di cuenta de que era como una máquina programada, eficiente pero sin calidez. Este libro ahora descansa silenciosamente en la esquina de mi estante, es un amor apasionado y ciego que tuve por la fe de la "autodisciplina", finalmente nos separamos en paz.',
+                user: { name: 'Javier Castro', avatar: 'https://i.pravatar.cc/150?img=38', trust_badge: '🌵 Lector Novato' }
+            },
+            {
+                id: 14,
+                title: 'La herencia',
+                author: 'Rosa Beltrán',
+                cover: 'https://images-na.ssl-images-amazon.com/images/I/71QKQ9KJZJL.jpg',
+                why_release: 'Leerlo fue como jugar un juego de rompecabezas psicológico ingenioso. Cada miembro de la familia cuenta una "verdad" que encaja perfectamente, pero juntas forman una imagen completamente distorsionada. Me recordó a cada reunión familiar, cuando mis hermanos y yo relatamos el mismo evento de manera completamente diferente. La llamada memoria familiar tal vez nunca fue historia, sino mitos contemporáneos que cada uno teje para sobrevivir.',
+                user: { name: 'Lucía Vargas', avatar: 'https://i.pravatar.cc/150?img=45', trust_badge: '📖 Bibliófilo Truequero' }
+            },
+            {
+                id: 15,
+                title: 'Pedro y el capitán',
+                author: 'Mario Benedetti',
+                cover: 'https://images-na.ssl-images-amazon.com/images/I/81Y5Z8KJZJL.jpg',
+                why_release: 'Este delgado guion lo terminé en un intervalo de una protesta. Los gritos en la plaza y los diálogos de interrogatorio en el libro formaron una disonancia estridente. No da respuestas simples de bien y mal, sino que arroja fríamente la pregunta de "cómo se deforma la humanidad bajo presión extrema". Al cerrar el libro y mirar a la multitud, una pregunta no desaparecía: ¿mi posición puede resistir cuánta presión real?',
+                user: { name: 'Miguel Ángel', avatar: 'https://i.pravatar.cc/150?img=55', trust_badge: '🦉 Compañero Confiable' }
+            },
+            {
+                id: 16,
+                title: 'La reina del sur',
+                author: 'Arturo Pérez-Reverte',
+                cover: 'https://images-na.ssl-images-amazon.com/images/I/81dQwQlmAXL.jpg',
+                why_release: '¡Lectura pura de evasión! Después de un período de trabajo agotador, lo llevé a Cancún. Playa, palmeras y la épica vida de una mujer en fuga. Fue como una dosis fuerte de adrenalina literaria, me hizo olvidar temporalmente todas las preocupaciones reales. Entre las páginas parece que todavía hay brisa marina y olor a protector solar barato, es un recuerdo de vacaciones que no necesitaba pensar, solo sentir velocidad y peligro.',
+                user: { name: 'Natalia Jiménez', avatar: 'https://i.pravatar.cc/150?img=60', trust_badge: '🌵 Lector Novato' }
+            },
+            {
+                id: 17,
+                title: 'El ojo en el cielo',
+                author: 'Carlos Cuauhtémoc',
+                cover: 'https://images-na.ssl-images-amazon.com/images/I/71QKQ9KJZJL.jpg',
+                why_release: 'Este libro fue mi "contrabando" de adolescencia, escondido debajo del libro de matemáticas, leído a escondidas en clases aburridas. Ese dulzor del primer amor, amargura y profundidad autoproclamada me hizo identificarme completamente. Ahora al releerlo, solo siento que la escritura es inmadura y la trama simple, pero esa palpitación ardiente y pura de los quince años ya no se puede reproducir. Es el fósil de mi iniciación emocional.',
+                user: { name: 'Óscar Pérez', avatar: 'https://i.pravatar.cc/150?img=65', trust_badge: '🦉 Compañero Confiable' }
+            },
+            {
+                id: 18,
+                title: 'Paseo con Octavio Paz',
+                author: 'Elena Poniatowska',
+                cover: 'https://images-na.ssl-images-amazon.com/images/I/81Y5Z8KJZJL.jpg',
+                why_release: 'Necesita un corazón completamente tranquilo para entrar, y mi vida reciente está llena de ruido: el llanto del niño, las notificaciones del trabajo, las tareas interminables. Es como un anciano sabio sentado en un banco del parque, esperando que esté listo para escuchar. Aún no estoy listo, pero sé que está ahí. Eso en sí mismo es un consuelo.',
+                user: { name: 'Paula Rodríguez', avatar: 'https://i.pravatar.cc/150?img=72', trust_badge: '📖 Bibliófilo Truequero' }
+            },
+            {
+                id: 19,
+                title: 'Réquiem',
+                author: 'Tatiana Tiba',
+                cover: 'https://images-na.ssl-images-amazon.com/images/I/81dQwQlmAXL.jpg',
+                why_release: 'Estos versos son como fragmentos de vidrio delicados, hermosos y afilados. Después de experimentar una pérdida importante, un amigo me envió este poemario. No encontré consuelo, pero encontré resonancia: resulta que el dolor extremo puede forjarse con tanta forma, el dolor puede no ser un charco de lodo, sino una escultura de hielo con bordes definidos. No me curó, pero me hizo respetar mi dolor.',
+                user: { name: 'Ricardo Silva', avatar: 'https://i.pravatar.cc/150?img=75', trust_badge: '🌵 Lector Novato' }
+            },
+            {
+                id: 20,
+                title: 'En el tiempo de las mariposas',
+                author: 'Julia Álvarez',
+                cover: 'https://images-na.ssl-images-amazon.com/images/I/71QKQ9KJZJL.jpg',
+                why_release: 'Como alguien que oscila entre dos culturas, este libro es mi "idioma". Esa pequeña grieta que se produce al cambiar entre inglés y español, esa sensación de que la definición de "hogar" siempre está borrosa, está precisamente capturada. Me hizo saber que mi confusión no es un defecto personal, sino una situación común de una generación. Leerlo es como reconocer a los de mi especie en el borde del mundo.',
+                user: { name: 'Sandra Méndez', avatar: 'https://i.pravatar.cc/150?img=80', trust_badge: '🦉 Compañero Confiable' }
+            }
+        ];
+
+        // 我的图书（用于交换）
+        const myBooks = [
+            { id: 1, title: 'La casa de los espíritus', cover: 'https://images-na.ssl-images-amazon.com/images/I/71QKQ9KJZJL.jpg' },
+            { id: 2, title: 'Rayuela', cover: 'https://images-na.ssl-images-amazon.com/images/I/81Y5Z8KJZJL.jpg' },
+            { id: 3, title: 'El amor en los tiempos del cólera', cover: 'https://images-na.ssl-images-amazon.com/images/I/81dQwQlmAXL.jpg' },
+            { id: 4, title: 'La tregua', cover: 'https://images-na.ssl-images-amazon.com/images/I/71QKQ9KJZJL.jpg' }
+        ];
+
+        // 历史交换记录
+        const exchanges = [
+            {
+                book1: { title: 'Cien años de soledad', cover: 'https://images-na.ssl-images-amazon.com/images/I/81dQwQlmAXL.jpg', user: 'María' },
+                book2: { title: 'La casa de los espíritus', cover: 'https://images-na.ssl-images-amazon.com/images/I/71QKQ9KJZJL.jpg', user: 'Luis' },
+                date: '15 Ene 2024'
+            },
+            {
+                book1: { title: 'Pedro Páramo', cover: 'https://images-na.ssl-images-amazon.com/images/I/81Y5Z8KJZJL.jpg', user: 'Carlos' },
+                book2: { title: 'Rayuela', cover: 'https://images-na.ssl-images-amazon.com/images/I/81Y5Z8KJZJL.jpg', user: 'Sofía' },
+                date: '20 Ene 2024'
+            },
+            {
+                book1: { title: 'Del amor y otros demonios', cover: 'https://images-na.ssl-images-amazon.com/images/I/81dQwQlmAXL.jpg', user: 'Ana' },
+                book2: { title: 'El amor en los tiempos del cólera', cover: 'https://images-na.ssl-images-amazon.com/images/I/81dQwQlmAXL.jpg', user: 'Diego' },
+                date: '25 Ene 2024'
+            }
+        ];
+
+        let currentBookIndex = 0;
+        let selectedBookId = null;
+
+        // 初始化
+        function init() {
+            displayBook(0);
+            displayExchanges();
+            updateCounter();
+        }
+
+        // 显示当前图书
+        function displayBook(index) {
+            if (index < 0 || index >= books.length) return;
+            currentBookIndex = index;
+            
+            const book = books[index];
+            const bookDisplay = document.getElementById('bookDisplay');
+            
+            bookDisplay.innerHTML = `
+                <div class="book-card">
+                    <div class="book-header">
+                        <img src="${book.cover}" alt="${book.title}" class="book-cover">
+                        <div class="book-info">
+                            <div class="book-title">${book.title}</div>
+                            <div class="book-author">por ${book.author}</div>
+                            <div class="user-info">
+                                <img src="${book.user.avatar}" alt="${book.user.name}" class="user-avatar">
+                                <div>
+                                    <div class="user-name">${book.user.name}</div>
+                                    <span class="trust-badge">${book.user.trust_badge}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="why-release">
+                        <h4>Por qué lo suelto</h4>
+                        <p>${book.why_release}</p>
+                    </div>
+                </div>
+            `;
+
+            updateCounter();
+            updateNavButtons();
+        }
+
+        // 更新计数器
+        function updateCounter() {
+            document.getElementById('currentIndex').textContent = currentBookIndex + 1;
+            document.getElementById('totalBooks').textContent = books.length;
+        }
+
+        // 更新导航按钮
+        function updateNavButtons() {
+            document.getElementById('prevBtn').disabled = currentBookIndex === 0;
+            document.getElementById('nextBtn').disabled = currentBookIndex === books.length - 1;
+        }
+
+        // 上一本
+        function prevBook() {
+            if (currentBookIndex > 0) {
+                displayBook(currentBookIndex - 1);
+            }
+        }
+
+        // 下一本
+        function nextBook() {
+            if (currentBookIndex < books.length - 1) {
+                displayBook(currentBookIndex + 1);
+            }
+        }
+
+        // 显示交换记录
+        function displayExchanges() {
+            const exchangeList = document.getElementById('exchangeList');
+            
+            if (exchanges.length === 0) {
+                exchangeList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🤝</div>
+                        <p>Aún no hay intercambios</p>
+                    </div>
+                `;
+                return;
+            }
+
+            exchangeList.innerHTML = exchanges.map(exchange => `
+                <div class="exchange-item">
+                    <div class="exchange-book">
+                        <img src="${exchange.book1.cover}" alt="${exchange.book1.title}">
+                        <p>${exchange.book1.title}</p>
+                        <p style="font-size: 10px; color: #6D4C41;">${exchange.book1.user}</p>
+                    </div>
+                    <div class="exchange-icon">🤝</div>
+                    <div class="exchange-book">
+                        <img src="${exchange.book2.cover}" alt="${exchange.book2.title}">
+                        <p>${exchange.book2.title}</p>
+                        <p style="font-size: 10px; color: #6D4C41;">${exchange.book2.user}</p>
+                    </div>
+                </div>
+                <div class="exchange-date">${exchange.date}</div>
+            `).join('');
+        }
+
+        // 打开模态框
+        function openModal() {
+            const modal = document.getElementById('exchangeModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // 显示我的图书
+            displayMyBooks();
+            
+            // 重置表单
+            document.getElementById('userStory').value = '';
+            selectedBookId = null;
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('submitBtn').disabled = false;
+        }
+
+        // 关闭模态框
+        function closeModal() {
+            const modal = document.getElementById('exchangeModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // 显示我的图书
+        function displayMyBooks() {
+            const selector = document.getElementById('bookSelector');
+            selector.innerHTML = myBooks.map(book => `
+                <div class="book-option ${selectedBookId === book.id ? 'selected' : ''}" 
+                     onclick="selectBook(${book.id})">
+                    <img src="${book.cover}" alt="${book.title}">
+                    <p>${book.title}</p>
+                </div>
+            `).join('');
+        }
+
+        // 选择图书
+        function selectBook(bookId) {
+            selectedBookId = bookId;
+            displayMyBooks();
+        }
+
+        // 提交交换申请
+        function submitExchange() {
+            const story = document.getElementById('userStory').value.trim();
+            
+            if (!story || story.length < 20) {
+                alert('Por favor, escribe al menos 20 palabras en tu historia.');
+                return;
+            }
+
+            if (!selectedBookId) {
+                alert('Por favor, selecciona un libro para intercambiar.');
+                return;
+            }
+
+            // 显示成功消息
+            document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('submitBtn').disabled = true;
+
+            // 3秒后关闭模态框
+            setTimeout(() => {
+                closeModal();
+                document.getElementById('userStory').value = '';
+                selectedBookId = null;
+                document.getElementById('successMessage').style.display = 'none';
+                document.getElementById('submitBtn').disabled = false;
+            }, 2000);
+
+            // 这里可以发送到后端
+            console.log('Intercambio solicitado:', {
+                bookId: books[currentBookIndex].id,
+                myBookId: selectedBookId,
+                story: story
+            });
+        }
+
+        // 点击模态框外部关闭
+        document.getElementById('exchangeModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // ESC键关闭模态框
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // 页面加载时初始化
+        init();
+    </script>
+</body>
+</html>

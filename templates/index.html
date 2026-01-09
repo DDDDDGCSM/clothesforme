@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trueque Digital - Clothes Exchange</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #F5E6D3;
+            color: #3E2723;
+            line-height: 1.6;
+            padding-bottom: 80px; /* 为底部按钮留空间 */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        /* 头部 */
+        .header {
+            text-align: center;
+            padding: 20px 15px;
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #2C5F2D;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            color: #6D4C41;
+            font-size: 14px;
+        }
+
+        /* 图书卡片 */
+        .book-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .book-header {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .book-cover {
+            width: 100px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
+
+        .book-info {
+            flex: 1;
+        }
+
+        .book-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2C5F2D;
+            margin-bottom: 5px;
+        }
+
+        .book-author {
+            color: #6D4C41;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .whatsapp-icon {
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            margin-left: 5px;
+        }
+
+        .whatsapp-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .whatsapp-icon.hidden {
+            display: none;
+        }
+
+        .share-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #2C5F2D;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 15px;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+            z-index: 10;
+        }
+
+        .share-btn:hover {
+            background: #4A7C59;
+            transform: translateY(-2px);
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #E8D5B7;
+            flex-shrink: 0;
+        }
+
+        .user-name {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .trust-badge {
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            background: #E8D5B7;
+        }
+
+        .why-release {
+            background: #FAF5ED;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #2C5F2D;
+            margin-top: 15px;
+        }
+
+        .why-release h4 {
+            font-size: 13px;
+            color: #2C5F2D;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .why-release p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #3E2723;
+        }
+
+        /* 导航箭头 */
+        .nav-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+
+        .nav-arrow {
+            background: #2C5F2D;
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-arrow:hover:not(:disabled) {
+            background: #4A7C59;
+            transform: scale(1.1);
+        }
+
+        .nav-arrow:disabled {
+            background: #95A5A6;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .book-counter {
+            font-size: 14px;
+            color: #6D4C41;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .book-counter span {
+            display: inline-block;
+        }
+
+        /* 底部固定按钮 */
+        .fixed-bottom-btn {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 15px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .request-btn {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px;
+            background: #2C5F2D;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+        }
+
+        .request-btn:hover {
+            background: #4A7C59;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(44, 95, 45, 0.3);
+        }
+
+        /* 模态框 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            padding: 30px 20px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #6D4C41;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            background: #F5E6D3;
+        }
+
+        .modal-title {
+            font-size: 22px;
+            color: #2C5F2D;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #3E2723;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 12px;
+            border: 2px solid #E8D5B7;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            resize: vertical;
+        }
+
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2C5F2D;
+        }
+
+        .image-upload-area {
+            border: 2px dashed #E8D5B7;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 15px;
+        }
+
+        .image-upload-area:hover {
+            border-color: #2C5F2D;
+            background: #FAF5ED;
+        }
+
+        .image-upload-area.has-image {
+            border-style: solid;
+            padding: 10px;
+        }
+
+        .uploaded-image {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .upload-icon {
+            font-size: 40px;
+            color: #6D4C41;
+            margin-bottom: 10px;
+        }
+
+        .whatsapp-display {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: #E8F5E9;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .whatsapp-display.active {
+            display: block;
+        }
+
+        .whatsapp-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #25D366;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: white;
+            border-radius: 25px;
+            transition: all 0.3s;
+        }
+
+        .whatsapp-link:hover {
+            background: #25D366;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .book-option {
+            border: 2px solid #E8D5B7;
+            border-radius: 8px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .book-option:hover {
+            border-color: #2C5F2D;
+            transform: translateY(-2px);
+        }
+
+        .book-option.selected {
+            border-color: #2C5F2D;
+            background: #FAF5ED;
+        }
+
+        .book-option img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 8px;
+        }
+
+        .book-option p {
+            font-size: 11px;
+            margin-top: 5px;
+            line-height: 1.3;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: #2C5F2D;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background: #4A7C59;
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:disabled {
+            background: #95A5A6;
+            cursor: not-allowed;
+        }
+
+        .success-message {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: #E8F5E9;
+            border-radius: 8px;
+            color: #2C5F2D;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        /* 历史交换区 */
+        .history-section {
+            margin-top: 30px;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .history-section h2 {
+            font-size: 20px;
+            color: #2C5F2D;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .exchange-list {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding: 10px 0;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .exchange-list::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .exchange-list::-webkit-scrollbar-track {
+            background: #F5E6D3;
+            border-radius: 3px;
+        }
+
+        .exchange-list::-webkit-scrollbar-thumb {
+            background: #2C5F2D;
+            border-radius: 3px;
+        }
+
+        .exchange-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: #FAF5ED;
+            border-radius: 10px;
+            min-width: 280px;
+            flex-shrink: 0;
+            scroll-snap-align: start;
+        }
+
+        .exchange-book {
+            text-align: center;
+            flex: 1;
+        }
+
+        .exchange-book img {
+            width: 60px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+
+        .exchange-book p {
+            font-size: 11px;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .exchange-icon {
+            font-size: 20px;
+        }
+
+        .exchange-date {
+            font-size: 11px;
+            color: #6D4C41;
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .book-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .book-cover {
+                width: 120px;
+                height: 180px;
+            }
+
+            .book-selector {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                margin: 10px;
+                padding: 20px 15px;
+            }
+
+            .exchange-item {
+                flex-direction: row;
+            }
+
+            .exchange-icon {
+                transform: none;
+            }
+
+            .share-btn {
+                position: static;
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+
+        /* 空状态 */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6D4C41;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <div class="header">
+            <h1>👗 Trueque Digital</h1>
+            <p>Exchange clothes, share stories, build community.</p>
+        </div>
+
+        <!-- 导航控制 -->
+        <div class="nav-controls">
+            <button class="nav-arrow" onclick="prevBook()" id="prevBtn">‹</button>
+            <div class="book-counter">
+                <span id="currentIndex">1</span> / <span id="totalBooks">15</span>
+            </div>
+            <button class="nav-arrow" onclick="nextBook()" id="nextBtn">›</button>
+        </div>
+
+        <!-- 图书展示 -->
+        <div style="position: relative;">
+            <div id="bookDisplay">
+                <!-- 图书卡片将在这里动态加载 -->
+            </div>
+            <!-- 分享按钮 -->
+            <button class="share-btn" onclick="shareBook()">
+                📤 Share
+            </button>
+        </div>
+
+        <!-- 历史交换区 -->
+        <div class="history-section">
+            <h2>🤝 Completed Exchanges</h2>
+            <div class="exchange-list" id="exchangeList">
+                <!-- 交换记录将在这里动态加载 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部固定按钮 -->
+    <div class="fixed-bottom-btn">
+        <button class="request-btn" onclick="openModal()">
+            👗 Request Exchange
+        </button>
+    </div>
+
+    <!-- 申请交换模态框 -->
+    <div class="modal" id="exchangeModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h2 class="modal-title">Request Exchange</h2>
+            
+            <div class="form-group">
+                <label>Why does this item appeal to you? Share your story:</label>
+                <textarea id="userStory" placeholder="Write here why you want this item and what item you want to exchange..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Upload a photo of your item:</label>
+                <div class="image-upload-area" id="imageUploadArea" onclick="document.getElementById('bookImageInput').click()">
+                    <div class="upload-icon">📷</div>
+                    <p style="color: #6D4C41; font-size: 14px;">Tap to upload a photo</p>
+                    <img id="uploadedImagePreview" class="uploaded-image" style="display: none;">
+                </div>
+                <input type="file" id="bookImageInput" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
+            </div>
+            
+            <div class="whatsapp-display" id="whatsappDisplay">
+                <p style="color: #2C5F2D; font-weight: 600; margin-bottom: 10px;">Request sent successfully!</p>
+                <p style="color: #6D4C41; font-size: 14px;">Contact the item owner:</p>
+                <a href="https://wa.me/971509216685" target="_blank" class="whatsapp-link" id="whatsappLink" onclick="openWhatsApp(books[currentBookIndex].id); return true;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                    </svg>
+                    +971 50 921 6685
+                </a>
+            </div>
+
+            <button class="submit-btn" onclick="submitExchange()" id="submitBtn">
+                🤝 Send Request
+            </button>
+
+            <div class="success-message" id="successMessage">
+                ✅ Request sent! We'll notify you when the user responds.
+            </div>
+        </div>
+    </div>
+
+    <script>
+                // 衣服数据（15件衣服）
+        const books = [
+            {
+                id: 1,
+                title: 'Elegant Evening Dress',
+                author: 'Dress',
+                cover: '/static/clothes-middle-east/衣服1.png',
+                why_release: 'This stunning evening dress has been my go-to for special occasions. The elegant design and perfect fit made me feel confident at every event. I\'m letting it go because my style has evolved, but I know it will bring someone else the same joy it brought me. Perfect for weddings, galas, or any special night out in Dubai.',
+                user: { name: 'Fatima Al-Mansoori', avatar: 'https://i.pravatar.cc/150?img=1', trust_badge: '⭐ Trusted Member' }
+            },
+            {
+                id: 2,
+                title: 'Casual Summer Outfit',
+                author: 'Casual',
+                cover: '/static/clothes-middle-east/衣服2.png',
+                why_release: 'This comfortable and stylish casual outfit has been perfect for Dubai\'s warm weather. Lightweight fabric that breathes well, perfect for shopping trips or casual brunches. I\'m passing it on because I\'ve found my new favorite style, but this piece deserves to be worn and loved by someone else.',
+                user: { name: 'Layla Hassan', avatar: 'https://i.pravatar.cc/150?img=5', trust_badge: '🌙 New Member' }
+            },
+            {
+                id: 3,
+                title: 'Professional Business Attire',
+                author: 'Business',
+                cover: '/static/clothes-middle-east/衣服3.png',
+                why_release: 'This professional outfit helped me land my dream job interview. The classic design and perfect tailoring gave me the confidence I needed. Now that I\'ve built my professional wardrobe, I want to pass this lucky piece to someone who needs that same confidence boost. Perfect for interviews, meetings, or any professional setting.',
+                user: { name: 'Noor Al-Zahra', avatar: 'https://i.pravatar.cc/150?img=9', trust_badge: '⭐ Trusted Member' }
+            },
+            {
+                id: 4,
+                title: 'Trendy Street Style Outfit',
+                author: 'Casual',
+                cover: '/static/clothes-middle-east/衣服4.png',
+                why_release: 'This trendy outfit was my statement piece for weekend outings. It always got compliments and made me feel fashionable. I\'m sharing it because fashion should be shared, and someone else deserves to feel as stylish as I did wearing this.',
+                user: { name: 'Aisha Mohammed', avatar: 'https://i.pravatar.cc/150?img=12', trust_badge: '⭐ Trusted Member' }
+            },
+            {
+                id: 5,
+                title: 'Comfortable Home Wear',
+                author: 'Casual',
+                cover: '/static/clothes-middle-east/衣服5.png',
+                why_release: 'This cozy outfit has been my comfort companion during lazy weekends and work-from-home days. Soft fabric that feels like a hug, perfect for relaxing at home or running errands. I\'m letting it go because I have too many similar pieces, but I know it will bring comfort to someone else.',
+                user: { name: 'Mariam Al-Rashid', avatar: 'https://i.pravatar.cc/150?img=15', trust_badge: '🌙 New Member' }
+            },
+            {
+                id: 6,
+                title: 'Elegant Formal Dress',
+                author: 'Dress',
+                cover: '/static/clothes-middle-east/衣服6.png',
+                why_release: 'This beautiful formal dress has been with me through many celebrations. The elegant design and flattering cut made me feel like a princess at every event. I\'m sharing it because I believe every woman deserves to feel beautiful, and this dress has that magic.',
+                user: { name: 'Zainab Al-Khalifa', avatar: 'https://i.pravatar.cc/150?img=20', trust_badge: '⭐ Trusted Member' }
+            },
+            {
+                id: 7,
+                title: 'Stylish Casual Top',
+                author: 'Casual',
+                cover: '/static/clothes-middle-east/衣服7.png',
+                why_release: 'This versatile top has been a wardrobe staple. It pairs well with everything and always looks put-together. I\'m passing it on because I want to make room for new pieces, but this top deserves to continue being someone\'s go-to piece.',
+                user: { name: 'Sara Al-Mazrouei', avatar: 'https://i.pravatar.cc/150?img=25', trust_badge: '🌙 New Member' }
+            },
+            {
+                id: 8,
+                title: 'Chic Modern Outfit',
+                author: 'Casual',
+                cover: '/static/clothes-middle-east/衣服8.png',
+                why_release: 'This modern outfit represents my journey into contemporary fashion. It\'s versatile, comfortable, and always makes me feel confident. I\'m sharing it because fashion is about expressing yourself, and I want someone else to experience that same feeling.',
+                user: { name: 'Hala Al-Dhaheri', avatar: 'https://i.pravatar.cc/150?img=30', trust_badge: '⭐ Trusted Member' }
+            },
+            {
+                id: 9,
+                title: 'Classic Timeless Piece',
+                author: 'Casual',
+                cover: '/static/clothes-middle-east/衣服9.png',
+                why_release: 'This timeless piece has been in my wardrobe for years because it never goes out of style. Classic design that works for any occasion. I\'m letting it go to make space, but I know it will serve someone else just as well as it served me.',
+                user: { name: 'Amira Al-Suwaidi', avatar: 'https://i.pravatar.cc/150?img=35', trust_badge: '⭐ Trusted Member' }
+            },
+            {
+                id: 10,
+                title: 'Fashion-Forward Statement Outfit',
+                author: 'Casual',
+                cover: '/static/clothes-middle-east/衣服10.png',
+                why_release: 'This bold outfit helped me step out of my comfort zone and embrace my unique style. It always turns heads and makes me feel like I\'m walking a fashion runway. I\'m sharing it because I want someone else to experience that confidence boost.',
+                user: { name: 'Yasmin Al-Qasimi', avatar: 'https://i.pravatar.cc/150?img=40', trust_badge: '🌙 New Member' }
+            },
+            {
+                id: 11,
+                title: 'Versatile Everyday Outfit',
+                author: 'Casual',
+                cover: '/static/clothes-middle-east/衣服11.png',
+                why_release: 'This versatile outfit has been my reliable choice for countless days. It works for work, casual outings, and everything in between. I\'m passing it on because I believe in sustainable fashion and want this piece to continue its journey with someone new.',
+                user: { name: 'Rania Al-Nuaimi', avatar: 'https://i.pravatar.cc/150?img=45', trust_badge: '⭐ Trusted Member' }
+            },
+            {
+                id: 12,
+                title: 'Elegant Special Occasion Outfit',
+                author: 'Dress',
+                cover: '/static/clothes-middle-east/衣服12.png',
+                why_release: 'This elegant outfit has been my choice for special celebrations. The beautiful design and perfect fit made every occasion memorable. I\'m sharing it because I want someone else to create their own beautiful memories wearing this piece.',
+                user: { name: 'Lina Al-Mazrouei', avatar: 'https://i.pravatar.cc/150?img=50', trust_badge: '⭐ Trusted Member' }
+            },
+            {
+                id: 13,
+                title: 'Comfortable Sleepwear Set',
+                author: 'Sleepwear',
+                cover: '/static/clothes-middle-east/睡衣.png',
+                why_release: 'This cozy sleepwear set has been my comfort companion for peaceful nights. Soft, breathable fabric that feels luxurious. I\'m sharing it because I believe everyone deserves a good night\'s sleep in comfortable clothing, and this set provides just that.',
+                user: { name: 'Nadia Al-Hosani', avatar: 'https://i.pravatar.cc/150?img=55', trust_badge: '⭐ Trusted Member' }
+            },
+            {
+                id: 14,
+                title: 'Fashion Magazine Collection',
+                author: 'Magazine',
+                cover: '/static/clothes-middle-east/杂志.png',
+                why_release: 'This collection of fashion magazines has been my inspiration source for years. Full of style tips, trends, and beautiful photography. I\'m sharing it because knowledge and inspiration should be shared. Perfect for anyone looking to stay updated with fashion trends in the Middle East.',
+                user: { name: 'Dina Al-Kaabi', avatar: 'https://i.pravatar.cc/150?img=60', trust_badge: '⭐ Trusted Member' }
+            },
+            {
+                id: 15,
+                title: 'Fashion Exchange Magazine',
+                author: 'Magazine',
+                cover: '/static/clothes-middle-east/杂志交换.png',
+                why_release: 'This special edition magazine is all about sustainable fashion and clothing exchange. It opened my eyes to the importance of circular fashion. I\'m sharing it because I want others to discover the joy of exchanging clothes and building a sustainable wardrobe.',
+                user: { name: 'Salma Al-Mansoori', avatar: 'https://i.pravatar.cc/150?img=65', trust_badge: '⭐ Trusted Member' }
+            }
+        ];
+
+        // 我的图书（用于交换）
+        const myBooks = [
+            { id: 1, title: 'La casa de los espíritus', cover: 'https://images-na.ssl-images-amazon.com/images/I/71QKQ9KJZJL.jpg' },
+            { id: 2, title: 'Rayuela', cover: 'https://images-na.ssl-images-amazon.com/images/I/81Y5Z8KJZJL.jpg' },
+            { id: 3, title: 'El amor en los tiempos del cólera', cover: 'https://images-na.ssl-images-amazon.com/images/I/81dQwQlmAXL.jpg' },
+            { id: 4, title: 'La tregua', cover: 'https://images-na.ssl-images-amazon.com/images/I/71QKQ9KJZJL.jpg' }
+        ];
+
+        // 生成最近一个月的日期
+        function getRecentDates() {
+            const dates = [];
+            const today = new Date();
+            const monthNames = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+            
+            // 生成10个日期
+            for (let i = 0; i < 10; i++) {
+                const date = new Date(today);
+                date.setDate(date.getDate() - (i * 3 + Math.floor(Math.random() * 2)));
+                const day = date.getDate();
+                const month = monthNames[date.getMonth()];
+                dates.push(`${day} ${month}`);
+            }
+            return dates;
+        }
+
+                // 历史交换记录（最近一个月）
+        const exchanges = [
+            {
+                item1: { title: 'Elegant Evening Dress', cover: '/static/clothes-middle-east/衣服1.png', user: 'Fatima' },
+                item2: { title: 'Professional Business Attire', cover: '/static/clothes-middle-east/衣服3.png', user: 'Noor' },
+                date: '2025-01-08'
+            },
+            {
+                item1: { title: 'Casual Summer Outfit', cover: '/static/clothes-middle-east/衣服2.png', user: 'Layla' },
+                item2: { title: 'Comfortable Home Wear', cover: '/static/clothes-middle-east/衣服5.png', user: 'Mariam' },
+                date: '2025-01-05'
+            }
+        ];
+
+        let currentBookIndex = 0;
+        let selectedBookId = null;
+        let uploadedImage = null;
+        let hasSubmittedExchange = false; // 跟踪是否已提交交换
+        // 书籍浏览去重：使用 Set 记录本次会话已浏览的书（避免重复记录）
+        let viewedBooksInSession = new Set();
+
+        // 生成fallback头像（基于用户名首字母）
+        function generateFallbackAvatar(name, size = 32) {
+            // 获取首字母
+            const words = name.split();
+            let initials = '';
+            if (words.length >= 2) {
+                initials = words[0][0].toUpperCase() + words[1][0].toUpperCase();
+            } else if (words.length === 1 && words[0].length > 0) {
+                initials = words[0][0].toUpperCase() + (words[0].length > 1 ? words[0][1].toUpperCase() : words[0][0].toUpperCase());
+            } else {
+                initials = 'U';
+            }
+            
+            // 根据名字生成颜色（确保一致性）
+            let hash = 0;
+            for (let i = 0; i < name.length; i++) {
+                hash = name.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            const r = (hash & 0xFF0000) >> 16;
+            const g = (hash & 0x00FF00) >> 8;
+            const b = hash & 0x0000FF;
+            // 调整颜色范围，使其更柔和（100-200）
+            const bgR = Math.floor((r % 100) + 100);
+            const bgG = Math.floor((g % 100) + 100);
+            const bgB = Math.floor((b % 100) + 100);
+            const bgColor = `rgb(${bgR}, ${bgG}, ${bgB})`;
+            
+            // 生成SVG
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+  <rect width="${size}" height="${size}" fill="${bgColor}" rx="${size/2}"/>
+  <text x="50%" y="50%" font-family="Arial, sans-serif" font-size="${size/2.5}" font-weight="bold" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">${initials}</text>
+</svg>`;
+            
+            // 转换为data URI
+            return 'data:image/svg+xml,' + encodeURIComponent(svg);
+        }
+
+        // 头像加载失败处理
+        function handleAvatarError(img, userName) {
+            if (img.src && !img.src.startsWith('data:image/svg+xml')) {
+                // 如果当前不是fallback头像，则切换到fallback
+                img.src = generateFallbackAvatar(userName);
+                img.onerror = null; // 防止无限循环
+            }
+        }
+
+        // 生成或获取匿名用户ID（用于UV统计）
+        function getAnonId() {
+            try {
+                const key = 'td_anon_id';
+                let id = localStorage.getItem(key);
+                if (!id) {
+                    if (window.crypto && crypto.randomUUID) {
+                        id = crypto.randomUUID();
+                    } else {
+                        id = 'td_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
+                    }
+                    localStorage.setItem(key, id);
+                }
+                return id;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        // 通用埋点函数（改进版：使用 sendBeacon 确保可靠发送）
+        function trackEvent(eventType, payload = {}) {
+            try {
+                const body = {
+                    event_type: eventType,
+                    anon_id: getAnonId(),
+                    book_id: payload.bookId || null,
+                    extra: payload.extra || {}
+                };
+
+                const data = JSON.stringify(body);
+                
+                // 优先使用 sendBeacon（更可靠，即使页面关闭也能发送）
+                if (navigator.sendBeacon) {
+                    const blob = new Blob([data], { type: 'application/json' });
+                    navigator.sendBeacon('/api/track', blob);
+                } else {
+                    // 降级方案：使用 fetch
+                    fetch('/api/track', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: data,
+                        keepalive: true  // 确保请求在页面关闭前完成
+                    }).catch(() => {
+                        // 忽略埋点错误，避免影响用户体验
+                    });
+                }
+            } catch (e) {
+                // 静默失败
+                console.warn('埋点发送失败:', e);
+            }
+        }
+
+        // 初始化
+        function init() {
+            displayBook(0);
+            displayExchanges();
+            updateCounter();
+            // 记录页面浏览
+            trackEvent('page_view', {});
+        }
+
+        // 显示当前图书
+        function displayBook(index) {
+            if (index < 0 || index >= books.length) return;
+            currentBookIndex = index;
+            
+            const book = books[index];
+            const bookDisplay = document.getElementById('bookDisplay');
+            
+            // 记录书籍浏览（每次切换都记录，确保精准统计）
+            // 使用会话级去重，避免同一会话内重复记录同一本书
+            if (book && book.id && !viewedBooksInSession.has(book.id)) {
+                trackEvent('book_view', { bookId: book.id, extra: {} });
+                viewedBooksInSession.add(book.id);
+            }
+
+            // WhatsApp 图标始终显示
+            bookDisplay.innerHTML = `
+                <div class="book-card">
+                    <div class="book-header">
+                        <img src="${encodeURI(book.cover)}" alt="${book.title}" class="book-cover" loading="lazy" onerror="this.onerror=null; this.style.display='none';">
+                        <div class="book-info">
+                            <div class="book-title">${book.title}</div>
+                            <div class="book-author">por ${book.author}</div>
+                            <div class="user-info">
+                                <img src="${book.user.avatar}" alt="${book.user.name}" class="user-avatar" onerror="handleAvatarError(this, '${book.user.name.replace(/'/g, "\\'")}')">
+                                <div>
+                                    <div class="user-name">${book.user.name}</div>
+                                    <span class="trust-badge">${book.user.trust_badge}</span>
+                                </div>
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2325D366'%3E%3Cpath d='M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z'/%3E%3C/svg%3E" alt="WhatsApp" class="whatsapp-icon" onclick="openWhatsApp(${book.id})" title="Contactar por WhatsApp">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="why-release">
+                        <h4>Why I'm sharing this</h4>
+                        <p>${book.why_release}</p>
+                    </div>
+                </div>
+            `;
+
+            updateCounter();
+            updateNavButtons();
+        }
+
+        // 更新计数器
+        function updateCounter() {
+            const currentIndexEl = document.getElementById('currentIndex');
+            const totalBooksEl = document.getElementById('totalBooks');
+            if (currentIndexEl && totalBooksEl) {
+                currentIndexEl.textContent = currentBookIndex + 1;
+                totalBooksEl.textContent = books.length;
+            } else {
+                // 如果元素不存在，直接更新整个计数器
+                const counterEl = document.querySelector('.book-counter');
+                if (counterEl) {
+                    counterEl.textContent = `${currentBookIndex + 1} / ${books.length}`;
+                }
+            }
+        }
+
+        // 更新导航按钮（循环模式下按钮始终可用）
+        function updateNavButtons() {
+            // 循环模式下，按钮始终可用，不需要禁用
+            document.getElementById('prevBtn').disabled = false;
+            document.getElementById('nextBtn').disabled = false;
+        }
+
+        // 上一本（支持循环：第一本时跳到最后一本）
+        function prevBook() {
+            if (currentBookIndex > 0) {
+                displayBook(currentBookIndex - 1);
+            } else {
+                // 如果是第一本，循环到最后一本
+                displayBook(books.length - 1);
+            }
+        }
+
+        // 下一本（支持循环：最后一本时跳到第一本）
+        function nextBook() {
+            if (currentBookIndex < books.length - 1) {
+                displayBook(currentBookIndex + 1);
+            } else {
+                // 如果是最后一本，循环到第一本
+                displayBook(0);
+            }
+        }
+
+        // 显示交换记录
+        function displayExchanges() {
+            const exchangeList = document.getElementById('exchangeList');
+            
+            if (exchanges.length === 0) {
+                exchangeList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🤝</div>
+                        <p>Aún no hay intercambios</p>
+                    </div>
+                `;
+                return;
+            }
+
+            exchangeList.innerHTML = exchanges.map(exchange => `
+                <div style="min-width: 280px; flex-shrink: 0; scroll-snap-align: start;">
+                    <div class="exchange-item">
+                        <div class="exchange-book">
+                            <img src="${encodeURI(exchange.item1.cover)}" alt="${exchange.item1.title}" loading="lazy" onerror="this.onerror=null; this.style.display='none';">
+                            <p>${exchange.item1.title}</p>
+                            <p style="font-size: 10px; color: #6D4C41;">${exchange.item1.user}</p>
+                        </div>
+                        <div class="exchange-icon">🤝</div>
+                        <div class="exchange-book">
+                            <img src="${encodeURI(exchange.item2.cover)}" alt="${exchange.item2.title}" loading="lazy" onerror="this.onerror=null; this.style.display='none';">
+                            <p>${exchange.item2.title}</p>
+                            <p style="font-size: 10px; color: #6D4C41;">${exchange.item2.user}</p>
+                        </div>
+                    </div>
+                    <div class="exchange-date">${exchange.date}</div>
+                </div>
+            `).join('');
+        }
+
+        // 打开模态框
+        function openModal() {
+            const modal = document.getElementById('exchangeModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // 显示我的图书
+            displayMyBooks();
+            
+            // 重置表单
+            document.getElementById('userStory').value = '';
+            uploadedImage = null;
+            document.getElementById('uploadedImagePreview').style.display = 'none';
+            document.getElementById('uploadedImagePreview').src = '';
+            document.getElementById('imageUploadArea').classList.remove('has-image');
+            document.getElementById('imageUploadArea').querySelector('.upload-icon').style.display = 'block';
+            document.getElementById('imageUploadArea').querySelector('p').textContent = 'Toca para subir una foto';
+            document.getElementById('whatsappDisplay').classList.remove('active');
+            document.getElementById('submitBtn').style.display = 'block';
+            document.getElementById('bookImageInput').value = '';
+        }
+
+        // 关闭模态框
+        function closeModal() {
+            const modal = document.getElementById('exchangeModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // 处理图片上传
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    uploadedImage = e.target.result;
+                    const preview = document.getElementById('uploadedImagePreview');
+                    const uploadArea = document.getElementById('imageUploadArea');
+                    preview.src = uploadedImage;
+                    preview.style.display = 'block';
+                    uploadArea.classList.add('has-image');
+                    uploadArea.querySelector('.upload-icon').style.display = 'none';
+                    uploadArea.querySelector('p').textContent = 'Tap to change photo';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // 提交交换申请
+        function submitExchange() {
+            const story = document.getElementById('userStory').value.trim();
+            
+            if (!story || story.length < 20) {
+                alert('Please write at least 20 words in your story.');
+                return;
+            }
+
+            if (!uploadedImage) {
+                alert('Please upload a photo of your item.');
+                return;
+            }
+
+            // 标记已提交交换
+            hasSubmittedExchange = true;
+            
+            // 显示WhatsApp联系方式
+            document.getElementById('whatsappDisplay').classList.add('active');
+            document.getElementById('submitBtn').style.display = 'none';
+            
+            // 重新显示当前图书以显示WhatsApp图标
+            displayBook(currentBookIndex);
+
+            // 这里可以发送到后端（目前仅在控制台打印）
+            console.log('Intercambio solicitado:', {
+                bookId: books[currentBookIndex].id,
+                story: story,
+                image: '[imagen subida]'
+            });
+
+            // 记录提交交换事件（带上故事摘要等信息，方便后台查看）
+            // 确保 has_image 正确记录：检查 uploadedImage 是否有实际内容
+            const hasImage = uploadedImage && uploadedImage.length > 0 && uploadedImage.startsWith('data:image');
+            trackEvent('exchange_request', {
+                bookId: books[currentBookIndex].id,
+                extra: {
+                    story_snippet: story.substring(0, 120),
+                    story_length: story.length,
+                    has_image: hasImage
+                }
+            });
+        }
+
+        // 打开WhatsApp
+        function openWhatsApp(bookId) {
+            // 先记录埋点（在 window.open 之前，确保可靠发送）
+            const currentBook = books[currentBookIndex];
+            trackEvent('whatsapp_click', {
+                bookId: currentBook ? currentBook.id : bookId
+            });
+            
+            // 然后打开 WhatsApp（如果是从链接点击，允许默认行为也执行）
+            const message = encodeURIComponent(`Hello, I'm interested in exchanging this item: "${currentBook ? currentBook.title : ''}"`);
+            window.open(`https://wa.me/971509216685?text=${message}`, '_blank');
+        }
+
+        // 分享功能
+        function shareBook() {
+            const book = books[currentBookIndex];
+            const shareText = `📚 ${book.title} – ${book.author}\n\n"${book.why_release.substring(0, 110)}..."\n\n🔥 Do you have clothes you no longer wear? Exchange them for new styles with fashion lovers in Dubai, Abu Dhabi, and across the Middle East. Entra al muro de intercambio y elige tu próximo libro:\n\n${window.location.href}`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: `📚 ${book.title}`,
+                    text: shareText,
+                    url: window.location.href
+                }).then(() => {
+                    // 仅在分享成功回调中记录
+                    trackEvent('share', {
+                        bookId: book.id
+                    });
+                }).catch(err => console.log('Error sharing', err));
+            } else {
+                // 降级方案：复制到剪贴板
+                navigator.clipboard.writeText(shareText).then(() => {
+                    alert('Text copied! Share it anywhere.');
+                    // 复制成功也认为是一次分享行为
+                    trackEvent('share', {
+                        bookId: book.id
+                    });
+                }).catch(() => {
+                    // 最终降级：显示文本让用户手动复制
+                    prompt('Copy this text to share:', shareText);
+                });
+            }
+        }
+
+        // 点击模态框外部关闭
+        document.getElementById('exchangeModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // ESC键关闭模态框
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // 页面加载时初始化
+        init();
+    </script>
+</body>
+</html>
