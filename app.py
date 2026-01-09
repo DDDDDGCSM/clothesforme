@@ -14,6 +14,7 @@ from typing import Optional, Dict, Any
 from collections import defaultdict
 from threading import Lock
 from clothes_data import CLOTHES_DATA, SAMPLE_EXCHANGES
+from translations import AR_TRANSLATIONS, ZH_TRANSLATIONS, CLOTHES_DATA_ZH
 
 app = Flask(__name__, static_folder='static', static_url_path='/static')
 CORS(app)
@@ -333,8 +334,13 @@ def init_analytics_db() -> None:
 
 @app.route('/')
 def index():
-    """主页 - 单页面应用"""
+    """主页 - 阿拉伯语版本（默认）"""
     return render_template('index.html')
+
+@app.route('/en')
+def index_en():
+    """主页 - 中文版本"""
+    return render_template('index_zh.html')
 
 @app.route('/plaza')
 def plaza():

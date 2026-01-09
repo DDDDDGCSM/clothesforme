@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="zh-CN" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trueque Digital - تبادل الملابس</title>
+    <title>Trueque Digital - 衣服交换</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👗</text></svg>">
     <style>
         * {
@@ -31,7 +31,7 @@
         .lang-switcher {
             position: fixed;
             top: 20px;
-            right: 20px;
+            left: 20px;
             z-index: 1001;
             background: white;
             padding: 10px 15px;
@@ -315,7 +315,7 @@
         .share-btn {
             position: absolute;
             top: 25px;
-            left: 25px;
+            right: 25px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
@@ -373,7 +373,7 @@
         .modal-close {
             position: absolute;
             top: 20px;
-            left: 20px;
+            right: 20px;
             background: #f8f9fa;
             border: none;
             font-size: 28px;
@@ -654,7 +654,7 @@
 
             .lang-switcher {
                 top: 10px;
-                right: 10px;
+                left: 10px;
                 padding: 8px 12px;
                 font-size: 12px;
             }
@@ -662,15 +662,15 @@
     </style>
 </head>
 <body>
-    <a href="/en" class="lang-switcher">
-        English
+    <a href="/" class="lang-switcher">
+        العربية
     </a>
 
     <div class="container">
         <!-- 头部 -->
         <div class="header">
-            <h1>👗 Trueque Digital - تبادل الملابس</h1>
-            <p>تبادل الملابس، شارك القصص، ابني المجتمع</p>
+            <h1>👗 Trueque Digital - 衣服交换</h1>
+            <p>交换衣服，分享故事，建立社区</p>
         </div>
 
         <!-- 导航控制 -->
@@ -689,13 +689,13 @@
             </div>
             <!-- 分享按钮 -->
             <button class="share-btn" onclick="shareItem()">
-                📤 مشاركة
+                📤 分享
             </button>
         </div>
 
         <!-- 历史交换区 -->
         <div class="history-section">
-            <h2>🤝 التبادلات المكتملة</h2>
+            <h2>🤝 已完成的交换</h2>
             <div class="exchange-list" id="exchangeList">
                 <!-- 交换记录将在这里动态加载 -->
             </div>
@@ -705,7 +705,7 @@
     <!-- 底部固定按钮 -->
     <div class="fixed-bottom-btn">
         <button class="request-btn" onclick="openModal()">
-            👗 طلب التبادل
+            👗 申请交换
         </button>
     </div>
 
@@ -713,26 +713,26 @@
     <div class="modal" id="exchangeModal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal()">&times;</button>
-            <h2 class="modal-title">طلب التبادل</h2>
+            <h2 class="modal-title">申请交换</h2>
             
             <div class="form-group">
-                <label>لماذا أشارك هذا:</label>
-                <textarea id="userStory" placeholder="اكتب هنا لماذا تريد هذا العنصر وما العنصر الذي تريد تبادله..."></textarea>
+                <label>为什么分享这件衣服:</label>
+                <textarea id="userStory" placeholder="请写下您为什么想要这件物品，以及您想交换的物品..."></textarea>
             </div>
 
             <div class="form-group">
-                <label>اضغط لرفع صورة:</label>
+                <label>点击上传照片:</label>
                 <div class="image-upload-area" id="imageUploadArea" onclick="document.getElementById('itemImageInput').click()">
                     <div class="upload-icon">📷</div>
-                    <p style="color: #6c757d; font-size: 15px;">اضغط لرفع صورة</p>
+                    <p style="color: #6c757d; font-size: 15px;">点击上传照片</p>
                     <img id="uploadedImagePreview" class="uploaded-image" style="display: none;">
                 </div>
                 <input type="file" id="itemImageInput" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
             </div>
             
             <div class="whatsapp-display" id="whatsappDisplay">
-                <p style="color: #155724; font-weight: 700; margin-bottom: 10px; font-size: 16px;">تم إرسال الطلب بنجاح!</p>
-                <p style="color: #6c757d; font-size: 14px;">اتصل بصاحب العنصر:</p>
+                <p style="color: #155724; font-weight: 700; margin-bottom: 10px; font-size: 16px;">申请已成功发送！</p>
+                <p style="color: #6c757d; font-size: 14px;">联系物品主人:</p>
                 <a href="https://wa.me/971509216685" target="_blank" class="whatsapp-link" id="whatsappLink" onclick="openWhatsApp(items[currentItemIndex].id); return true;">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
@@ -742,11 +742,11 @@
             </div>
 
             <button class="submit-btn" onclick="submitExchange()" id="submitBtn">
-                🤝 إرسال الطلب
+                🤝 发送申请
             </button>
 
             <div class="success-message" id="successMessage">
-                ✅ تم إرسال الطلب! سنخطرك عندما يرد المستخدم.
+                ✅ ✅ 申请已发送！用户回复时我们会通知您。
             </div>
         </div>
     </div>
@@ -756,255 +756,255 @@
         const items = [
                 {
                                 "id": 1,
-                                "title": "Elegant Evening Dress",
-                                "category": "Dress",
+                                "title": "优雅晚礼服",
+                                "category": "礼服",
                                 "cover": "/static/clothes-middle-east/衣服1.png",
-                                "condition": "Like New",
+                                "condition": "几乎全新",
                                 "size": "M",
-                                "why_release": "This stunning evening dress has been my go-to for special occasions. The elegant design and perfect fit made me feel confident at every event. I'm letting it go because my style has evolved, but I know it will bring someone else the same joy it brought me. Perfect for weddings, galas, or any special night out in Dubai.",
+                                "why_release": "这件令人惊艳的晚礼服一直是我参加特殊场合的首选。优雅的设计和完美的剪裁让我在每次活动中都充满自信。我选择分享它是因为我的风格已经进化，但我知道它会给其他人带来同样的快乐。非常适合婚礼、晚宴或迪拜的任何特殊夜晚。",
                                 "user": {
                                                 "name": "Fatima Al-Mansoori",
                                                 "avatar": "https://i.pravatar.cc/150?img=1",
                                                 "trust_level": "trusted",
-                                                "trust_badge": "⭐ Trusted Member"
+                                                "trust_badge": "⭐ 可信成员"
                                 },
                                 "has_story": true,
                                 "verified": true
                 },
                 {
                                 "id": 2,
-                                "title": "Casual Summer Outfit",
-                                "category": "Casual",
+                                "title": "休闲夏季套装",
+                                "category": "休闲",
                                 "cover": "/static/clothes-middle-east/衣服2.png",
-                                "condition": "Excellent",
+                                "condition": "优秀",
                                 "size": "S",
-                                "why_release": "This comfortable and stylish casual outfit has been perfect for Dubai's warm weather. Lightweight fabric that breathes well, perfect for shopping trips or casual brunches. I'm passing it on because I've found my new favorite style, but this piece deserves to be worn and loved by someone else.",
+                                "why_release": "这套舒适时尚的休闲装非常适合迪拜的温暖天气。轻质面料透气性好，非常适合购物或休闲早午餐。我选择传递它是因为我找到了新的最爱风格，但这件衣服值得被其他人穿着和喜爱。",
                                 "user": {
                                                 "name": "Layla Hassan",
                                                 "avatar": "https://i.pravatar.cc/150?img=5",
                                                 "trust_level": "new",
-                                                "trust_badge": "🌙 New Member"
+                                                "trust_badge": "🌙 新成员"
                                 },
                                 "has_story": true,
                                 "verified": false
                 },
                 {
                                 "id": 3,
-                                "title": "Professional Business Attire",
-                                "category": "Business",
+                                "title": "专业商务装",
+                                "category": "商务",
                                 "cover": "/static/clothes-middle-east/衣服3.png",
-                                "condition": "Like New",
+                                "condition": "几乎全新",
                                 "size": "L",
-                                "why_release": "This professional outfit helped me land my dream job interview. The classic design and perfect tailoring gave me the confidence I needed. Now that I've built my professional wardrobe, I want to pass this lucky piece to someone who needs that same confidence boost. Perfect for interviews, meetings, or any professional setting.",
+                                "why_release": "这套专业装帮助我获得了梦想工作的面试机会。经典的设计和完美的剪裁给了我所需的自信。现在我已经建立了我的职业衣橱，我想把这件幸运的衣服传递给需要同样自信提升的人。非常适合面试、会议或任何专业场合。",
                                 "user": {
                                                 "name": "Noor Al-Zahra",
                                                 "avatar": "https://i.pravatar.cc/150?img=9",
                                                 "trust_level": "trusted",
-                                                "trust_badge": "⭐ Trusted Member"
+                                                "trust_badge": "⭐ 可信成员"
                                 },
                                 "has_story": true,
                                 "verified": true
                 },
                 {
                                 "id": 4,
-                                "title": "Trendy Street Style Outfit",
-                                "category": "Casual",
+                                "title": "时尚街头风格",
+                                "category": "休闲",
                                 "cover": "/static/clothes-middle-east/衣服4.png",
-                                "condition": "Good",
+                                "condition": "良好",
                                 "size": "M",
-                                "why_release": "This trendy outfit was my statement piece for weekend outings. It always got compliments and made me feel fashionable. I'm sharing it because fashion should be shared, and someone else deserves to feel as stylish as I did wearing this.",
+                                "why_release": "这套时尚装是我周末外出的标志性单品。它总是获得赞美，让我感觉时尚。我分享它是因为时尚应该被分享，其他人也应该感受到我穿着它时的时尚感。",
                                 "user": {
                                                 "name": "Aisha Mohammed",
                                                 "avatar": "https://i.pravatar.cc/150?img=12",
                                                 "trust_level": "trusted",
-                                                "trust_badge": "⭐ Trusted Member"
+                                                "trust_badge": "⭐ 可信成员"
                                 },
                                 "has_story": true,
                                 "verified": true
                 },
                 {
                                 "id": 5,
-                                "title": "Comfortable Home Wear",
-                                "category": "Casual",
+                                "title": "舒适居家服",
+                                "category": "休闲",
                                 "cover": "/static/clothes-middle-east/衣服5.png",
-                                "condition": "Excellent",
+                                "condition": "优秀",
                                 "size": "S",
-                                "why_release": "This cozy outfit has been my comfort companion during lazy weekends and work-from-home days. Soft fabric that feels like a hug, perfect for relaxing at home or running errands. I'm letting it go because I have too many similar pieces, but I know it will bring comfort to someone else.",
+                                "why_release": "这套舒适的居家服一直是我懒散周末和在家工作日的舒适伴侣。柔软的面料感觉像拥抱，非常适合在家放松或跑腿。我选择分享它是因为我有太多类似的单品，但我知道它会给其他人带来舒适。",
                                 "user": {
                                                 "name": "Mariam Al-Rashid",
                                                 "avatar": "https://i.pravatar.cc/150?img=15",
                                                 "trust_level": "new",
-                                                "trust_badge": "🌙 New Member"
+                                                "trust_badge": "🌙 新成员"
                                 },
                                 "has_story": true,
                                 "verified": false
                 },
                 {
                                 "id": 6,
-                                "title": "Elegant Formal Dress",
-                                "category": "Dress",
+                                "title": "优雅正式礼服",
+                                "category": "礼服",
                                 "cover": "/static/clothes-middle-east/衣服6.png",
-                                "condition": "Like New",
+                                "condition": "几乎全新",
                                 "size": "M",
-                                "why_release": "This beautiful formal dress has been with me through many celebrations. The elegant design and flattering cut made me feel like a princess at every event. I'm sharing it because I believe every woman deserves to feel beautiful, and this dress has that magic.",
+                                "why_release": "这件美丽的正式礼服陪伴我度过了许多庆祝活动。优雅的设计和讨人喜欢的剪裁让我在每次活动中都感觉像公主。我分享它是因为我相信每个女人都应该感到美丽，这件礼服有那种魔力。",
                                 "user": {
                                                 "name": "Zainab Al-Khalifa",
                                                 "avatar": "https://i.pravatar.cc/150?img=20",
                                                 "trust_level": "trusted",
-                                                "trust_badge": "⭐ Trusted Member"
+                                                "trust_badge": "⭐ 可信成员"
                                 },
                                 "has_story": true,
                                 "verified": true
                 },
                 {
                                 "id": 7,
-                                "title": "Stylish Casual Top",
-                                "category": "Casual",
+                                "title": "时尚休闲上衣",
+                                "category": "休闲",
                                 "cover": "/static/clothes-middle-east/衣服7.png",
-                                "condition": "Good",
+                                "condition": "良好",
                                 "size": "L",
-                                "why_release": "This versatile top has been a wardrobe staple. It pairs well with everything and always looks put-together. I'm passing it on because I want to make room for new pieces, but this top deserves to continue being someone's go-to piece.",
+                                "why_release": "这件多功能上衣一直是衣橱必备品。它与所有东西都很搭配，总是看起来很整洁。我选择传递它是因为我想为新单品腾出空间，但这件上衣值得继续成为某人的首选单品。",
                                 "user": {
                                                 "name": "Sara Al-Mazrouei",
                                                 "avatar": "https://i.pravatar.cc/150?img=25",
                                                 "trust_level": "new",
-                                                "trust_badge": "🌙 New Member"
+                                                "trust_badge": "🌙 新成员"
                                 },
                                 "has_story": false,
                                 "verified": false
                 },
                 {
                                 "id": 8,
-                                "title": "Chic Modern Outfit",
-                                "category": "Casual",
+                                "title": "时尚现代套装",
+                                "category": "休闲",
                                 "cover": "/static/clothes-middle-east/衣服8.png",
-                                "condition": "Excellent",
+                                "condition": "优秀",
                                 "size": "M",
-                                "why_release": "This modern outfit represents my journey into contemporary fashion. It's versatile, comfortable, and always makes me feel confident. I'm sharing it because fashion is about expressing yourself, and I want someone else to experience that same feeling.",
+                                "why_release": "这套现代装代表了我进入当代时尚的旅程。它多功能、舒适，总是让我感到自信。我分享它是因为时尚是关于表达自己，我希望其他人也能体验到同样的感觉。",
                                 "user": {
                                                 "name": "Hala Al-Dhaheri",
                                                 "avatar": "https://i.pravatar.cc/150?img=30",
                                                 "trust_level": "trusted",
-                                                "trust_badge": "⭐ Trusted Member"
+                                                "trust_badge": "⭐ 可信成员"
                                 },
                                 "has_story": true,
                                 "verified": true
                 },
                 {
                                 "id": 9,
-                                "title": "Classic Timeless Piece",
-                                "category": "Casual",
+                                "title": "经典永恒单品",
+                                "category": "休闲",
                                 "cover": "/static/clothes-middle-east/衣服9.png",
-                                "condition": "Like New",
+                                "condition": "几乎全新",
                                 "size": "S",
-                                "why_release": "This timeless piece has been in my wardrobe for years because it never goes out of style. Classic design that works for any occasion. I'm letting it go to make space, but I know it will serve someone else just as well as it served me.",
+                                "why_release": "这件永恒的单品在我的衣橱里已经很多年了，因为它永远不会过时。经典的设计适用于任何场合。我选择分享它来腾出空间，但我知道它会为其他人服务得和我一样好。",
                                 "user": {
                                                 "name": "Amira Al-Suwaidi",
                                                 "avatar": "https://i.pravatar.cc/150?img=35",
                                                 "trust_level": "trusted",
-                                                "trust_badge": "⭐ Trusted Member"
+                                                "trust_badge": "⭐ 可信成员"
                                 },
                                 "has_story": true,
                                 "verified": true
                 },
                 {
                                 "id": 10,
-                                "title": "Fashion-Forward Statement Outfit",
-                                "category": "Casual",
+                                "title": "时尚前卫宣言装",
+                                "category": "休闲",
                                 "cover": "/static/clothes-middle-east/衣服10.png",
-                                "condition": "Excellent",
+                                "condition": "优秀",
                                 "size": "L",
-                                "why_release": "This bold outfit helped me step out of my comfort zone and embrace my unique style. It always turns heads and makes me feel like I'm walking a fashion runway. I'm sharing it because I want someone else to experience that confidence boost.",
+                                "why_release": "这套大胆的装束帮助我走出舒适区，拥抱我独特的风格。它总是引人注目，让我感觉像在走时尚T台。我分享它是因为我希望其他人也能体验到那种自信提升。",
                                 "user": {
                                                 "name": "Yasmin Al-Qasimi",
                                                 "avatar": "https://i.pravatar.cc/150?img=40",
                                                 "trust_level": "new",
-                                                "trust_badge": "🌙 New Member"
+                                                "trust_badge": "🌙 新成员"
                                 },
                                 "has_story": true,
                                 "verified": false
                 },
                 {
                                 "id": 11,
-                                "title": "Versatile Everyday Outfit",
-                                "category": "Casual",
+                                "title": "多功能日常装",
+                                "category": "休闲",
                                 "cover": "/static/clothes-middle-east/衣服11.png",
-                                "condition": "Good",
+                                "condition": "良好",
                                 "size": "M",
-                                "why_release": "This versatile outfit has been my reliable choice for countless days. It works for work, casual outings, and everything in between. I'm passing it on because I believe in sustainable fashion and want this piece to continue its journey with someone new.",
+                                "why_release": "这套多功能装一直是我无数天的可靠选择。它适用于工作、休闲外出以及介于两者之间的一切。我选择传递它是因为我相信可持续时尚，希望这件单品能继续与新的人一起继续它的旅程。",
                                 "user": {
                                                 "name": "Rania Al-Nuaimi",
                                                 "avatar": "https://i.pravatar.cc/150?img=45",
                                                 "trust_level": "trusted",
-                                                "trust_badge": "⭐ Trusted Member"
+                                                "trust_badge": "⭐ 可信成员"
                                 },
                                 "has_story": true,
                                 "verified": true
                 },
                 {
                                 "id": 12,
-                                "title": "Elegant Special Occasion Outfit",
-                                "category": "Dress",
+                                "title": "优雅特殊场合装",
+                                "category": "礼服",
                                 "cover": "/static/clothes-middle-east/衣服12.png",
-                                "condition": "Like New",
+                                "condition": "几乎全新",
                                 "size": "S",
-                                "why_release": "This elegant outfit has been my choice for special celebrations. The beautiful design and perfect fit made every occasion memorable. I'm sharing it because I want someone else to create their own beautiful memories wearing this piece.",
+                                "why_release": "这套优雅的装束一直是我特殊庆祝活动的选择。美丽的设计和完美的合身让每个场合都令人难忘。我分享它是因为我希望其他人穿着这件单品创造他们自己美丽的回忆。",
                                 "user": {
                                                 "name": "Lina Al-Mazrouei",
                                                 "avatar": "https://i.pravatar.cc/150?img=50",
                                                 "trust_level": "trusted",
-                                                "trust_badge": "⭐ Trusted Member"
+                                                "trust_badge": "⭐ 可信成员"
                                 },
                                 "has_story": true,
                                 "verified": true
                 },
                 {
                                 "id": 13,
-                                "title": "Comfortable Sleepwear Set",
-                                "category": "Sleepwear",
+                                "title": "舒适睡衣套装",
+                                "category": "睡衣",
                                 "cover": "/static/clothes-middle-east/睡衣.png",
-                                "condition": "Excellent",
+                                "condition": "优秀",
                                 "size": "M",
-                                "why_release": "This cozy sleepwear set has been my comfort companion for peaceful nights. Soft, breathable fabric that feels luxurious. I'm sharing it because I believe everyone deserves a good night's sleep in comfortable clothing, and this set provides just that.",
+                                "why_release": "这套舒适的睡衣一直是我宁静夜晚的舒适伴侣。柔软、透气的面料感觉奢华。我分享它是因为我相信每个人都应该在舒适的服装中享受良好的睡眠，这套睡衣正是如此。",
                                 "user": {
                                                 "name": "Nadia Al-Hosani",
                                                 "avatar": "https://i.pravatar.cc/150?img=55",
                                                 "trust_level": "trusted",
-                                                "trust_badge": "⭐ Trusted Member"
+                                                "trust_badge": "⭐ 可信成员"
                                 },
                                 "has_story": true,
                                 "verified": true
                 },
                 {
                                 "id": 14,
-                                "title": "Fashion Magazine Collection",
-                                "category": "Magazine",
+                                "title": "时尚杂志合集",
+                                "category": "杂志",
                                 "cover": "/static/clothes-middle-east/杂志.png",
-                                "condition": "Like New",
+                                "condition": "几乎全新",
                                 "size": "N/A",
-                                "why_release": "This collection of fashion magazines has been my inspiration source for years. Full of style tips, trends, and beautiful photography. I'm sharing it because knowledge and inspiration should be shared. Perfect for anyone looking to stay updated with fashion trends in the Middle East.",
+                                "why_release": "这套时尚杂志多年来一直是我的灵感来源。充满了风格提示、趋势和美丽的摄影。我分享它是因为知识和灵感应该被分享。非常适合任何希望了解中东时尚趋势的人。",
                                 "user": {
                                                 "name": "Dina Al-Kaabi",
                                                 "avatar": "https://i.pravatar.cc/150?img=60",
                                                 "trust_level": "trusted",
-                                                "trust_badge": "⭐ Trusted Member"
+                                                "trust_badge": "⭐ 可信成员"
                                 },
                                 "has_story": true,
                                 "verified": true
                 },
                 {
                                 "id": 15,
-                                "title": "Fashion Exchange Magazine",
-                                "category": "Magazine",
+                                "title": "时尚交换杂志",
+                                "category": "杂志",
                                 "cover": "/static/clothes-middle-east/杂志交换.png",
-                                "condition": "Excellent",
+                                "condition": "优秀",
                                 "size": "N/A",
-                                "why_release": "This special edition magazine is all about sustainable fashion and clothing exchange. It opened my eyes to the importance of circular fashion. I'm sharing it because I want others to discover the joy of exchanging clothes and building a sustainable wardrobe.",
+                                "why_release": "这本特别版杂志全部关于可持续时尚和衣服交换。它让我看到了循环时尚的重要性。我分享它是因为我希望其他人发现交换衣服和建立可持续衣橱的快乐。",
                                 "user": {
                                                 "name": "Salma Al-Mansoori",
                                                 "avatar": "https://i.pravatar.cc/150?img=65",
                                                 "trust_level": "trusted",
-                                                "trust_badge": "⭐ Trusted Member"
+                                                "trust_badge": "⭐ 可信成员"
                                 },
                                 "has_story": true,
                                 "verified": true
@@ -1077,7 +1077,7 @@
                         </div>
                     </div>
                     <div class="why-release">
-                        <h4>لماذا أشارك هذا</h4>
+                        <h4>为什么分享这件衣服</h4>
                         <p>${item.why_release}</p>
                     </div>
                 </div>
@@ -1171,11 +1171,11 @@
         function submitExchange() {
             const story = document.getElementById('userStory').value.trim();
             if (!story || story.length < 20) {
-                alert('اكتب هنا لماذا تريد هذا العنصر وما العنصر الذي تريد تبادله...');
+                alert('请写下您为什么想要这件物品，以及您想交换的物品...');
                 return;
             }
             if (!uploadedImage) {
-                alert('اضغط لرفع صورة');
+                alert('点击上传照片');
                 return;
             }
             hasSubmittedExchange = true;
