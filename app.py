@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-ClothesForME - 中东衣服交换平台
+BookForMX - 墨西哥图书交换平台
 Flask 后端应用
 """
 
@@ -13,17 +13,102 @@ from pathlib import Path
 from typing import Optional, Dict, Any
 from collections import defaultdict
 from threading import Lock
-from clothes_data import CLOTHES_DATA, SAMPLE_EXCHANGES
-from translations import AR_TRANSLATIONS, ZH_TRANSLATIONS, CLOTHES_DATA_ZH
 
 app = Flask(__name__, static_folder='static', static_url_path='/static')
 CORS(app)
 
-# 衣服数据（从 clothes_data.py 导入）
-SAMPLE_CLOTHES = CLOTHES_DATA
+# 模拟数据（实际应用中应该从数据库获取）
+SAMPLE_BOOKS = [
+    {
+        'id': 1,
+        'title': 'Cien años de soledad',
+        'author': 'Gabriel García Márquez',
+        'cover': 'https://images-na.ssl-images-amazon.com/images/I/81dQwQlmAXL.jpg',
+        'condition': 'Como nuevo',
+        'isbn': '978-0307474728',
+        'publisher': 'Editorial Sudamericana',
+        'why_release': 'Este libro me acompañó en un momento difícil. Ahora quiero que encuentre a alguien que también lo necesite.',
+        'user': {
+            'name': 'María González',
+            'avatar': 'https://i.pravatar.cc/150?img=1',
+            'trust_level': 'confiable',
+            'trust_badge': '🦉 Compañero Confiable'
+        },
+        'has_story': True,
+        'verified': True
+    },
+    {
+        'id': 2,
+        'title': 'El laberinto de la soledad',
+        'author': 'Octavio Paz',
+        'cover': 'https://images-na.ssl-images-amazon.com/images/I/71QKQ9KJZJL.jpg',
+        'condition': 'Buen estado',
+        'isbn': '978-9681600128',
+        'publisher': 'Fondo de Cultura Económica',
+        'why_release': 'Lo leí en la universidad y marcó mi forma de pensar sobre México. Espero que inspire a otros.',
+        'user': {
+            'name': 'Carlos Ramírez',
+            'avatar': 'https://i.pravatar.cc/150?img=12',
+            'trust_level': 'bibliofilo',
+            'trust_badge': '📖 Bibliófilo Experto'
+        },
+        'has_story': True,
+        'verified': True
+    },
+    {
+        'id': 3,
+        'title': 'Pedro Páramo',
+        'author': 'Juan Rulfo',
+        'cover': 'https://images-na.ssl-images-amazon.com/images/I/81Y5Z8KJZJL.jpg',
+        'condition': 'Excelente',
+        'isbn': '978-9684110128',
+        'publisher': 'Fondo de Cultura Económica',
+        'why_release': 'Un clásico que todos deberían leer. Mi copia tiene algunas anotaciones que espero sean útiles.',
+        'user': {
+            'name': 'Ana Martínez',
+            'avatar': 'https://i.pravatar.cc/150?img=5',
+            'trust_level': 'novato',
+            'trust_badge': '🌵 Lector Novato'
+        },
+        'has_story': False,
+        'verified': False
+    }
+]
 
-# 为了兼容性，保留 SAMPLE_BOOKS 变量名但使用衣服数据
-SAMPLE_BOOKS = CLOTHES_DATA
+SAMPLE_EXCHANGES = [
+    {
+        'id': 1,
+        'date': '2024-01-15',
+        'book1': {
+            'title': 'Cien años de soledad',
+            'cover': 'https://images-na.ssl-images-amazon.com/images/I/81dQwQlmAXL.jpg',
+            'user': 'María González'
+        },
+        'book2': {
+            'title': 'La casa de los espíritus',
+            'cover': 'https://images-na.ssl-images-amazon.com/images/I/71QKQ9KJZJL.jpg',
+            'user': 'Luis Fernández'
+        },
+        'message1': 'Gracias por compartir esta historia. Espero que disfrutes tanto como yo.',
+        'message2': 'Un intercambio perfecto. ¡Gracias!'
+    },
+    {
+        'id': 2,
+        'date': '2024-01-20',
+        'book1': {
+            'title': 'El laberinto de la soledad',
+            'cover': 'https://images-na.ssl-images-amazon.com/images/I/71QKQ9KJZJL.jpg',
+            'user': 'Carlos Ramírez'
+        },
+        'book2': {
+            'title': 'Rayuela',
+            'cover': 'https://images-na.ssl-images-amazon.com/images/I/81Y5Z8KJZJL.jpg',
+            'user': 'Sofía Herrera'
+        },
+        'message1': 'Un diálogo literario increíble. ¡Gracias!',
+        'message2': 'Me encantó tu historia. ¡Que disfrutes el libro!'
+    }
+]
 
 # =========================
 # 简单埋点 & 统计存储（支持数据库持久化 + 内存回退）
@@ -334,39 +419,34 @@ def init_analytics_db() -> None:
 
 @app.route('/')
 def index():
-    """主页 - 阿拉伯语版本（默认）"""
+    """主页 - 单页面应用"""
     return render_template('index.html')
-
-@app.route('/en')
-def index_en():
-    """主页 - 中文版本"""
-    return render_template('index_zh.html')
 
 @app.route('/plaza')
 def plaza():
-    """衣服广场 - 发现页（保留兼容性）"""
+    """图书广场 - 发现页（保留兼容性）"""
     return render_template('plaza.html', books=SAMPLE_BOOKS)
 
 @app.route('/book/<int:book_id>')
 def book_detail(book_id):
-    """衣服详情页"""
+    """书籍详情页"""
     book = next((b for b in SAMPLE_BOOKS if b['id'] == book_id), None)
     if not book:
-        return "Item not found", 404
+        return "Libro no encontrado", 404
     
     # 模拟交换历史
     exchange_history = [
         {
-            'date': '2025-01-08',
-            'from_user': 'Fatima Al-Mansoori',
-            'to_user': 'Noor Al-Zahra',
-            'city': 'Dubai'
+            'date': '2024-01-10',
+            'from_user': 'Juan Pérez',
+            'to_user': 'María González',
+            'city': 'Ciudad de México'
         },
         {
-            'date': '2025-01-05',
-            'from_user': 'Layla Hassan',
-            'to_user': 'Mariam Al-Rashid',
-            'city': 'Abu Dhabi'
+            'date': '2023-12-05',
+            'from_user': 'Ana López',
+            'to_user': 'Juan Pérez',
+            'city': 'Guadalajara'
         }
     ]
     
@@ -379,31 +459,28 @@ def exchange_wall():
 
 @app.route('/api/books')
 def api_books():
-    """获取衣服列表API"""
+    """获取图书列表API"""
     category = request.args.get('category', '')
     has_story = request.args.get('has_story', '').lower() == 'true'
     verified = request.args.get('verified', '').lower() == 'true'
     
-    clothes = SAMPLE_BOOKS.copy()
-    
-    if category:
-        clothes = [c for c in clothes if c.get('category', '').lower() == category.lower()]
+    books = SAMPLE_BOOKS.copy()
     
     if has_story:
-        clothes = [c for c in clothes if c.get('has_story', False)]
+        books = [b for b in books if b.get('has_story', False)]
     
     if verified:
-        clothes = [c for c in clothes if c.get('verified', False)]
+        books = [b for b in books if b.get('verified', False)]
     
-    return jsonify({'books': clothes})
+    return jsonify({'books': books})
 
 @app.route('/api/book/<int:book_id>')
 def api_book_detail(book_id):
-    """获取衣服详情API"""
-    item = next((b for b in SAMPLE_BOOKS if b['id'] == book_id), None)
-    if not item:
-        return jsonify({'error': 'Item not found'}), 404
-    return jsonify(item)
+    """获取图书详情API"""
+    book = next((b for b in SAMPLE_BOOKS if b['id'] == book_id), None)
+    if not book:
+        return jsonify({'error': 'Libro no encontrado'}), 404
+    return jsonify(book)
 
 @app.route('/api/exchange/request', methods=['POST'])
 def api_exchange_request():
@@ -474,7 +551,7 @@ def admin_stats():
         <html lang="es-MX">
         <head>
             <meta charset="UTF-8">
-            <title>Access Restricted - Trueque Digital</title>
+            <title>Acceso Restringido - Trueque Digital</title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <style>
                 body {
@@ -540,10 +617,10 @@ def admin_stats():
         </head>
         <body>
             <div class="login-box">
-                <h1>🔒 Access Restricted</h1>
+                <h1>🔒 Acceso Restringido</h1>
                 <form method="GET" action="/admin/stats">
-                    <input type="password" name="token" placeholder="Enter access token" required autofocus>
-                    <button type="submit">Access</button>
+                    <input type="password" name="token" placeholder="Ingresa el token de acceso" required autofocus>
+                    <button type="submit">Acceder</button>
                 </form>
             </div>
         </body>
@@ -615,17 +692,13 @@ def send_static(path):
     decoded_path = urllib.parse.unquote(path)
     
     # 在Vercel环境下，静态文件可能在多个位置
-    # 尝试多个可能的路径（包括public目录）
+    # 尝试多个可能的路径
     possible_dirs = [
-        Path('public'),  # Vercel自动服务的public目录
         Path(app.static_folder or 'static'),
         Path('static'),
         Path(os.getcwd()) / 'static',
-        Path(os.getcwd()) / 'public',
         Path('/var/task/static'),
-        Path('/var/task/public'),
         Path('/vercel/path0/static'),
-        Path('/vercel/path0/public'),
     ]
     
     file_path = None
@@ -675,7 +748,7 @@ def send_static(path):
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     print('=' * 60)
-    print('🚀 Trueque Digital - 中东衣服交换平台')
+    print('🚀 Trueque Digital - 墨西哥图书交换平台')
     print('=' * 60)
     print(f'✅ 服务启动成功')
     print(f'📱 访问地址: http://localhost:{port}')
