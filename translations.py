@@ -325,7 +325,7 @@ CLOTHES_DATA_ZH = [
 CLOTHES_DATA_AR = [
     {
         'id': 1,
-        'title': 'بدلة سباحة أنيقة',
+        'title': 'مايوه أنيق',
         'category': 'ملابس السباحة',
         'cover': '/static/clothes-middle-east/item1.png',
         'condition': 'كالجديد',
@@ -342,7 +342,7 @@ CLOTHES_DATA_AR = [
     },
     {
         'id': 2,
-        'title': 'زي صيفي عادي',
+        'title': 'طقم صيفي كاجوال',
         'category': 'عادي',
         'cover': '/static/clothes-middle-east/item2.png',
         'condition': 'ممتاز',
@@ -359,7 +359,7 @@ CLOTHES_DATA_AR = [
     },
     {
         'id': 3,
-        'title': 'ملابس عمل احترافية',
+        'title': 'طقم عمل أنيق',
         'category': 'عمل',
         'cover': '/static/clothes-middle-east/item3.png',
         'condition': 'كالجديد',
@@ -376,7 +376,7 @@ CLOTHES_DATA_AR = [
     },
     {
         'id': 4,
-        'title': 'زي أسلوب الشارع العصري',
+        'title': 'طقم ستريت ستايل عصري',
         'category': 'عادي',
         'cover': '/static/clothes-middle-east/item4.png',
         'condition': 'جيد',
@@ -393,7 +393,7 @@ CLOTHES_DATA_AR = [
     },
     {
         'id': 5,
-        'title': 'ملابس منزلية مريحة',
+        'title': 'ملابس بيت مريحة',
         'category': 'عادي',
         'cover': '/static/clothes-middle-east/item5.png',
         'condition': 'ممتاز',
@@ -410,7 +410,7 @@ CLOTHES_DATA_AR = [
     },
     {
         'id': 6,
-        'title': 'فستان رسمي أنيق',
+        'title': 'فستان أنيق للمناسبات',
         'category': 'فستان',
         'cover': '/static/clothes-middle-east/item6.png',
         'condition': 'كالجديد',
@@ -427,7 +427,7 @@ CLOTHES_DATA_AR = [
     },
     {
         'id': 7,
-        'title': 'قميص عادي أنيق',
+        'title': 'بلوزة كاجوال أنيقة',
         'category': 'عادي',
         'cover': '/static/clothes-middle-east/item7.png',
         'condition': 'جيد',
@@ -444,7 +444,7 @@ CLOTHES_DATA_AR = [
     },
     {
         'id': 8,
-        'title': 'زي عصري أنيق',
+        'title': 'طقم عصري أنيق',
         'category': 'عادي',
         'cover': '/static/clothes-middle-east/item8.png',
         'condition': 'ممتاز',
@@ -461,7 +461,7 @@ CLOTHES_DATA_AR = [
     },
     {
         'id': 9,
-        'title': 'قطعة كلاسيكية خالدة',
+        'title': 'قطعة كلاسيكية أبدية',
         'category': 'عادي',
         'cover': '/static/clothes-middle-east/item9.png',
         'condition': 'كالجديد',
@@ -478,7 +478,7 @@ CLOTHES_DATA_AR = [
     },
     {
         'id': 10,
-        'title': 'زي تصريحي مواكب للموضة',
+        'title': 'طقم موضة جريء',
         'category': 'عادي',
         'cover': '/static/clothes-middle-east/item10.png',
         'condition': 'ممتاز',
@@ -495,7 +495,7 @@ CLOTHES_DATA_AR = [
     },
     {
         'id': 11,
-        'title': 'زي يومي متعدد الاستخدامات',
+        'title': 'طقم يومي متعدد الاستخدامات',
         'category': 'عادي',
         'cover': '/static/clothes-middle-east/item11.png',
         'condition': 'جيد',
@@ -512,7 +512,7 @@ CLOTHES_DATA_AR = [
     },
     {
         'id': 12,
-        'title': 'زي مناسبة خاصة أنيق',
+        'title': 'فستان مناسبة خاصة أنيق',
         'category': 'فستان',
         'cover': '/static/clothes-middle-east/item12.png',
         'condition': 'كالجديد',
@@ -529,7 +529,7 @@ CLOTHES_DATA_AR = [
     },
     {
         'id': 13,
-        'title': 'مجموعة ملابس نوم مريحة',
+        'title': 'بيجامة مريحة',
         'category': 'ملابس النوم',
         'cover': '/static/clothes-middle-east/sleepwear.png',
         'condition': 'ممتاز',
@@ -546,7 +546,7 @@ CLOTHES_DATA_AR = [
     },
     {
         'id': 14,
-        'title': 'مجموعة مجلات الموضة',
+        'title': 'مجموعة مجلات أزياء',
         'category': 'مجلة',
         'cover': '/static/clothes-middle-east/magazine1.png',
         'condition': 'كالجديد',
@@ -563,7 +563,7 @@ CLOTHES_DATA_AR = [
     },
     {
         'id': 15,
-        'title': 'مجلة تبادل الموضة',
+        'title': 'مجلة أزياء للتبادل',
         'category': 'مجلة',
         'cover': '/static/clothes-middle-east/magazine2.png',
         'condition': 'ممتاز',
