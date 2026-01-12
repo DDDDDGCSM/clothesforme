@@ -150,14 +150,22 @@ def _init_database_if_available():
                     extra JSONB,
                     ip VARCHAR(45),
                     user_agent TEXT,
+                    project_type VARCHAR(20) DEFAULT 'clothes',
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
             ''')
+            
+            # 添加 project_type 字段（如果不存在）
+            try:
+                cursor.execute('ALTER TABLE book_exchange_events ADD COLUMN IF NOT EXISTS project_type VARCHAR(20) DEFAULT \'clothes\'')
+            except Exception:
+                pass  # 字段可能已存在
             
             # 创建索引
             cursor.execute('CREATE INDEX IF NOT EXISTS idx_event_type ON book_exchange_events(event_type)')
             cursor.execute('CREATE INDEX IF NOT EXISTS idx_created_at ON book_exchange_events(created_at)')
             cursor.execute('CREATE INDEX IF NOT EXISTS idx_book_id ON book_exchange_events(book_id)')
+            cursor.execute('CREATE INDEX IF NOT EXISTS idx_project_type ON book_exchange_events(project_type)')
             
             conn.commit()
             cursor.close()
@@ -224,8 +232,12 @@ def _get_db_connection():
 
 def add_event(event_type: str, book_id: Optional[int] = None, 
               anon_id: Optional[str] = None, extra: Dict = None,
-              ip: str = '', user_agent: str = ''):
-    """添加事件（优先使用数据库，否则使用内存存储）"""
+              ip: str = '', user_agent: str = '', project_type: str = 'clothes'):
+    """添加事件（优先使用数据库，否则使用内存存储）
+    
+    Args:
+        project_type: 'book' 或 'clothes'，默认为 'clothes'（衣服项目）
+    """
     # 优先使用数据库
     db_conn = _get_db_connection()
     if db_conn:
@@ -234,9 +246,9 @@ def add_event(event_type: str, book_id: Optional[int] = None,
             extra_json = json.dumps(extra or {}, ensure_ascii=False)
             cursor.execute('''
                 INSERT INTO book_exchange_events 
-                (event_type, book_id, anon_id, extra, ip, user_agent)
-                VALUES (%s, %s, %s, %s, %s, %s)
-            ''', (event_type, book_id, anon_id, extra_json, ip, user_agent))
+                (event_type, book_id, anon_id, extra, ip, user_agent, project_type)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+            ''', (event_type, book_id, anon_id, extra_json, ip, user_agent, project_type))
             db_conn.commit()
             cursor.close()
             return
@@ -254,6 +266,7 @@ def add_event(event_type: str, book_id: Optional[int] = None,
             'extra': extra or {},
             'ip': ip,
             'user_agent': user_agent,
+            'project_type': project_type,
             'created_at': datetime.utcnow().isoformat()
         }
         storage['events'].append(event)
@@ -261,17 +274,21 @@ def add_event(event_type: str, book_id: Optional[int] = None,
         if len(storage['events']) > 10000:
             storage['events'] = storage['events'][-10000:]
 
-def get_events(event_type: Optional[str] = None, limit: int = None):
-    """获取事件列表（优先从数据库，否则从内存）"""
+def get_events(event_type: Optional[str] = None, limit: int = None, project_type: str = 'clothes'):
+    """获取事件列表（优先从数据库，否则从内存）
+    
+    Args:
+        project_type: 'book' 或 'clothes'，默认为 'clothes'（只查询衣服项目的数据）
+    """
     # 优先使用数据库
     db_conn = _get_db_connection()
     if db_conn:
         try:
             cursor = db_conn.cursor()
-            query = 'SELECT id, event_type, book_id, anon_id, extra, ip, user_agent, created_at FROM book_exchange_events'
-            params = []
+            query = 'SELECT id, event_type, book_id, anon_id, extra, ip, user_agent, created_at FROM book_exchange_events WHERE project_type = %s'
+            params = [project_type]
             if event_type:
-                query += ' WHERE event_type = %s'
+                query += ' AND event_type = %s'
                 params.append(event_type)
             query += ' ORDER BY created_at DESC'
             if limit:
@@ -305,20 +322,26 @@ def get_events(event_type: Optional[str] = None, limit: int = None):
     storage = get_analytics_storage()
     with storage['lock']:
         events = storage['events']
+        # 只查询指定项目类型的数据
+        events = [e for e in events if e.get('project_type', 'clothes') == project_type]
         if event_type:
             events = [e for e in events if e['event_type'] == event_type]
         if limit:
             events = events[-limit:]
         return events
 
-def count_events(event_type: str) -> int:
-    """统计特定类型事件的数量（优先从数据库，否则从内存）"""
+def count_events(event_type: str, project_type: str = 'clothes') -> int:
+    """统计特定类型事件的数量（优先从数据库，否则从内存）
+    
+    Args:
+        project_type: 'book' 或 'clothes'，默认为 'clothes'（只统计衣服项目的数据）
+    """
     # 优先使用数据库
     db_conn = _get_db_connection()
     if db_conn:
         try:
             cursor = db_conn.cursor()
-            cursor.execute('SELECT COUNT(*) FROM book_exchange_events WHERE event_type = %s', (event_type,))
+            cursor.execute('SELECT COUNT(*) FROM book_exchange_events WHERE event_type = %s AND project_type = %s', (event_type, project_type))
             count = cursor.fetchone()[0]
             cursor.close()
             return count
@@ -328,7 +351,9 @@ def count_events(event_type: str) -> int:
     # 回退到内存存储
     storage = get_analytics_storage()
     with storage['lock']:
-        return sum(1 for e in storage['events'] if e['event_type'] == event_type)
+        return sum(1 for e in storage['events'] 
+                  if e['event_type'] == event_type 
+                  and e.get('project_type', 'clothes') == project_type)
 
 def get_distinct_anon_ids(event_type: str) -> set:
     """（旧）获取独立访客 ID 集合，暂保留以兼容后续升级"""
@@ -341,14 +366,18 @@ def get_distinct_anon_ids(event_type: str) -> set:
         return anon_ids
 
 
-def get_distinct_ips(event_type: str) -> set:
-    """获取独立访客 IP 集合（用于 UV 统计，优先从数据库，否则从内存）"""
+def get_distinct_ips(event_type: str, project_type: str = 'clothes') -> set:
+    """获取独立访客 IP 集合（用于 UV 统计，优先从数据库，否则从内存）
+    
+    Args:
+        project_type: 'book' 或 'clothes'，默认为 'clothes'（只统计衣服项目的数据）
+    """
     # 优先使用数据库
     db_conn = _get_db_connection()
     if db_conn:
         try:
             cursor = db_conn.cursor()
-            cursor.execute('SELECT DISTINCT ip FROM book_exchange_events WHERE event_type = %s AND ip IS NOT NULL AND ip != %s', (event_type, ''))
+            cursor.execute('SELECT DISTINCT ip FROM book_exchange_events WHERE event_type = %s AND project_type = %s AND ip IS NOT NULL AND ip != %s', (event_type, project_type, ''))
             ips = {row[0] for row in cursor.fetchall()}
             cursor.close()
             return ips
@@ -360,12 +389,18 @@ def get_distinct_ips(event_type: str) -> set:
     with storage['lock']:
         ips = set()
         for e in storage['events']:
-            if e['event_type'] == event_type and e.get('ip'):
+            if (e['event_type'] == event_type 
+                and e.get('project_type', 'clothes') == project_type 
+                and e.get('ip')):
                 ips.add(e['ip'])
         return ips
 
-def get_daily_stats(days: int = 30):
-    """获取按天统计的 PV/UV（优先从数据库，否则从内存）"""
+def get_daily_stats(days: int = 30, project_type: str = 'clothes'):
+    """获取按天统计的 PV/UV（优先从数据库，否则从内存）
+    
+    Args:
+        project_type: 'book' 或 'clothes'，默认为 'clothes'（只统计衣服项目的数据）
+    """
     # 优先使用数据库
     db_conn = _get_db_connection()
     if db_conn:
@@ -377,11 +412,12 @@ def get_daily_stats(days: int = 30):
                        COUNT(DISTINCT ip) as uv
                 FROM book_exchange_events
                 WHERE event_type = 'page_view'
-                  AND created_at >= CURRENT_DATE - INTERVAL '%s days'
+                  AND project_type = %s
+                  AND created_at >= CURRENT_DATE - make_interval(days => %s)
                 GROUP BY day
                 ORDER BY day DESC
                 LIMIT %s
-            ''', (days, days))
+            ''', (project_type, days, days))
             rows = cursor.fetchall()
             result = [{'day': str(row[0]), 'pv': row[1], 'uv': row[2]} for row in rows]
             cursor.close()
@@ -394,7 +430,8 @@ def get_daily_stats(days: int = 30):
     with storage['lock']:
         daily = defaultdict(lambda: {'pv': 0, 'uv': set()})
         for e in storage['events']:
-            if e['event_type'] == 'page_view':
+            if (e['event_type'] == 'page_view' 
+                and e.get('project_type', 'clothes') == project_type):
                 day = e['created_at'][:10]  # YYYY-MM-DD
                 daily[day]['pv'] += 1
                 if e.get('ip'):
@@ -530,14 +567,15 @@ def api_track_event():
         ip = request.remote_addr or ''
     user_agent = request.headers.get('User-Agent', '')
 
-    # 使用内存存储替代 SQLite
+    # 使用内存存储替代 SQLite，标记为衣服项目
     add_event(
         event_type=event_type,
         book_id=book_id,
         anon_id=anon_id,
         extra=extra,
         ip=ip,
-        user_agent=user_agent
+        user_agent=user_agent,
+        project_type='clothes'  # 标记为衣服项目，与书籍项目区分
     )
 
     return jsonify({'success': True})
@@ -632,33 +670,44 @@ def admin_stats():
         </html>
         """, 403
 
-    # 使用内存存储获取统计数据
-    total_pv = count_events('page_view')
-    # UV 使用 IP 维度，便于内部核对
-    total_uv = len(get_distinct_ips('page_view'))
+    # 使用内存存储获取统计数据（只查询衣服项目的数据）
+    project_type = 'clothes'
+    base_pv = count_events('page_view', project_type=project_type)
+    base_uv = len(get_distinct_ips('page_view', project_type=project_type))
     
-    # 书籍浏览统计
-    total_book_views = count_events('book_view')
-    # 被浏览过的不同书本数
-    book_view_events = get_events('book_view')
-    viewed_book_ids = {e.get('book_id') for e in book_view_events if e.get('book_id') is not None}
+    # 为衣服的 PV 和 UV 添加偏移量
+    total_pv = base_pv + 11  # PV 在实际基础上加 11
+    total_uv = base_uv + 5   # UV 在实际基础上加 5
+    
+    # 衣服浏览统计（只查询衣服项目的数据）
+    total_clothes_views = count_events('book_view', project_type=project_type)
+    # 被浏览过的不同衣服数
+    clothes_view_events = get_events('book_view', project_type=project_type)
+    viewed_clothes_ids = {e.get('book_id') for e in clothes_view_events if e.get('book_id') is not None}
     
     stats = {
         'total_pv': total_pv,
         'total_uv': total_uv,
-        'share_count': count_events('share'),
-        'exchange_request_count': count_events('exchange_request'),
-        'whatsapp_click_count': count_events('telegram_click') or count_events('whatsapp_click'),  # 兼容旧数据
-        'book_view_count': total_book_views,
-        'book_view_unique_books': len(viewed_book_ids),
+        'share_count': count_events('share', project_type=project_type),
+        'exchange_request_count': count_events('exchange_request', project_type=project_type),
+        'telegram_click_count': count_events('telegram_click', project_type=project_type) + count_events('whatsapp_click', project_type=project_type),  # 兼容旧数据
+        'clothes_view_count': total_clothes_views,
+        'clothes_view_unique_items': len(viewed_clothes_ids),
     }
     
-    # 按天聚合 PV/UV（最近30天）
-    daily = get_daily_stats(30)
+    # 按天聚合 PV/UV（最近30天，只查询衣服项目的数据）
+    daily = get_daily_stats(30, project_type=project_type)
+    # 为每天的 PV 和 UV 也添加偏移量（仅对今天的数据）
+    from datetime import datetime, date
+    today_str = date.today().isoformat()
+    for day_stat in daily:
+        if day_stat['day'] == today_str:
+            day_stat['pv'] = day_stat['pv'] + 11
+            day_stat['uv'] = day_stat['uv'] + 5
 
-    # 最近提交明细（最多 50 条，按时间倒序）
+    # 最近提交明细（最多 50 条，按时间倒序，只查询衣服项目的数据）
     recent_submits = []
-    events = get_events('exchange_request', limit=50)
+    events = get_events('exchange_request', limit=50, project_type=project_type)
     for e in reversed(events):  # 最新的在前
         extra = e.get('extra') or {}
         book_title = None
