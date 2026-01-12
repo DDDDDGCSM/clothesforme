@@ -767,12 +767,17 @@ def admin_stats():
                 pass
         
         # 处理 has_image：确保正确解析布尔值
+        # 对于 exchange_request，如果图片是必传的，那么如果用户成功提交了，图片一定已上传
         has_image_value = extra.get('has_image')
-        if isinstance(has_image_value, bool):
+        if has_image_value is None:
+            # 如果字段不存在，默认认为已上传（因为前端有验证，只有上传了才能提交）
+            has_image = True
+        elif isinstance(has_image_value, bool):
             has_image = has_image_value
         elif isinstance(has_image_value, str):
             has_image = has_image_value.lower() in ('true', '1', 'yes')
         else:
+            # 对于其他类型（如数字），转换为布尔值
             has_image = bool(has_image_value)
         
         recent_submits.append({
