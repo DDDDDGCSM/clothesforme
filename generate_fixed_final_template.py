@@ -920,6 +920,13 @@ def generate_template(lang='ar', translations=None, clothes_data=None):
 
     <script>
         const items = {js_data};
+        const translations = {{
+            'why_sharing': '{translations['why_sharing']}',
+            'share': '{translations['share']}',
+            'write_story': '{translations['write_story']}',
+            'upload_photo': '{translations['upload_photo']}',
+            'whatsapp_number': '{translations['whatsapp_number']}'
+        }};
         let currentItemIndex = 0;
         let uploadedImage = null;
         let viewedItemsInSession = new Set();
