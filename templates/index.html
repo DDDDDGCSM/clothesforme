@@ -770,8 +770,8 @@
             }
 
             .why-release h4 {
-                font-size: 20px;
-            }
+            font-size: 20px;
+        }
 
             .why-release p {
                 font-size: 20px;
@@ -828,8 +828,8 @@
 
         <div class="clothes-list-container">
             <div class="clothes-list" id="clothesList"></div>
+            </div>
         </div>
-    </div>
 
     <div class="fixed-bottom-btn">
         <button class="request-btn" onclick="openModal()">
@@ -1166,7 +1166,7 @@
                     book_id: payload?.itemId || payload?.book_id || null,
                     extra: payload?.extra || {}
                 };
-                
+
                 if (navigator.sendBeacon) {
                     navigator.sendBeacon('/api/track', new Blob([JSON.stringify(body)], { type: 'application/json' }));
                 } else {
@@ -1237,24 +1237,24 @@
                             <img src="${imageUrl}" alt="${item.title}" class="clothes-cover" loading="lazy" onerror="handleImageError(this, '${imageUrl}')" onload="if (!viewedItemsInSession.has(${item.id})) { viewedItemsInSession.add(${item.id}); trackEvent('book_view', { itemId: ${item.id} }); }">
                         </div>
                         <div class="clothes-info">
-                            <div>
+                                <div>
                                 <div class="clothes-title">${item.title}</div>
                                 <span class="clothes-category">${item.category}</span>
-                            </div>
+                                </div>
                             <div class="user-info">
                                 ${avatarHtml}
                                 <div class="user-details">
                                     <div class="user-name">${item.user.name}</div>
                                     <span class="trust-badge">${item.user.trust_badge}</span>
-                                </div>
+                            </div>
                                 <div class="telegram-icon" onclick="openTelegram(${item.id}, ${index})" title="Contact via Telegram">
                                     <svg viewBox="0 0 24 24" fill="currentColor">
                                         <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.12l-6.87 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z"/>
                                     </svg>
-                                </div>
-                            </div>
                         </div>
                     </div>
+                    </div>
+                </div>
                     <div class="why-release">
                         <h4>${translations['why_sharing']}</h4>
                         <p>${item.why_release}</p>
@@ -1315,7 +1315,7 @@
                 alert('اضغط لرفع صورة');
                 return;
             }
-            
+
             // 发送交换申请埋点
             trackEvent('exchange_request', {
                 itemId: items[currentItemIndex]?.id || null,
