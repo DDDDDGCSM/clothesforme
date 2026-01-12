@@ -13,7 +13,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/item1.png',
         'condition': 'Like New',
         'size': 'M',
-        'why_release': 'This beautiful swimsuit has been perfect for beach days and pool parties in Dubai. The stylish design and comfortable fit made me feel confident and elegant. I\'m letting it go because I\'ve found my new favorite style, but I know it will bring someone else the same joy it brought me. Perfect for beach vacations, pool parties, or any water activities.',
+        'why_release': 'I want to exchange this stunning swimsuit because I\'m looking for something that will make me feel irresistible at the beach. This piece has been my secret weapon for turning heads, and now I\'m ready to trade it for something equally captivating. Perfect for someone who wants to stand out and feel confident.'m letting it go because I\'ve found my new favorite style, but I know it will bring someone else the same joy it brought me. Perfect for beach vacations, pool parties, or any water activities.',
         'user': {
             'name': 'Fatima Al-Mansoori',
             'avatar': 'https://i.pravatar.cc/150?img=1',
@@ -30,7 +30,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/item2.png',
         'condition': 'Excellent',
         'size': 'S',
-        'why_release': 'This comfortable and stylish casual outfit has been perfect for Dubai\'s warm weather. Lightweight fabric that breathes well, perfect for shopping trips or casual brunches. I\'m passing it on because I\'ve found my new favorite style, but this piece deserves to be worn and loved by someone else.',
+        'why_release': 'I\'m exchanging this casual outfit because I want something that will catch your eye. This piece has been my go-to for making a statement, and I\'m ready to swap it for something that will make me feel even more attractive. Ideal for someone who wants to look effortlessly sexy.'s warm weather. Lightweight fabric that breathes well, perfect for shopping trips or casual brunches. I\'m passing it on because I\'ve found my new favorite style, but this piece deserves to be worn and loved by someone else.',
         'user': {
             'name': 'Layla Hassan',
             'avatar': 'https://i.pravatar.cc/150?img=5',
@@ -47,7 +47,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/item3.png',
         'condition': 'Like New',
         'size': 'L',
-        'why_release': 'This professional outfit helped me land my dream job interview. The classic design and perfect tailoring gave me the confidence I needed. Now that I\'ve built my professional wardrobe, I want to pass this lucky piece to someone who needs that same confidence boost. Perfect for interviews, meetings, or any professional setting.',
+        'why_release': 'I want to trade this professional attire because I\'m seeking something that will make me feel powerful and alluring. This outfit has been my confidence booster, and now I want to exchange it for something that will make me feel even more desirable. Perfect for someone who wants to look both professional and irresistible.'ve built my professional wardrobe, I want to pass this lucky piece to someone who needs that same confidence boost. Perfect for interviews, meetings, or any professional setting.',
         'user': {
             'name': 'Noor Al-Zahra',
             'avatar': 'https://i.pravatar.cc/150?img=9',
@@ -64,7 +64,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/item4.png',
         'condition': 'Good',
         'size': 'M',
-        'why_release': 'This trendy outfit was my statement piece for weekend outings. It always got compliments and made me feel fashionable. I\'m sharing it because fashion should be shared, and someone else deserves to feel as stylish as I did wearing this.',
+        'why_release': 'I\'m exchanging this trendy outfit because I want something that will make me feel more seductive. This piece has been my favorite for attracting attention, and I\'m ready to trade it for something that will make me feel even more captivating. Ideal for someone who wants to look effortlessly hot.'m sharing it because fashion should be shared, and someone else deserves to feel as stylish as I did wearing this.',
         'user': {
             'name': 'Aisha Mohammed',
             'avatar': 'https://i.pravatar.cc/150?img=12',
@@ -81,7 +81,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/item5.png',
         'condition': 'Excellent',
         'size': 'S',
-        'why_release': 'This cozy outfit has been my comfort companion during lazy weekends and work-from-home days. Soft fabric that feels like a hug, perfect for relaxing at home or running errands. I\'m letting it go because I have too many similar pieces, but I know it will bring comfort to someone else.',
+        'why_release': 'I want to swap this comfortable wear because I\'m looking for something that will make me feel more desirable. This piece has been my comfort choice, but now I want something that will make me feel more attractive. Perfect for someone who wants to look both comfortable and alluring.'m letting it go because I have too many similar pieces, but I know it will bring comfort to someone else.',
         'user': {
             'name': 'Mariam Al-Rashid',
             'avatar': 'https://i.pravatar.cc/150?img=15',
@@ -98,7 +98,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/item6.png',
         'condition': 'Like New',
         'size': 'M',
-        'why_release': 'This beautiful formal dress has been with me through many celebrations. The elegant design and flattering cut made me feel like a princess at every event. I\'m sharing it because I believe every woman deserves to feel beautiful, and this dress has that magic.',
+        'why_release': 'I\'m exchanging this elegant dress because I want something that will make me feel more irresistible. This piece has been my secret for special occasions, and now I want to trade it for something that will make me feel even more captivating. Ideal for someone who wants to look stunning and seductive.'m sharing it because I believe every woman deserves to feel beautiful, and this dress has that magic.',
         'user': {
             'name': 'Zainab Al-Khalifa',
             'avatar': 'https://i.pravatar.cc/150?img=20',
@@ -115,7 +115,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/item7.png',
         'condition': 'Good',
         'size': 'L',
-        'why_release': 'This versatile top has been a wardrobe staple. It pairs well with everything and always looks put-together. I\'m passing it on because I want to make room for new pieces, but this top deserves to continue being someone\'s go-to piece.',
+        'why_release': 'I want to trade this casual top because I\'m seeking something that will make me feel more attractive. This piece has been my go-to for looking good, and now I want to exchange it for something that will make me feel even more desirable. Perfect for someone who wants to look effortlessly sexy.'m passing it on because I want to make room for new pieces, but this top deserves to continue being someone\'s go-to piece.',
         'user': {
             'name': 'Sara Al-Mazrouei',
             'avatar': 'https://i.pravatar.cc/150?img=25',
@@ -132,7 +132,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/item8.png',
         'condition': 'Excellent',
         'size': 'M',
-        'why_release': 'This modern outfit represents my journey into contemporary fashion. It\'s versatile, comfortable, and always makes me feel confident. I\'m sharing it because fashion is about expressing yourself, and I want someone else to experience that same feeling.',
+        'why_release': 'I\'m exchanging this modern outfit because I want something that will make me feel more seductive. This piece has been my favorite for turning heads, and I\'m ready to swap it for something that will make me feel even more captivating. Ideal for someone who wants to look hot and irresistible.'s versatile, comfortable, and always makes me feel confident. I\'m sharing it because fashion is about expressing yourself, and I want someone else to experience that same feeling.',
         'user': {
             'name': 'Hala Al-Dhaheri',
             'avatar': 'https://i.pravatar.cc/150?img=30',
@@ -149,7 +149,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/item9.png',
         'condition': 'Like New',
         'size': 'S',
-        'why_release': 'This timeless piece has been in my wardrobe for years because it never goes out of style. Classic design that works for any occasion. I\'m letting it go to make space, but I know it will serve someone else just as well as it served me.',
+        'why_release': 'I want to swap this timeless piece because I\'m looking for something that will make me feel more desirable. This piece has been my classic choice, but now I want something that will make me feel more attractive. Perfect for someone who wants to look both elegant and alluring.'m letting it go to make space, but I know it will serve someone else just as well as it served me.',
         'user': {
             'name': 'Amira Al-Suwaidi',
             'avatar': 'https://i.pravatar.cc/150?img=35',
@@ -166,7 +166,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/item10.png',
         'condition': 'Excellent',
         'size': 'L',
-        'why_release': 'This bold outfit helped me step out of my comfort zone and embrace my unique style. It always turns heads and makes me feel like I\'m walking a fashion runway. I\'m sharing it because I want someone else to experience that confidence boost.',
+        'why_release': 'I\'m exchanging this statement outfit because I want something that will make me feel more irresistible. This piece has been my bold choice for attracting attention, and now I want to trade it for something that will make me feel even more captivating. Ideal for someone who wants to look stunning and seductive.'m walking a fashion runway. I\'m sharing it because I want someone else to experience that confidence boost.',
         'user': {
             'name': 'Yasmin Al-Qasimi',
             'avatar': 'https://i.pravatar.cc/150?img=40',
@@ -183,7 +183,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/item11.png',
         'condition': 'Good',
         'size': 'M',
-        'why_release': 'This versatile outfit has been my reliable choice for countless days. It works for work, casual outings, and everything in between. I\'m passing it on because I believe in sustainable fashion and want this piece to continue its journey with someone new.',
+        'why_release': 'I want to trade this versatile outfit because I\'m seeking something that will make me feel more attractive. This piece has been my reliable choice, and now I want to exchange it for something that will make me feel even more desirable. Perfect for someone who wants to look effortlessly sexy.'m passing it on because I believe in sustainable fashion and want this piece to continue its journey with someone new.',
         'user': {
             'name': 'Rania Al-Nuaimi',
             'avatar': 'https://i.pravatar.cc/150?img=45',
@@ -200,7 +200,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/item12.png',
         'condition': 'Like New',
         'size': 'S',
-        'why_release': 'This elegant outfit has been my choice for special celebrations. The beautiful design and perfect fit made every occasion memorable. I\'m sharing it because I want someone else to create their own beautiful memories wearing this piece.',
+        'why_release': 'I\'m exchanging this special occasion outfit because I want something that will make me feel more seductive. This piece has been my go-to for celebrations, and I\'m ready to swap it for something that will make me feel even more captivating. Ideal for someone who wants to look hot and irresistible.'m sharing it because I want someone else to create their own beautiful memories wearing this piece.',
         'user': {
             'name': 'Lina Al-Mazrouei',
             'avatar': 'https://i.pravatar.cc/150?img=50',
@@ -217,7 +217,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/sleepwear.png',
         'condition': 'Excellent',
         'size': 'M',
-        'why_release': 'This cozy sleepwear set has been my comfort companion for peaceful nights. Soft, breathable fabric that feels luxurious. I\'m sharing it because I believe everyone deserves a good night\'s sleep in comfortable clothing, and this set provides just that.',
+        'why_release': 'I want to swap this sleepwear set because I\'m looking for something that will make me feel more desirable. This piece has been my comfort choice, but now I want something that will make me feel more attractive. Perfect for someone who wants to look both comfortable and alluring.'m sharing it because I believe everyone deserves a good night\'s sleep in comfortable clothing, and this set provides just that.',
         'user': {
             'name': 'Nadia Al-Hosani',
             'avatar': 'https://i.pravatar.cc/150?img=55',
@@ -234,7 +234,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/magazine1.png',
         'condition': 'Like New',
         'size': 'N/A',
-        'why_release': 'This collection of fashion magazines has been my inspiration source for years. Full of style tips, trends, and beautiful photography. I\'m sharing it because knowledge and inspiration should be shared. Perfect for anyone looking to stay updated with fashion trends in the Middle East.',
+        'why_release': 'I\'m exchanging this fashion magazine collection because I want something that will inspire me to look more irresistible. This collection has been my style guide, and now I want to trade it for something that will make me feel even more captivating. Ideal for someone who wants to stay updated with seductive fashion trends.'m sharing it because knowledge and inspiration should be shared. Perfect for anyone looking to stay updated with fashion trends in the Middle East.',
         'user': {
             'name': 'Dina Al-Kaabi',
             'avatar': 'https://i.pravatar.cc/150?img=60',
@@ -251,7 +251,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/magazine2.png',
         'condition': 'Excellent',
         'size': 'N/A',
-        'why_release': 'This special edition magazine is all about sustainable fashion and clothing exchange. It opened my eyes to the importance of circular fashion. I\'m sharing it because I want others to discover the joy of exchanging clothes and building a sustainable wardrobe.',
+        'why_release': 'I want to trade this fashion exchange magazine because I\'m seeking something that will make me feel more attractive. This magazine has been my inspiration, and now I want to exchange it for something that will make me feel even more desirable. Perfect for someone who wants to discover the art of looking irresistible.'m sharing it because I want others to discover the joy of exchanging clothes and building a sustainable wardrobe.',
         'user': {
             'name': 'Salma Al-Mansoori',
             'avatar': 'https://i.pravatar.cc/150?img=65',
