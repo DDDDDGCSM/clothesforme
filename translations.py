@@ -26,7 +26,9 @@ AR_TRANSLATIONS = {
     'request_sent_success': 'تم إرسال الطلب! سنخطرك عندما يرد المستخدم.',
     'write_story': 'اكتب هنا لماذا تريد هذا العنصر وما العنصر الذي تريد تبادله...',
     'upload_photo': 'اضغط لرفع صورة',
-    'whatsapp_number': '+971 50 921 6685',
+    'whatsapp_number': '+1 742 666 4481',
+    'telegram_number': '+1 742 666 4481',
+    'contact_telegram': 'تواصل عبر تيليجرام',
     'language_switcher': 'English',
     'language_switcher_url': '/en'
 }
@@ -53,7 +55,9 @@ ZH_TRANSLATIONS = {
     'request_sent_success': '✅ 申请已发送！用户回复时我们会通知您。',
     'write_story': '请写下您为什么想要这件物品，以及您想交换的物品...',
     'upload_photo': '点击上传照片',
-    'whatsapp_number': '+971 50 921 6685',
+    'whatsapp_number': '+1 742 666 4481',
+    'telegram_number': '+1 742 666 4481',
+    'contact_telegram': 'تواصل عبر تيليجرام',
     'language_switcher': 'العربية',
     'language_switcher_url': '/'
 }
