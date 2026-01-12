@@ -648,7 +648,7 @@ def admin_stats():
         'total_uv': total_uv,
         'share_count': count_events('share'),
         'exchange_request_count': count_events('exchange_request'),
-        'whatsapp_click_count': count_events('whatsapp_click'),
+        'whatsapp_click_count': count_events('telegram_click') or count_events('whatsapp_click'),  # 兼容旧数据
         'book_view_count': total_book_views,
         'book_view_unique_books': len(viewed_book_ids),
     }
