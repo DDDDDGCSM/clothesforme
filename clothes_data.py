@@ -13,7 +13,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/item1.png',
         'condition': 'Like New',
         'size': 'M',
-        'why_release': 'I\'m trading this stunning swimsuit because I want something that will make every head turn at the beach. This piece has been my secret weapon for attracting attention, and I\'m ready to exchange it for something that will make me feel even more irresistible. Perfect for someone who wants to look absolutely captivating.'m ready to exchange it for something that will make me feel even more irresistible. Perfect for someone who wants to look absolutely captivating.'m ready to exchange it for something that will make me feel even more irresistible. Perfect for someone who wants to look absolutely captivating.'m ready to exchange it for something that will make me feel even more irresistible. Perfect for someone who wants to look absolutely captivating.',
+        'why_release': 'I\'m trading this stunning swimsuit because I want something that will make every head turn at the beach. This piece has been my secret weapon for attracting attention, and I\'m ready to exchange it for something that will make me feel even more irresistible. Perfect for someone who wants to look absolutely captivating.',
         'user': {
             'name': 'Fatima Al-Mansoori',
             'avatar': 'https://i.pravatar.cc/150?img=1',
@@ -30,7 +30,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/item2.png',
         'condition': 'Excellent',
         'size': 'S',
-        'why_release': 'I want to exchange this casual outfit because I\'m looking for something that will catch your eye instantly. This piece has been my go-to for making a bold statement, and I\'m ready to swap it for something that will make me feel even more alluring. Ideal for someone who wants to look effortlessly seductive.'m ready to swap it for something that will make me feel even more alluring. Ideal for someone who wants to look effortlessly seductive.'m ready to swap it for something that will make me feel even more alluring. Ideal for someone who wants to look effortlessly seductive.'m ready to swap it for something that will make me feel even more alluring. Ideal for someone who wants to look effortlessly seductive.'m exchanging this casual outfit because I want something that will catch your eye. This piece has been my go-to for making a statement, and I\'m ready to swap it for something that will make me feel even more attractive. Ideal for someone who wants to look effortlessly sexy.',
+        'why_release': 'I want to exchange this casual outfit because I\'m looking for something that will catch your eye instantly. This piece has been my go-to for making a bold statement, and I\'m ready to swap it for something that will make me feel even more alluring. Ideal for someone who wants to look effortlessly seductive.',
         'user': {
             'name': 'Layla Hassan',
             'avatar': 'https://i.pravatar.cc/150?img=5',
@@ -47,7 +47,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/item3.png',
         'condition': 'Like New',
         'size': 'L',
-        'why_release': 'I\'m trading this professional attire because I want something that will make me feel powerful and irresistible. This outfit has been my confidence booster, and now I want to exchange it for something that will make me feel even more desirable. Perfect for someone who wants to look both professional and absolutely captivating.'m seeking something that will make me feel powerful and alluring. This outfit has been my confidence booster, and now I want to exchange it for something that will make me feel even more desirable. Perfect for someone who wants to look both professional and irresistible.',
+        'why_release': 'I\'m trading this professional attire because I want something that will make me feel powerful and irresistible. This outfit has been my confidence booster, and now I want to exchange it for something that will make me feel even more desirable. Perfect for someone who wants to look both professional and absolutely captivating.',
         'user': {
             'name': 'Noor Al-Zahra',
             'avatar': 'https://i.pravatar.cc/150?img=9',
@@ -64,7 +64,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/item4.png',
         'condition': 'Good',
         'size': 'M',
-        'why_release': 'I want to exchange this trendy outfit because I\'m seeking something that will make me feel more seductive. This piece has been my favorite for turning heads, and I\'m ready to trade it for something that will make me feel even more irresistible. Ideal for someone who wants to look effortlessly hot and alluring.'m ready to trade it for something that will make me feel even more irresistible. Ideal for someone who wants to look effortlessly hot and alluring.'m ready to trade it for something that will make me feel even more irresistible. Ideal for someone who wants to look effortlessly hot and alluring.'m ready to trade it for something that will make me feel even more irresistible. Ideal for someone who wants to look effortlessly hot and alluring.'m exchanging this trendy outfit because I want something that will make me feel more seductive. This piece has been my favorite for attracting attention, and I\'m ready to trade it for something that will make me feel even more captivating. Ideal for someone who wants to look effortlessly hot.',
+        'why_release': 'I want to exchange this trendy outfit because I\'m seeking something that will make me feel more seductive. This piece has been my favorite for turning heads, and I\'m ready to trade it for something that will make me feel even more irresistible. Ideal for someone who wants to look effortlessly hot and alluring.',
         'user': {
             'name': 'Aisha Mohammed',
             'avatar': 'https://i.pravatar.cc/150?img=12',
@@ -81,7 +81,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/item5.png',
         'condition': 'Excellent',
         'size': 'S',
-        'why_release': 'I\'m trading this comfortable wear because I want something that will make me feel more desirable. This piece has been my comfort choice, but now I want something that will make me feel more attractive and captivating. Perfect for someone who wants to look both comfortable and absolutely irresistible.'m looking for something that will make me feel more desirable. This piece has been my comfort choice, but now I want something that will make me feel more attractive. Perfect for someone who wants to look both comfortable and alluring.',
+        'why_release': 'I\'m trading this comfortable wear because I want something that will make me feel more desirable. This piece has been my comfort choice, but now I want something that will make me feel more attractive and captivating. Perfect for someone who wants to look both comfortable and absolutely irresistible.',
         'user': {
             'name': 'Mariam Al-Rashid',
             'avatar': 'https://i.pravatar.cc/150?img=15',
@@ -98,7 +98,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/item6.png',
         'condition': 'Like New',
         'size': 'M',
-        'why_release': 'I want to exchange this elegant dress because I\'m looking for something that will make me feel more irresistible. This piece has been my secret weapon for special occasions, and now I want to trade it for something that will make me feel even more captivating. Ideal for someone who wants to look stunning and absolutely seductive.'m exchanging this elegant dress because I want something that will make me feel more irresistible. This piece has been my secret for special occasions, and now I want to trade it for something that will make me feel even more captivating. Ideal for someone who wants to look stunning and seductive.',
+        'why_release': 'I want to exchange this elegant dress because I\'m looking for something that will make me feel more irresistible. This piece has been my secret weapon for special occasions, and now I want to trade it for something that will make me feel even more captivating. Ideal for someone who wants to look stunning and absolutely seductive.',
         'user': {
             'name': 'Zainab Al-Khalifa',
             'avatar': 'https://i.pravatar.cc/150?img=20',
@@ -115,7 +115,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/item7.png',
         'condition': 'Good',
         'size': 'L',
-        'why_release': 'I\'m trading this casual top because I want something that will make me feel more attractive. This piece has been my go-to for looking amazing, and now I want to exchange it for something that will make me feel even more desirable. Perfect for someone who wants to look effortlessly sexy and alluring.'m seeking something that will make me feel more attractive. This piece has been my go-to for looking good, and now I want to exchange it for something that will make me feel even more desirable. Perfect for someone who wants to look effortlessly sexy.',
+        'why_release': 'I\'m trading this casual top because I want something that will make me feel more attractive. This piece has been my go-to for looking amazing, and now I want to exchange it for something that will make me feel even more desirable. Perfect for someone who wants to look effortlessly sexy and alluring.',
         'user': {
             'name': 'Sara Al-Mazrouei',
             'avatar': 'https://i.pravatar.cc/150?img=25',
@@ -132,7 +132,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/item8.png',
         'condition': 'Excellent',
         'size': 'M',
-        'why_release': 'I want to exchange this modern outfit because I\'m seeking something that will make me feel more seductive. This piece has been my favorite for attracting attention, and I\'m ready to swap it for something that will make me feel even more irresistible. Ideal for someone who wants to look hot and absolutely captivating.'m ready to swap it for something that will make me feel even more irresistible. Ideal for someone who wants to look hot and absolutely captivating.'m ready to swap it for something that will make me feel even more irresistible. Ideal for someone who wants to look hot and absolutely captivating.'m ready to swap it for something that will make me feel even more irresistible. Ideal for someone who wants to look hot and absolutely captivating.'m exchanging this modern outfit because I want something that will make me feel more seductive. This piece has been my favorite for turning heads, and I\'m ready to swap it for something that will make me feel even more captivating. Ideal for someone who wants to look hot and irresistible.',
+        'why_release': 'I want to exchange this modern outfit because I\'m seeking something that will make me feel more seductive. This piece has been my favorite for attracting attention, and I\'m ready to swap it for something that will make me feel even more irresistible. Ideal for someone who wants to look hot and absolutely captivating.',
         'user': {
             'name': 'Hala Al-Dhaheri',
             'avatar': 'https://i.pravatar.cc/150?img=30',
@@ -149,7 +149,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/item9.png',
         'condition': 'Like New',
         'size': 'S',
-        'why_release': 'I\'m trading this timeless piece because I want something that will make me feel more desirable. This piece has been my classic choice, but now I want something that will make me feel more attractive and alluring. Perfect for someone who wants to look both elegant and absolutely irresistible.'m looking for something that will make me feel more desirable. This piece has been my classic choice, but now I want something that will make me feel more attractive. Perfect for someone who wants to look both elegant and alluring.',
+        'why_release': 'I\'m trading this timeless piece because I want something that will make me feel more desirable. This piece has been my classic choice, but now I want something that will make me feel more attractive and alluring. Perfect for someone who wants to look both elegant and absolutely irresistible.',
         'user': {
             'name': 'Amira Al-Suwaidi',
             'avatar': 'https://i.pravatar.cc/150?img=35',
@@ -166,7 +166,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/item10.png',
         'condition': 'Excellent',
         'size': 'L',
-        'why_release': 'I want to exchange this statement outfit because I\'m looking for something that will make me feel more irresistible. This piece has been my bold choice for turning heads, and now I want to trade it for something that will make me feel even more captivating. Ideal for someone who wants to look stunning and absolutely seductive.'m exchanging this statement outfit because I want something that will make me feel more irresistible. This piece has been my bold choice for attracting attention, and now I want to trade it for something that will make me feel even more captivating. Ideal for someone who wants to look stunning and seductive.',
+        'why_release': 'I want to exchange this statement outfit because I\'m looking for something that will make me feel more irresistible. This piece has been my bold choice for turning heads, and now I want to trade it for something that will make me feel even more captivating. Ideal for someone who wants to look stunning and absolutely seductive.',
         'user': {
             'name': 'Yasmin Al-Qasimi',
             'avatar': 'https://i.pravatar.cc/150?img=40',
@@ -183,7 +183,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/item11.png',
         'condition': 'Good',
         'size': 'M',
-        'why_release': 'I\'m trading this versatile outfit because I want something that will make me feel more attractive. This piece has been my reliable choice, and now I want to exchange it for something that will make me feel even more desirable. Perfect for someone who wants to look effortlessly sexy and alluring.'m seeking something that will make me feel more attractive. This piece has been my reliable choice, and now I want to exchange it for something that will make me feel even more desirable. Perfect for someone who wants to look effortlessly sexy.',
+        'why_release': 'I\'m trading this versatile outfit because I want something that will make me feel more attractive. This piece has been my reliable choice, and now I want to exchange it for something that will make me feel even more desirable. Perfect for someone who wants to look effortlessly sexy and alluring.',
         'user': {
             'name': 'Rania Al-Nuaimi',
             'avatar': 'https://i.pravatar.cc/150?img=45',
@@ -200,7 +200,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/item12.png',
         'condition': 'Like New',
         'size': 'S',
-        'why_release': 'I want to exchange this special occasion outfit because I\'m seeking something that will make me feel more seductive. This piece has been my go-to for celebrations, and I\'m ready to swap it for something that will make me feel even more irresistible. Ideal for someone who wants to look hot and absolutely captivating.'m ready to swap it for something that will make me feel even more irresistible. Ideal for someone who wants to look hot and absolutely captivating.'m ready to swap it for something that will make me feel even more irresistible. Ideal for someone who wants to look hot and absolutely captivating.'m ready to swap it for something that will make me feel even more irresistible. Ideal for someone who wants to look hot and absolutely captivating.'m exchanging this special occasion outfit because I want something that will make me feel more seductive. This piece has been my go-to for celebrations, and I\'m ready to swap it for something that will make me feel even more captivating. Ideal for someone who wants to look hot and irresistible.',
+        'why_release': 'I want to exchange this special occasion outfit because I\'m seeking something that will make me feel more seductive. This piece has been my go-to for celebrations, and I\'m ready to swap it for something that will make me feel even more irresistible. Ideal for someone who wants to look hot and absolutely captivating.',
         'user': {
             'name': 'Lina Al-Mazrouei',
             'avatar': 'https://i.pravatar.cc/150?img=50',
@@ -217,7 +217,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/sleepwear.png',
         'condition': 'Excellent',
         'size': 'M',
-        'why_release': 'I\'m trading this sleepwear set because I want something that will make me feel more desirable. This piece has been my comfort choice, but now I want something that will make me feel more attractive and alluring. Perfect for someone who wants to look both comfortable and absolutely irresistible.'m looking for something that will make me feel more desirable. This piece has been my comfort choice, but now I want something that will make me feel more attractive. Perfect for someone who wants to look both comfortable and alluring.',
+        'why_release': 'I\'m trading this sleepwear set because I want something that will make me feel more desirable. This piece has been my comfort choice, but now I want something that will make me feel more attractive and alluring. Perfect for someone who wants to look both comfortable and absolutely irresistible.',
         'user': {
             'name': 'Nadia Al-Hosani',
             'avatar': 'https://i.pravatar.cc/150?img=55',
@@ -234,7 +234,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/magazine1.png',
         'condition': 'Like New',
         'size': 'N/A',
-        'why_release': 'I want to exchange this fashion magazine collection because I\'m looking for something that will inspire me to look more irresistible. This collection has been my style guide, and now I want to trade it for something that will make me feel even more captivating. Ideal for someone who wants to stay updated with seductive fashion trends.'m exchanging this fashion magazine collection because I want something that will inspire me to look more irresistible. This collection has been my style guide, and now I want to trade it for something that will make me feel even more captivating. Ideal for someone who wants to stay updated with seductive fashion trends.',
+        'why_release': 'I want to exchange this fashion magazine collection because I\'m looking for something that will inspire me to look more irresistible. This collection has been my style guide, and now I want to trade it for something that will make me feel even more captivating. Ideal for someone who wants to stay updated with seductive fashion trends.',
         'user': {
             'name': 'Dina Al-Kaabi',
             'avatar': 'https://i.pravatar.cc/150?img=60',
@@ -251,7 +251,7 @@ CLOTHES_DATA = [
         'cover': '/static/clothes-middle-east/magazine2.png',
         'condition': 'Excellent',
         'size': 'N/A',
-        'why_release': 'I\'m trading this fashion exchange magazine because I want something that will make me feel more attractive. This magazine has been my inspiration, and now I want to exchange it for something that will make me feel even more desirable. Perfect for someone who wants to discover the art of looking absolutely irresistible.'m seeking something that will make me feel more attractive. This magazine has been my inspiration, and now I want to exchange it for something that will make me feel even more desirable. Perfect for someone who wants to discover the art of looking irresistible.',
+        'why_release': 'I\'m trading this fashion exchange magazine because I want something that will make me feel more attractive. This magazine has been my inspiration, and now I want to exchange it for something that will make me feel even more desirable. Perfect for someone who wants to discover the art of looking absolutely irresistible.',
         'user': {
             'name': 'Salma Al-Mansoori',
             'avatar': 'https://i.pravatar.cc/150?img=65',
@@ -298,4 +298,3 @@ SAMPLE_EXCHANGES = [
         'message2': 'Glad it works for you! Enjoy your new casual style!'
     }
 ]
-
