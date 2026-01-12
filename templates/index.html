@@ -301,8 +301,6 @@
             width: 55px;
             height: 55px;
             border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--primary);
             flex-shrink: 0;
             box-shadow: var(--shadow-gold);
             background: var(--gold-gradient);
@@ -314,6 +312,7 @@
             font-size: 24px;
             position: relative;
             overflow: hidden;
+            border: 3px solid var(--primary);
         }
 
         .user-avatar img {
@@ -324,6 +323,11 @@
             position: absolute;
             top: 0;
             left: 0;
+            display: none;
+        }
+
+        .user-avatar img.loaded {
+            display: block;
         }
 
         .user-avatar .avatar-fallback {
@@ -833,7 +837,7 @@
     <div class="container">
         <div class="header">
             <h1>👗 Trueque Digital - تبادل الملابس</h1>
-            <p>تبادل الملابس، شارك القصص، ابني المجتمع</p>
+            <p>هنا يمكنك تبادل أي شيء تريده</p>
         </div>
 
         <div class="clothes-list-container">
@@ -853,7 +857,7 @@
             <h2 class="modal-title">طلب التبادل</h2>
             
             <div class="form-group">
-                <label>لماذا أشارك هذا:</label>
+                <label>لماذا أريد تبادل هذا:</label>
                 <textarea id="userStory" placeholder="اكتب هنا لماذا تريد هذا العنصر وما العنصر الذي تريد تبادله..."></textarea>
             </div>
 
@@ -897,7 +901,7 @@
                                 "cover": "/static/clothes-middle-east/item1.png",
                                 "condition": "Like New",
                                 "size": "M",
-                                "why_release": "This beautiful swimsuit has been perfect for beach days and pool parties in Dubai. The stylish design and comfortable fit made me feel confident and elegant. I'm letting it go because I've found my new favorite style, but I know it will bring someone else the same joy it brought me. Perfect for beach vacations, pool parties, or any water activities.",
+                                "why_release": "I want to exchange this stunning swimsuit because I'm looking for something that will make me feel irresistible at the beach. This piece has been my secret weapon for turning heads, and now I'm ready to trade it for something equally captivating. Perfect for someone who wants to stand out and feel confident.",
                                 "user": {
                                                 "name": "Fatima Al-Mansoori",
                                                 "avatar": "https://i.pravatar.cc/150?img=1",
@@ -914,7 +918,7 @@
                                 "cover": "/static/clothes-middle-east/item2.png",
                                 "condition": "Excellent",
                                 "size": "S",
-                                "why_release": "This comfortable and stylish casual outfit has been perfect for Dubai's warm weather. Lightweight fabric that breathes well, perfect for shopping trips or casual brunches. I'm passing it on because I've found my new favorite style, but this piece deserves to be worn and loved by someone else.",
+                                "why_release": "I'm exchanging this casual outfit because I want something that will catch your eye. This piece has been my go-to for making a statement, and I'm ready to swap it for something that will make me feel even more attractive. Ideal for someone who wants to look effortlessly sexy.",
                                 "user": {
                                                 "name": "Layla Hassan",
                                                 "avatar": "https://i.pravatar.cc/150?img=5",
@@ -931,7 +935,7 @@
                                 "cover": "/static/clothes-middle-east/item3.png",
                                 "condition": "Like New",
                                 "size": "L",
-                                "why_release": "This professional outfit helped me land my dream job interview. The classic design and perfect tailoring gave me the confidence I needed. Now that I've built my professional wardrobe, I want to pass this lucky piece to someone who needs that same confidence boost. Perfect for interviews, meetings, or any professional setting.",
+                                "why_release": "I want to trade this professional attire because I'm seeking something that will make me feel powerful and alluring. This outfit has been my confidence booster, and now I want to exchange it for something that will make me feel even more desirable. Perfect for someone who wants to look both professional and irresistible.",
                                 "user": {
                                                 "name": "Noor Al-Zahra",
                                                 "avatar": "https://i.pravatar.cc/150?img=9",
@@ -948,7 +952,7 @@
                                 "cover": "/static/clothes-middle-east/item4.png",
                                 "condition": "Good",
                                 "size": "M",
-                                "why_release": "This trendy outfit was my statement piece for weekend outings. It always got compliments and made me feel fashionable. I'm sharing it because fashion should be shared, and someone else deserves to feel as stylish as I did wearing this.",
+                                "why_release": "I'm exchanging this trendy outfit because I want something that will make me feel more seductive. This piece has been my favorite for attracting attention, and I'm ready to trade it for something that will make me feel even more captivating. Ideal for someone who wants to look effortlessly hot.",
                                 "user": {
                                                 "name": "Aisha Mohammed",
                                                 "avatar": "https://i.pravatar.cc/150?img=12",
@@ -965,7 +969,7 @@
                                 "cover": "/static/clothes-middle-east/item5.png",
                                 "condition": "Excellent",
                                 "size": "S",
-                                "why_release": "This cozy outfit has been my comfort companion during lazy weekends and work-from-home days. Soft fabric that feels like a hug, perfect for relaxing at home or running errands. I'm letting it go because I have too many similar pieces, but I know it will bring comfort to someone else.",
+                                "why_release": "I want to swap this comfortable wear because I'm looking for something that will make me feel more desirable. This piece has been my comfort choice, but now I want something that will make me feel more attractive. Perfect for someone who wants to look both comfortable and alluring.",
                                 "user": {
                                                 "name": "Mariam Al-Rashid",
                                                 "avatar": "https://i.pravatar.cc/150?img=15",
@@ -982,7 +986,7 @@
                                 "cover": "/static/clothes-middle-east/item6.png",
                                 "condition": "Like New",
                                 "size": "M",
-                                "why_release": "This beautiful formal dress has been with me through many celebrations. The elegant design and flattering cut made me feel like a princess at every event. I'm sharing it because I believe every woman deserves to feel beautiful, and this dress has that magic.",
+                                "why_release": "I'm exchanging this elegant dress because I want something that will make me feel more irresistible. This piece has been my secret for special occasions, and now I want to trade it for something that will make me feel even more captivating. Ideal for someone who wants to look stunning and seductive.",
                                 "user": {
                                                 "name": "Zainab Al-Khalifa",
                                                 "avatar": "https://i.pravatar.cc/150?img=20",
@@ -999,7 +1003,7 @@
                                 "cover": "/static/clothes-middle-east/item7.png",
                                 "condition": "Good",
                                 "size": "L",
-                                "why_release": "This versatile top has been a wardrobe staple. It pairs well with everything and always looks put-together. I'm passing it on because I want to make room for new pieces, but this top deserves to continue being someone's go-to piece.",
+                                "why_release": "I want to trade this casual top because I'm seeking something that will make me feel more attractive. This piece has been my go-to for looking good, and now I want to exchange it for something that will make me feel even more desirable. Perfect for someone who wants to look effortlessly sexy.",
                                 "user": {
                                                 "name": "Sara Al-Mazrouei",
                                                 "avatar": "https://i.pravatar.cc/150?img=25",
@@ -1016,7 +1020,7 @@
                                 "cover": "/static/clothes-middle-east/item8.png",
                                 "condition": "Excellent",
                                 "size": "M",
-                                "why_release": "This modern outfit represents my journey into contemporary fashion. It's versatile, comfortable, and always makes me feel confident. I'm sharing it because fashion is about expressing yourself, and I want someone else to experience that same feeling.",
+                                "why_release": "I'm exchanging this modern outfit because I want something that will make me feel more seductive. This piece has been my favorite for turning heads, and I'm ready to swap it for something that will make me feel even more captivating. Ideal for someone who wants to look hot and irresistible.",
                                 "user": {
                                                 "name": "Hala Al-Dhaheri",
                                                 "avatar": "https://i.pravatar.cc/150?img=30",
@@ -1033,7 +1037,7 @@
                                 "cover": "/static/clothes-middle-east/item9.png",
                                 "condition": "Like New",
                                 "size": "S",
-                                "why_release": "This timeless piece has been in my wardrobe for years because it never goes out of style. Classic design that works for any occasion. I'm letting it go to make space, but I know it will serve someone else just as well as it served me.",
+                                "why_release": "I want to swap this timeless piece because I'm looking for something that will make me feel more desirable. This piece has been my classic choice, but now I want something that will make me feel more attractive. Perfect for someone who wants to look both elegant and alluring.",
                                 "user": {
                                                 "name": "Amira Al-Suwaidi",
                                                 "avatar": "https://i.pravatar.cc/150?img=35",
@@ -1050,7 +1054,7 @@
                                 "cover": "/static/clothes-middle-east/item10.png",
                                 "condition": "Excellent",
                                 "size": "L",
-                                "why_release": "This bold outfit helped me step out of my comfort zone and embrace my unique style. It always turns heads and makes me feel like I'm walking a fashion runway. I'm sharing it because I want someone else to experience that confidence boost.",
+                                "why_release": "I'm exchanging this statement outfit because I want something that will make me feel more irresistible. This piece has been my bold choice for attracting attention, and now I want to trade it for something that will make me feel even more captivating. Ideal for someone who wants to look stunning and seductive.",
                                 "user": {
                                                 "name": "Yasmin Al-Qasimi",
                                                 "avatar": "https://i.pravatar.cc/150?img=40",
@@ -1067,7 +1071,7 @@
                                 "cover": "/static/clothes-middle-east/item11.png",
                                 "condition": "Good",
                                 "size": "M",
-                                "why_release": "This versatile outfit has been my reliable choice for countless days. It works for work, casual outings, and everything in between. I'm passing it on because I believe in sustainable fashion and want this piece to continue its journey with someone new.",
+                                "why_release": "I want to trade this versatile outfit because I'm seeking something that will make me feel more attractive. This piece has been my reliable choice, and now I want to exchange it for something that will make me feel even more desirable. Perfect for someone who wants to look effortlessly sexy.",
                                 "user": {
                                                 "name": "Rania Al-Nuaimi",
                                                 "avatar": "https://i.pravatar.cc/150?img=45",
@@ -1084,7 +1088,7 @@
                                 "cover": "/static/clothes-middle-east/item12.png",
                                 "condition": "Like New",
                                 "size": "S",
-                                "why_release": "This elegant outfit has been my choice for special celebrations. The beautiful design and perfect fit made every occasion memorable. I'm sharing it because I want someone else to create their own beautiful memories wearing this piece.",
+                                "why_release": "I'm exchanging this special occasion outfit because I want something that will make me feel more seductive. This piece has been my go-to for celebrations, and I'm ready to swap it for something that will make me feel even more captivating. Ideal for someone who wants to look hot and irresistible.",
                                 "user": {
                                                 "name": "Lina Al-Mazrouei",
                                                 "avatar": "https://i.pravatar.cc/150?img=50",
@@ -1101,7 +1105,7 @@
                                 "cover": "/static/clothes-middle-east/sleepwear.png",
                                 "condition": "Excellent",
                                 "size": "M",
-                                "why_release": "This cozy sleepwear set has been my comfort companion for peaceful nights. Soft, breathable fabric that feels luxurious. I'm sharing it because I believe everyone deserves a good night's sleep in comfortable clothing, and this set provides just that.",
+                                "why_release": "I want to swap this sleepwear set because I'm looking for something that will make me feel more desirable. This piece has been my comfort choice, but now I want something that will make me feel more attractive. Perfect for someone who wants to look both comfortable and alluring.",
                                 "user": {
                                                 "name": "Nadia Al-Hosani",
                                                 "avatar": "https://i.pravatar.cc/150?img=55",
@@ -1118,7 +1122,7 @@
                                 "cover": "/static/clothes-middle-east/magazine1.png",
                                 "condition": "Like New",
                                 "size": "N/A",
-                                "why_release": "This collection of fashion magazines has been my inspiration source for years. Full of style tips, trends, and beautiful photography. I'm sharing it because knowledge and inspiration should be shared. Perfect for anyone looking to stay updated with fashion trends in the Middle East.",
+                                "why_release": "I'm exchanging this fashion magazine collection because I want something that will inspire me to look more irresistible. This collection has been my style guide, and now I want to trade it for something that will make me feel even more captivating. Ideal for someone who wants to stay updated with seductive fashion trends.",
                                 "user": {
                                                 "name": "Dina Al-Kaabi",
                                                 "avatar": "https://i.pravatar.cc/150?img=60",
@@ -1135,7 +1139,7 @@
                                 "cover": "/static/clothes-middle-east/magazine2.png",
                                 "condition": "Excellent",
                                 "size": "N/A",
-                                "why_release": "This special edition magazine is all about sustainable fashion and clothing exchange. It opened my eyes to the importance of circular fashion. I'm sharing it because I want others to discover the joy of exchanging clothes and building a sustainable wardrobe.",
+                                "why_release": "I want to trade this fashion exchange magazine because I'm seeking something that will make me feel more attractive. This magazine has been my inspiration, and now I want to exchange it for something that will make me feel even more desirable. Perfect for someone who wants to discover the art of looking irresistible.",
                                 "user": {
                                                 "name": "Salma Al-Mansoori",
                                                 "avatar": "https://i.pravatar.cc/150?img=65",
@@ -1154,59 +1158,84 @@
             displayAllItems();
         }
 
-        function createAvatarFallback(name) {
-            const initial = name.charAt(0).toUpperCase();
-            return `<div class="avatar-fallback">${initial}</div>`;
+        function createAvatarElement(user) {
+            const avatarContainer = document.createElement('div');
+            avatarContainer.className = 'user-avatar';
+            
+            const fallback = document.createElement('div');
+            fallback.className = 'avatar-fallback';
+            fallback.textContent = user.name.charAt(0).toUpperCase();
+            avatarContainer.appendChild(fallback);
+            
+            if (user.avatar && user.avatar.startsWith('http')) {
+                const img = document.createElement('img');
+                img.src = user.avatar;
+                img.alt = user.name;
+                img.onload = function() {
+                    img.classList.add('loaded');
+                    fallback.style.display = 'none';
+                };
+                img.onerror = function() {
+                    img.style.display = 'none';
+                    fallback.style.display = 'flex';
+                };
+                avatarContainer.appendChild(img);
+            }
+            
+            return avatarContainer;
         }
 
         function displayAllItems() {
             const clothesList = document.getElementById('clothesList');
-            clothesList.innerHTML = items.map((item, index) => {
+            clothesList.innerHTML = '';
+            
+            items.forEach((item, index) => {
                 const imageUrl = item.cover.startsWith('http') ? item.cover : 
                                (item.cover.startsWith('/') ? window.location.origin + item.cover : 
                                window.location.origin + '/static/' + item.cover.replace('/static/', ''));
                 
-                const avatarUrl = item.user.avatar && item.user.avatar.startsWith('http') ? item.user.avatar : '';
-                const avatarFallback = createAvatarFallback(item.user.name);
-                const avatarFallbackSvg = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='55' height='55'%3E%3Crect width='55' height='55' fill='%23d4af37'/%3E%3Ctext x='50%25' y='50%25' fill='%231a1a1a' text-anchor='middle' dominant-baseline='central' font-size='26' font-weight='bold'%3E${item.user.name.charAt(0).toUpperCase()}%3C/text%3E%3C/svg%3E`;
-
-                return `
-                    <div class="clothes-card" data-item-id="${item.id}">
-                        <div class="clothes-header">
-                            <div class="clothes-image-wrapper">
-                                <img src="${imageUrl}" alt="${item.title}" class="clothes-cover" loading="lazy" onerror="handleImageError(this, '${imageUrl}')">
+                const card = document.createElement('div');
+                card.className = 'clothes-card';
+                card.setAttribute('data-item-id', item.id);
+                
+                const avatarElement = createAvatarElement(item.user);
+                const avatarHtml = avatarElement.outerHTML;
+                
+                card.innerHTML = `
+                    <div class="clothes-header">
+                        <div class="clothes-image-wrapper">
+                            <img src="${imageUrl}" alt="${item.title}" class="clothes-cover" loading="lazy" onerror="handleImageError(this, '${imageUrl}')">
+                        </div>
+                        <div class="clothes-info">
+                            <div>
+                                <div class="clothes-title">${item.title}</div>
+                                <span class="clothes-category">${item.category}</span>
                             </div>
-                            <div class="clothes-info">
-                                <div>
-                                    <div class="clothes-title">${item.title}</div>
-                                    <span class="clothes-category">${item.category}</span>
+                            <div class="user-info">
+                                ${avatarHtml}
+                                <div class="user-details">
+                                    <div class="user-name">${item.user.name}</div>
+                                    <span class="trust-badge">${item.user.trust_badge}</span>
                                 </div>
-                                <div class="user-info">
-                                    <div class="user-avatar">
-                                        ${avatarUrl ? `<img src="${avatarUrl}" alt="${item.user.name}" onerror="this.onerror=null; this.parentElement.innerHTML='${avatarFallback}';" style="display: block;">` : avatarFallback}
-                                    </div>
-                                    <div class="user-details">
-                                        <div class="user-name">${item.user.name}</div>
-                                        <span class="trust-badge">${item.user.trust_badge}</span>
-                                    </div>
-                                    <div class="whatsapp-icon" onclick="openWhatsApp(${item.id}, ${index})" title="Contact via WhatsApp">
-                                        <svg viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-                                        </svg>
-                                    </div>
+                                <div class="whatsapp-icon" onclick="openWhatsApp(${item.id}, ${index})" title="Contact via WhatsApp">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                                    </svg>
                                 </div>
                             </div>
                         </div>
-                        <div class="why-release">
-                            <h4>لماذا أشارك هذا</h4>
-                            <p>${item.why_release}</p>
-                        </div>
-                        <button class="share-btn" onclick="shareItem(${index})">
-                            📤 مشاركة
-                        </button>
                     </div>
+                    <div class="why-release">
+                        <h4>${translations['why_sharing']}</h4>
+                        <p>${item.why_release}</p>
+                    </div>
+                    <button class="share-btn" onclick="shareItem(${index})">
+                        📤 ${translations['share']}
+                    </button>
                 `;
-            }).join('');
+                
+                clothesList.appendChild(card);
+            });
         }
 
         function handleImageError(img, url) {
