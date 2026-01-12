@@ -8,12 +8,12 @@
 CLOTHES_DATA = [
     {
         'id': 1,
-        'title': 'Elegant Evening Dress',
-        'category': 'Dress',
+        'title': 'Stylish Swimsuit',
+        'category': 'Swimwear',
         'cover': '/static/clothes-middle-east/item1.png',
         'condition': 'Like New',
         'size': 'M',
-        'why_release': 'This stunning evening dress has been my go-to for special occasions. The elegant design and perfect fit made me feel confident at every event. I\'m letting it go because my style has evolved, but I know it will bring someone else the same joy it brought me. Perfect for weddings, galas, or any special night out in Dubai.',
+        'why_release': 'This beautiful swimsuit has been perfect for beach days and pool parties in Dubai. The stylish design and comfortable fit made me feel confident and elegant. I\'m letting it go because I\'ve found my new favorite style, but I know it will bring someone else the same joy it brought me. Perfect for beach vacations, pool parties, or any water activities.',
         'user': {
             'name': 'Fatima Al-Mansoori',
             'avatar': 'https://i.pravatar.cc/150?img=1',

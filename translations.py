@@ -62,12 +62,12 @@ ZH_TRANSLATIONS = {
 CLOTHES_DATA_ZH = [
     {
         'id': 1,
-        'title': '优雅晚礼服',
-        'category': '礼服',
+        'title': '时尚泳装',
+        'category': '泳装',
         'cover': '/static/clothes-middle-east/item1.png',
         'condition': '几乎全新',
         'size': 'M',
-        'why_release': '这件令人惊艳的晚礼服一直是我参加特殊场合的首选。优雅的设计和完美的剪裁让我在每次活动中都充满自信。我选择分享它是因为我的风格已经进化，但我知道它会给其他人带来同样的快乐。非常适合婚礼、晚宴或迪拜的任何特殊夜晚。',
+        'why_release': '这件漂亮的泳装非常适合在迪拜的海滩日和泳池派对。时尚的设计和舒适的剪裁让我感到自信和优雅。我选择分享它是因为我找到了新的最爱风格，但我知道它会给其他人带来同样的快乐。非常适合海滩度假、泳池派对或任何水上活动。',
         'user': {
             'name': 'Fatima Al-Mansoori',
             'avatar': 'https://i.pravatar.cc/150?img=1',

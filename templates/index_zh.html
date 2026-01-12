@@ -47,7 +47,7 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* 背景装饰 - 移动端减少 */
+        /* 背景装饰 */
         body::before {
             content: '';
             position: fixed;
@@ -89,7 +89,7 @@
             z-index: 1;
         }
 
-        /* 语言切换器 - 移动端优化 */
+        /* 语言切换器 */
         .lang-switcher {
             position: fixed;
             top: 15px;
@@ -116,7 +116,7 @@
             transform: translateY(-2px);
         }
 
-        /* 头部 - 移动端优化 */
+        /* 头部 */
         .header {
             text-align: center;
             padding: 40px 25px;
@@ -167,7 +167,7 @@
             letter-spacing: 0.3px;
         }
 
-        /* 导航控制 - 移动端优化 */
+        /* 导航控制 */
         .nav-controls {
             display: flex;
             justify-content: space-between;
@@ -222,7 +222,7 @@
             text-align: center;
         }
 
-        /* 卡片设计 - 移动端优化 */
+        /* 卡片设计 */
         .clothes-card {
             background: rgba(26, 26, 26, 0.9);
             backdrop-filter: blur(30px);
@@ -317,6 +317,20 @@
             border: 3px solid var(--primary);
             flex-shrink: 0;
             box-shadow: var(--shadow-gold);
+            background: var(--gold-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark);
+            font-weight: 900;
+            font-size: 24px;
+        }
+
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
         }
 
         .user-details {
@@ -416,7 +430,7 @@
             letter-spacing: 0.2px;
         }
 
-        /* 分享按钮 - 移动端优化 */
+        /* 分享按钮 */
         .share-btn {
             position: static;
             width: 100%;
@@ -450,7 +464,7 @@
             transform: translateY(-2px);
         }
 
-        /* 底部按钮 - 移动端优化 */
+        /* 底部按钮 */
         .fixed-bottom-btn {
             position: fixed;
             bottom: 0;
@@ -491,7 +505,7 @@
             box-shadow: 0 16px 64px rgba(212, 175, 55, 0.6);
         }
 
-        /* 模态框 - 移动端优化 */
+        /* 模态框 */
         .modal {
             display: none;
             position: fixed;
@@ -669,109 +683,6 @@
             box-shadow: 0 16px 64px rgba(212, 175, 55, 0.6);
         }
 
-        /* 历史交换区 - 移动端优化 */
-        .history-section {
-            margin-top: 40px;
-            background: rgba(26, 26, 26, 0.9);
-            backdrop-filter: blur(30px);
-            border: 2px solid var(--primary);
-            border-radius: 25px;
-            padding: 30px 20px;
-            box-shadow: var(--shadow-dark), var(--shadow-gold);
-        }
-
-        .history-section h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 32px;
-            background: var(--gold-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 30px;
-            text-align: center;
-            font-weight: 900;
-            letter-spacing: -0.5px;
-        }
-
-        .exchange-list {
-            display: flex;
-            gap: 20px;
-            overflow-x: auto;
-            padding: 15px 0;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: thin;
-            scrollbar-color: var(--primary) rgba(26, 26, 26, 0.5);
-        }
-
-        .exchange-list::-webkit-scrollbar {
-            height: 6px;
-        }
-
-        .exchange-list::-webkit-scrollbar-track {
-            background: rgba(26, 26, 26, 0.5);
-            border-radius: 3px;
-        }
-
-        .exchange-list::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 3px;
-        }
-
-        .exchange-item {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 25px;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(255, 107, 157, 0.1) 100%);
-            border-radius: 20px;
-            min-width: 320px;
-            flex-shrink: 0;
-            scroll-snap-align: start;
-            box-shadow: var(--shadow-dark);
-            border: 2px solid rgba(212, 175, 55, 0.4);
-        }
-
-        .exchange-clothes {
-            text-align: center;
-            flex: 1;
-        }
-
-        .exchange-clothes img {
-            width: 90px;
-            height: 135px;
-            object-fit: cover;
-            border-radius: 15px;
-            margin-bottom: 12px;
-            box-shadow: var(--shadow-dark);
-            border: 2px solid var(--primary);
-        }
-
-        .exchange-clothes p {
-            font-size: 14px;
-            font-weight: 900;
-            line-height: 1.4;
-            color: var(--text-primary);
-            letter-spacing: 0.3px;
-        }
-
-        .exchange-icon {
-            font-size: 36px;
-            background: var(--gold-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .exchange-date {
-            font-size: 12px;
-            color: var(--text-secondary);
-            text-align: center;
-            margin-top: 12px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
         /* 桌面端样式 */
         @media (min-width: 769px) {
             .container {
@@ -846,6 +757,7 @@
             .user-avatar {
                 width: 70px;
                 height: 70px;
+                font-size: 32px;
             }
 
             .user-name {
@@ -907,34 +819,6 @@
             .modal-title {
                 font-size: 40px;
             }
-
-            .history-section {
-                padding: 60px;
-                border-radius: 40px;
-            }
-
-            .history-section h2 {
-                font-size: 48px;
-            }
-
-            .exchange-item {
-                min-width: 480px;
-                padding: 40px;
-                border-radius: 30px;
-            }
-
-            .exchange-clothes img {
-                width: 130px;
-                height: 195px;
-            }
-
-            .exchange-clothes p {
-                font-size: 16px;
-            }
-
-            .exchange-icon {
-                font-size: 52px;
-            }
         }
 
         /* 平板端样式 */
@@ -978,11 +862,6 @@
             <button class="share-btn" onclick="shareItem()">
                 📤 分享
             </button>
-        </div>
-
-        <div class="history-section">
-            <h2>🤝 已完成的交换</h2>
-            <div class="exchange-list" id="exchangeList"></div>
         </div>
     </div>
 
@@ -1037,12 +916,12 @@
         const items = [
                 {
                                 "id": 1,
-                                "title": "优雅晚礼服",
-                                "category": "礼服",
+                                "title": "时尚泳装",
+                                "category": "泳装",
                                 "cover": "/static/clothes-middle-east/item1.png",
                                 "condition": "几乎全新",
                                 "size": "M",
-                                "why_release": "这件令人惊艳的晚礼服一直是我参加特殊场合的首选。优雅的设计和完美的剪裁让我在每次活动中都充满自信。我选择分享它是因为我的风格已经进化，但我知道它会给其他人带来同样的快乐。非常适合婚礼、晚宴或迪拜的任何特殊夜晚。",
+                                "why_release": "这件漂亮的泳装非常适合在迪拜的海滩日和泳池派对。时尚的设计和舒适的剪裁让我感到自信和优雅。我选择分享它是因为我找到了新的最爱风格，但我知道它会给其他人带来同样的快乐。非常适合海滩度假、泳池派对或任何水上活动。",
                                 "user": {
                                                 "name": "Fatima Al-Mansoori",
                                                 "avatar": "https://i.pravatar.cc/150?img=1",
@@ -1291,27 +1170,24 @@
                                 "verified": true
                 }
 ];
-        const exchanges = [
-            {
-                item1: { title: items[0].title, cover: items[0].cover, user: items[0].user.name.split(' ')[0] },
-                item2: { title: items[2].title, cover: items[2].cover, user: items[2].user.name.split(' ')[0] },
-                date: '2025-01-08'
-            },
-            {
-                item1: { title: items[1].title, cover: items[1].cover, user: items[1].user.name.split(' ')[0] },
-                item2: { title: items[4].title, cover: items[4].cover, user: items[4].user.name.split(' ')[0] },
-                date: '2025-01-05'
-            }
-        ];
-
         let currentItemIndex = 0;
         let uploadedImage = null;
         let viewedItemsInSession = new Set();
 
         function init() {
             displayItem(0);
-            displayExchanges();
             updateCounter();
+        }
+
+        function getAvatarUrl(user) {
+            // 如果头像URL存在且有效，使用它；否则生成SVG占位符
+            if (user.avatar && user.avatar.startsWith('http')) {
+                return user.avatar;
+            }
+            // 生成SVG占位符
+            const initial = user.name.charAt(0).toUpperCase();
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="55" height="55"><rect width="55" height="55" fill="#d4af37"/><text x="50%" y="50%" fill="#1a1a1a" text-anchor="middle" dominant-baseline="central" font-size="26" font-weight="bold">${initial}</text></svg>`;
+            return 'data:image/svg+xml;base64,' + btoa(svg);
         }
 
         function displayItem(index) {
@@ -1328,6 +1204,9 @@
                            (item.cover.startsWith('/') ? window.location.origin + item.cover : 
                            window.location.origin + '/static/' + item.cover.replace('/static/', ''));
 
+            const avatarUrl = getAvatarUrl(item.user);
+            const avatarFallback = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='55' height='55'%3E%3Crect width='55' height='55' fill='%23d4af37'/%3E%3Ctext x='50%25' y='50%25' fill='%231a1a1a' text-anchor='middle' dominant-baseline='central' font-size='26' font-weight='bold'%3E${item.user.name.charAt(0).toUpperCase()}%3C/text%3E%3C/svg%3E`;
+
             itemDisplay.innerHTML = `
                 <div class="clothes-card">
                     <div class="clothes-header">
@@ -1340,7 +1219,9 @@
                                 <span class="clothes-category">${item.category}</span>
                             </div>
                             <div class="user-info">
-                                <img src="${item.user.avatar}" alt="${item.user.name}" class="user-avatar" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\'%3E%3Crect width=\'55\' height=\'55\' fill=\'%23d4af37\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' fill=\'%231a1a1a\' text-anchor=\'middle\' dominant-baseline=\'central\' font-size=\'26\' font-weight=\'bold\'>${item.user.name.charAt(0)}</text%3E%3C/svg%3E';">
+                                <div class="user-avatar">
+                                    <img src="${avatarUrl}" alt="${item.user.name}" onerror="this.onerror=null; this.src='${avatarFallback}'; this.style.display='block';">
+                                </div>
                                 <div class="user-details">
                                     <div class="user-name">${item.user.name}</div>
                                     <span class="trust-badge">${item.user.trust_badge}</span>
@@ -1386,36 +1267,6 @@
 
         function nextItem() {
             displayItem(currentItemIndex < items.length - 1 ? currentItemIndex + 1 : 0);
-        }
-
-        function displayExchanges() {
-            const exchangeList = document.getElementById('exchangeList');
-            exchangeList.innerHTML = exchanges.map(ex => {
-                const img1Url = ex.item1.cover.startsWith('http') ? ex.item1.cover : 
-                              (ex.item1.cover.startsWith('/') ? window.location.origin + ex.item1.cover : 
-                              window.location.origin + '/static/' + ex.item1.cover.replace('/static/', ''));
-                const img2Url = ex.item2.cover.startsWith('http') ? ex.item2.cover : 
-                              (ex.item2.cover.startsWith('/') ? window.location.origin + ex.item2.cover : 
-                              window.location.origin + '/static/' + ex.item2.cover.replace('/static/', ''));
-                return `
-                <div style="min-width: 320px; flex-shrink: 0;">
-                    <div class="exchange-item">
-                        <div class="exchange-clothes">
-                            <img src="${img1Url}" alt="${ex.item1.title}" loading="lazy" onerror="this.style.display='none';">
-                            <p>${ex.item1.title}</p>
-                            <p style="font-size: 12px; color: var(--text-secondary); margin-top: 8px; font-weight: 700;">${ex.item1.user}</p>
-                        </div>
-                        <div class="exchange-icon">🤝</div>
-                        <div class="exchange-clothes">
-                            <img src="${img2Url}" alt="${ex.item2.title}" loading="lazy" onerror="this.style.display='none';">
-                            <p>${ex.item2.title}</p>
-                            <p style="font-size: 12px; color: var(--text-secondary); margin-top: 8px; font-weight: 700;">${ex.item2.user}</p>
-                        </div>
-                    </div>
-                    <div class="exchange-date">${ex.date}</div>
-                </div>
-            `;
-            }).join('');
         }
 
         function openModal() {
