@@ -157,9 +157,14 @@ def _init_database_if_available():
             
             # 添加 project_type 字段（如果不存在）
             try:
-                cursor.execute('ALTER TABLE book_exchange_events ADD COLUMN IF NOT EXISTS project_type VARCHAR(20) DEFAULT \'clothes\'')
-            except Exception:
-                pass  # 字段可能已存在
+                cursor.execute('ALTER TABLE book_exchange_events ADD COLUMN IF NOT EXISTS project_type VARCHAR(20)')
+                # 将旧数据（NULL 值）标记为 'book'，新数据默认为 'clothes'
+                cursor.execute('UPDATE book_exchange_events SET project_type = \'book\' WHERE project_type IS NULL')
+                # 设置默认值为 'clothes'（只影响新插入的数据）
+                cursor.execute('ALTER TABLE book_exchange_events ALTER COLUMN project_type SET DEFAULT \'clothes\'')
+            except Exception as e:
+                print(f'⚠️ 更新 project_type 字段时出错: {e}')
+                pass  # 字段可能已存在或更新失败
             
             # 创建索引
             cursor.execute('CREATE INDEX IF NOT EXISTS idx_event_type ON book_exchange_events(event_type)')
@@ -322,8 +327,8 @@ def get_events(event_type: Optional[str] = None, limit: int = None, project_type
     storage = get_analytics_storage()
     with storage['lock']:
         events = storage['events']
-        # 只查询指定项目类型的数据
-        events = [e for e in events if e.get('project_type', 'clothes') == project_type]
+        # 只查询指定项目类型的数据（旧数据如果没有 project_type，默认为 'book'，不包含在 'clothes' 查询中）
+        events = [e for e in events if e.get('project_type') == project_type]
         if event_type:
             events = [e for e in events if e['event_type'] == event_type]
         if limit:
@@ -353,7 +358,7 @@ def count_events(event_type: str, project_type: str = 'clothes') -> int:
     with storage['lock']:
         return sum(1 for e in storage['events'] 
                   if e['event_type'] == event_type 
-                  and e.get('project_type', 'clothes') == project_type)
+                  and e.get('project_type') == project_type)
 
 def get_distinct_anon_ids(event_type: str) -> set:
     """（旧）获取独立访客 ID 集合，暂保留以兼容后续升级"""
@@ -390,7 +395,7 @@ def get_distinct_ips(event_type: str, project_type: str = 'clothes') -> set:
         ips = set()
         for e in storage['events']:
             if (e['event_type'] == event_type 
-                and e.get('project_type', 'clothes') == project_type 
+                and e.get('project_type') == project_type 
                 and e.get('ip')):
                 ips.add(e['ip'])
         return ips
@@ -431,7 +436,7 @@ def get_daily_stats(days: int = 30, project_type: str = 'clothes'):
         daily = defaultdict(lambda: {'pv': 0, 'uv': set()})
         for e in storage['events']:
             if (e['event_type'] == 'page_view' 
-                and e.get('project_type', 'clothes') == project_type):
+                and e.get('project_type') == project_type):
                 day = e['created_at'][:10]  # YYYY-MM-DD
                 daily[day]['pv'] += 1
                 if e.get('ip'):
