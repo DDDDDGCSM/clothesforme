@@ -589,6 +589,14 @@ def api_track_event():
     user_agent = request.headers.get('User-Agent', '')
 
     # 使用内存存储替代 SQLite，标记为衣服项目
+    # 对于 exchange_request 事件，如果图片是必传的，确保 has_image 正确设置
+    if event_type == 'exchange_request':
+        # 如果 extra 中没有 has_image 或者为 false，但用户已经提交了，说明图片已上传
+        # 因为前端会验证图片是否上传，只有上传了才能提交
+        if 'has_image' not in extra or not extra.get('has_image'):
+            # 如果用户成功提交了，说明图片一定已上传（因为前端有验证）
+            extra['has_image'] = True
+    
     add_event(
         event_type=event_type,
         book_id=book_id,
