@@ -1101,6 +1101,7 @@ def generate_template(lang='ar', translations=None, clothes_data=None):
             trackEvent('exchange_request', {{
                 itemId: items[currentItemIndex]?.id || null,
                 extra: {{
+                    story_snippet: story.substring(0, 120),  // 故事摘要（前120字）
                     story_length: story.length,
                     has_image: !!uploadedImage
                 }}

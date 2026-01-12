@@ -665,6 +665,7 @@ def admin_stats():
         try:
             book_id = e.get('book_id')
             if isinstance(book_id, int):
+                # 从衣服数据中查找标题
                 for b in SAMPLE_BOOKS:
                     if b.get('id') == book_id:
                         book_title = b.get('title')
