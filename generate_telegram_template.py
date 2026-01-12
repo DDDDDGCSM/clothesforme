@@ -217,32 +217,7 @@ def generate_template(lang='ar', translations=None, clothes_data=None):
             display: flex;
             flex-direction: column;
             gap: 30px;
-            max-height: calc(100vh - 300px);
-            overflow-y: auto;
-            overflow-x: hidden;
             padding: 10px 0;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: thin;
-            scrollbar-color: var(--primary) rgba(26, 26, 26, 0.5);
-        }}
-
-        .clothes-list::-webkit-scrollbar {{
-            width: 8px;
-        }}
-
-        .clothes-list::-webkit-scrollbar-track {{
-            background: rgba(26, 26, 26, 0.5);
-            border-radius: 4px;
-        }}
-
-        .clothes-list::-webkit-scrollbar-thumb {{
-            background: var(--primary);
-            border-radius: 4px;
-        }}
-
-        .clothes-list::-webkit-scrollbar-thumb:hover {{
-            background: var(--primary-light);
         }}
 
         /* 卡片设计 */
@@ -761,9 +736,6 @@ def generate_template(lang='ar', translations=None, clothes_data=None):
                 font-size: 22px;
             }}
 
-            .clothes-list {{
-                max-height: calc(100vh - 400px);
-            }}
 
             .clothes-card {{
                 border-radius: 40px;
@@ -1096,7 +1068,27 @@ def generate_template(lang='ar', translations=None, clothes_data=None):
             const currentItem = items[index];
             const message = encodeURIComponent(`Hello, I'm interested in exchanging this item: "${{currentItem ? currentItem.title : ''}}"`);
             const phoneNumber = '{translations['telegram_number'].replace('+', '').replace(' ', '').replace('-', '')}';
-            window.open(`https://t.me/${{phoneNumber}}?text=${{message}}`, '_blank');
+            // 使用 tg:// 协议直接唤起 Telegram 应用
+            const tgLink = `tg://resolve?phone=${{phoneNumber}}&text=${{message}}`;
+            const webLink = `https://t.me/+${{phoneNumber}}?text=${{message}}`;
+            
+            // 先尝试深链接，如果失败则使用网页链接
+            try {{
+                const link = document.createElement('a');
+                link.href = tgLink;
+                link.target = '_blank';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // 如果深链接失败，延迟后尝试网页链接
+                setTimeout(function() {{
+                    window.open(webLink, '_blank');
+                }}, 500);
+            }} catch(e) {{
+                // 如果出错，直接使用网页链接
+                window.open(webLink, '_blank');
+            }}
         }}
 
         function shareItem(index) {{
