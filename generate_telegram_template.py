@@ -4,7 +4,7 @@
 """
 import json
 from clothes_data import CLOTHES_DATA
-from translations import AR_TRANSLATIONS, ZH_TRANSLATIONS, CLOTHES_DATA_ZH
+from translations import AR_TRANSLATIONS, ZH_TRANSLATIONS, CLOTHES_DATA_ZH, CLOTHES_DATA_AR
 
 def generate_template(lang='ar', translations=None, clothes_data=None):
     """生成Telegram版本的UI模板"""
@@ -20,7 +20,13 @@ def generate_template(lang='ar', translations=None, clothes_data=None):
     if translations is None:
         translations = AR_TRANSLATIONS
     if clothes_data is None:
-        clothes_data = CLOTHES_DATA
+        # 根据语言选择对应的数据
+        if lang == 'ar':
+            clothes_data = CLOTHES_DATA_AR
+        elif lang == 'zh':
+            clothes_data = CLOTHES_DATA_ZH
+        else:
+            clothes_data = CLOTHES_DATA
     
     js_data = json.dumps(clothes_data, ensure_ascii=False, indent=16)
     
@@ -1120,7 +1126,7 @@ def generate_template(lang='ar', translations=None, clothes_data=None):
     return html
 
 if __name__ == '__main__':
-    ar_html = generate_template('ar', AR_TRANSLATIONS, CLOTHES_DATA)
+    ar_html = generate_template('ar', AR_TRANSLATIONS, CLOTHES_DATA_AR)
     with open('templates/index.html', 'w', encoding='utf-8') as f:
         f.write(ar_html)
     print('✅ 已生成Telegram版本UI模板（阿拉伯语）')
