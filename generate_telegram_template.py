@@ -927,8 +927,45 @@ def generate_template(lang='ar', translations=None, clothes_data=None):
         let currentItemIndex = 0;
         let uploadedImage = null;
         let viewedItemsInSession = new Set();
+        
+        // 获取或创建匿名用户ID
+        function getAnonId() {{
+            let anonId = localStorage.getItem('td_anon_id');
+            if (!anonId) {{
+                anonId = 'td_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
+                localStorage.setItem('td_anon_id', anonId);
+            }}
+            return anonId;
+        }}
+        
+        // 埋点函数
+        function trackEvent(eventType, payload) {{
+            try {{
+                const body = {{
+                    event_type: eventType,
+                    anon_id: getAnonId(),
+                    book_id: payload?.itemId || payload?.book_id || null,
+                    extra: payload?.extra || {{}}
+                }};
+                
+                if (navigator.sendBeacon) {{
+                    navigator.sendBeacon('/api/track', new Blob([JSON.stringify(body)], {{ type: 'application/json' }}));
+                }} else {{
+                    fetch('/api/track', {{
+                        method: 'POST',
+                        headers: {{ 'Content-Type': 'application/json' }},
+                        body: JSON.stringify(body),
+                        keepalive: true
+                    }}).catch(e => console.warn('Tracking failed:', e));
+                }}
+            }} catch (e) {{
+                console.warn('Tracking failed:', e);
+            }}
+        }}
 
         function init() {{
+            // 页面加载时发送 page_view 埋点
+            trackEvent('page_view', {{}});
             displayAllItems();
         }}
 
@@ -978,7 +1015,7 @@ def generate_template(lang='ar', translations=None, clothes_data=None):
                 card.innerHTML = `
                     <div class="clothes-header">
                         <div class="clothes-image-wrapper">
-                            <img src="${{imageUrl}}" alt="${{item.title}}" class="clothes-cover" loading="lazy" onerror="handleImageError(this, '${{imageUrl}}')">
+                            <img src="${{imageUrl}}" alt="${{item.title}}" class="clothes-cover" loading="lazy" onerror="handleImageError(this, '${{imageUrl}}')" onload="if (!viewedItemsInSession.has(${{item.id}})) {{ viewedItemsInSession.add(${{item.id}}); trackEvent('book_view', {{ itemId: ${{item.id}} }}); }}">
                         </div>
                         <div class="clothes-info">
                             <div>
@@ -1059,6 +1096,16 @@ def generate_template(lang='ar', translations=None, clothes_data=None):
                 alert('{translations["upload_photo"]}');
                 return;
             }}
+            
+            // 发送交换申请埋点
+            trackEvent('exchange_request', {{
+                itemId: items[currentItemIndex]?.id || null,
+                extra: {{
+                    story_length: story.length,
+                    has_image: !!uploadedImage
+                }}
+            }});
+            
             document.getElementById('telegramDisplay').style.display = 'block';
             document.getElementById('submitBtn').style.display = 'none';
         }}
@@ -1066,6 +1113,9 @@ def generate_template(lang='ar', translations=None, clothes_data=None):
         function openTelegram(itemId, index) {{
             currentItemIndex = index;
             const currentItem = items[index];
+            // 发送 Telegram 点击埋点
+            trackEvent('telegram_click', {{ itemId: itemId }});
+            
             const message = encodeURIComponent(`Hello, I'm interested in exchanging this item: "${{currentItem ? currentItem.title : ''}}"`);
             const phoneNumber = '{translations['telegram_number'].replace('+', '').replace(' ', '').replace('-', '')}';
             // 使用 tg:// 协议直接唤起 Telegram 应用
@@ -1093,6 +1143,9 @@ def generate_template(lang='ar', translations=None, clothes_data=None):
 
         function shareItem(index) {{
             const item = items[index];
+            // 发送分享埋点
+            trackEvent('share', {{ itemId: item.id }});
+            
             const shareText = `👗 ${{item.title}} – ${{item.category}}\\n\\n"${{item.why_release.substring(0, 110)}}..."\\n\\n🔥 Exchange clothes, share stories!`;
             if (navigator.share) {{
                 navigator.share({{ title: `👗 ${{item.title}}`, text: shareText, url: window.location.href }});
