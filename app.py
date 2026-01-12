@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import Optional, Dict, Any
 from collections import defaultdict
 from threading import Lock
+from clothes_data import CLOTHES_DATA  # 导入衣服数据
 
 app = Flask(__name__, static_folder='static', static_url_path='/static')
 CORS(app)
@@ -735,9 +736,9 @@ def admin_stats():
             book_id = e.get('book_id')
             if isinstance(book_id, int):
                 # 从衣服数据中查找标题
-                for b in SAMPLE_BOOKS:
-                    if b.get('id') == book_id:
-                        book_title = b.get('title')
+                for item in CLOTHES_DATA:
+                    if item.get('id') == book_id:
+                        book_title = item.get('title')
                         break
         except Exception:
             book_title = None
@@ -757,13 +758,22 @@ def admin_stats():
                 # 如果解析失败，使用原始值
                 pass
         
+        # 处理 has_image：确保正确解析布尔值
+        has_image_value = extra.get('has_image')
+        if isinstance(has_image_value, bool):
+            has_image = has_image_value
+        elif isinstance(has_image_value, str):
+            has_image = has_image_value.lower() in ('true', '1', 'yes')
+        else:
+            has_image = bool(has_image_value)
+        
         recent_submits.append({
             'created_at': created_at or '未知时间',
             'book_id': e.get('book_id'),
             'book_title': book_title or (f"衣服 #{e.get('book_id')}" if e.get('book_id') else '未指定'),
             'story_snippet': extra.get('story_snippet') or '无故事内容',
             'story_length': extra.get('story_length') or 0,
-            'has_image': bool(extra.get('has_image')),
+            'has_image': has_image,
             # 内部使用完整 IP，便于校验
             'ip': e.get('ip') or ''
         })
