@@ -6,7 +6,7 @@
 
 # 阿拉伯语翻译（默认）
 AR_TRANSLATIONS = {
-    'site_title': 'Trueque Digital - تبادل الملابس',
+    'site_title': 'تبادل الإغراء - Exchange Desire',
     'site_subtitle': 'هنا يمكنك تبادل أي شيء تريده',
     'exchange_clothes': 'تبادل الملابس',
     'share_stories': 'شارك القصص',
@@ -33,7 +33,7 @@ AR_TRANSLATIONS = {
 
 # 中文翻译
 ZH_TRANSLATIONS = {
-    'site_title': 'Trueque Digital - 衣服交换',
+    'site_title': '欲望交换 - Desire Exchange',
     'site_subtitle': '你在这里可以换你想换的任何东西',
     'exchange_clothes': '交换衣服',
     'share_stories': '分享故事',
@@ -67,7 +67,7 @@ CLOTHES_DATA_ZH = [
         'cover': '/static/clothes-middle-east/item1.png',
         'condition': '几乎全新',
         'size': 'M',
-        'why_release': '我想要交换这件令人惊艳的泳装，因为我在寻找能让我在海滩上魅力四射的单品。这件衣服一直是我吸引眼球的秘密武器，现在我准备用它换取同样迷人的东西。非常适合想要脱颖而出、充满自信的你。',
+        'why_release': '我想要交换这件令人惊艳的泳装，因为我在寻找能让我在海滩上成为焦点的单品。这件衣服一直是我吸引眼球的秘密武器，现在我准备用它换取让我感觉更加不可抗拒的东西。非常适合想要看起来绝对迷人的你。',
         'user': {
             'name': 'Fatima Al-Mansoori',
             'avatar': 'https://i.pravatar.cc/150?img=1',
@@ -84,7 +84,7 @@ CLOTHES_DATA_ZH = [
         'cover': '/static/clothes-middle-east/item2.png',
         'condition': '优秀',
         'size': 'S',
-        'why_release': '我想要交换这套休闲装，因为我想要能抓住你眼球的东西。这件衣服一直是我展现魅力的首选，我准备用它换取让我感觉更加迷人的单品。适合想要看起来轻松性感的你。',
+        'why_release': '我想要交换这套休闲装，因为我想要能瞬间抓住你眼球的东西。这件衣服一直是我展现魅力的首选，我准备用它换取让我感觉更加诱人的单品。适合想要看起来轻松性感的你。',
         'user': {
             'name': 'Layla Hassan',
             'avatar': 'https://i.pravatar.cc/150?img=5',
@@ -101,7 +101,7 @@ CLOTHES_DATA_ZH = [
         'cover': '/static/clothes-middle-east/item3.png',
         'condition': '几乎全新',
         'size': 'L',
-        'why_release': '我想要交换这套职业装，因为我在寻找能让我感觉既强大又诱人的单品。这套衣服一直是我的自信助推器，现在我想用它换取让我感觉更加迷人的东西。非常适合想要看起来既专业又不可抗拒的你。',
+        'why_release': '我想要交换这套职业装，因为我在寻找能让我感觉既强大又不可抗拒的单品。这套衣服一直是我的自信助推器，现在我想用它换取让我感觉更加迷人的东西。非常适合想要看起来既专业又绝对迷人的你。',
         'user': {
             'name': 'Noor Al-Zahra',
             'avatar': 'https://i.pravatar.cc/150?img=9',
@@ -118,7 +118,7 @@ CLOTHES_DATA_ZH = [
         'cover': '/static/clothes-middle-east/item4.png',
         'condition': '良好',
         'size': 'M',
-        'why_release': '我想要交换这套时尚装，因为我想要让我感觉更加诱人的东西。这件衣服一直是我吸引注意力的最爱，我准备用它换取让我感觉更加迷人的单品。适合想要看起来轻松火辣的 you。',
+        'why_release': '我想要交换这套时尚装，因为我想要让我感觉更加诱人的东西。这件衣服一直是我吸引眼球的最爱，我准备用它换取让我感觉更加不可抗拒的单品。适合想要看起来轻松火辣诱人的你。',
         'user': {
             'name': 'Aisha Mohammed',
             'avatar': 'https://i.pravatar.cc/150?img=12',
@@ -135,7 +135,7 @@ CLOTHES_DATA_ZH = [
         'cover': '/static/clothes-middle-east/item5.png',
         'condition': '优秀',
         'size': 'S',
-        'why_release': '我想要交换这套舒适装，因为我在寻找能让我感觉更加迷人的东西。这件衣服一直是我的舒适选择，但现在我想要让我感觉更加吸引人的单品。非常适合想要看起来既舒适又诱人的你。',
+        'why_release': '我想要交换这套舒适装，因为我在寻找能让我感觉更加迷人的东西。这件衣服一直是我的舒适选择，但现在我想要让我感觉更加吸引人和迷人的单品。非常适合想要看起来既舒适又绝对不可抗拒的你。',
         'user': {
             'name': 'Mariam Al-Rashid',
             'avatar': 'https://i.pravatar.cc/150?img=15',
@@ -152,7 +152,7 @@ CLOTHES_DATA_ZH = [
         'cover': '/static/clothes-middle-east/item6.png',
         'condition': '几乎全新',
         'size': 'M',
-        'why_release': '我想要交换这件优雅礼服，因为我想要让我感觉更加不可抗拒的东西。这件衣服一直是我特殊场合的秘密武器，现在我想用它换取让我感觉更加迷人的单品。适合想要看起来惊艳诱人的你。',
+        'why_release': '我想要交换这件优雅礼服，因为我想要让我感觉更加不可抗拒的东西。这件衣服一直是我特殊场合的秘密武器，现在我想用它换取让我感觉更加迷人的单品。适合想要看起来惊艳绝对性感的你。',
         'user': {
             'name': 'Zainab Al-Khalifa',
             'avatar': 'https://i.pravatar.cc/150?img=20',
@@ -169,7 +169,7 @@ CLOTHES_DATA_ZH = [
         'cover': '/static/clothes-middle-east/item7.png',
         'condition': '良好',
         'size': 'L',
-        'why_release': '我想要交换这件休闲上衣，因为我在寻找能让我感觉更加吸引人的东西。这件衣服一直是我看起来很棒的首选，现在我想用它换取让我感觉更加迷人的单品。非常适合想要看起来轻松性感的你。',
+        'why_release': '我想要交换这件休闲上衣，因为我在寻找能让我感觉更加吸引人的东西。这件衣服一直是我看起来很棒的首选，现在我想用它换取让我感觉更加迷人的单品。非常适合想要看起来轻松性感诱人的你。',
         'user': {
             'name': 'Sara Al-Mazrouei',
             'avatar': 'https://i.pravatar.cc/150?img=25',
@@ -186,7 +186,7 @@ CLOTHES_DATA_ZH = [
         'cover': '/static/clothes-middle-east/item8.png',
         'condition': '优秀',
         'size': 'M',
-        'why_release': '我想要交换这套现代装，因为我想要让我感觉更加诱人的东西。这件衣服一直是我吸引眼球的最爱，我准备用它换取让我感觉更加迷人的单品。适合想要看起来火辣不可抗拒的你。',
+        'why_release': '我想要交换这套现代装，因为我想要让我感觉更加诱人的东西。这件衣服一直是我吸引注意力的最爱，我准备用它换取让我感觉更加不可抗拒的单品。适合想要看起来火辣绝对迷人的你。',
         'user': {
             'name': 'Hala Al-Dhaheri',
             'avatar': 'https://i.pravatar.cc/150?img=30',
@@ -203,7 +203,7 @@ CLOTHES_DATA_ZH = [
         'cover': '/static/clothes-middle-east/item9.png',
         'condition': '几乎全新',
         'size': 'S',
-        'why_release': '我想要交换这件经典单品，因为我在寻找能让我感觉更加迷人的东西。这件衣服一直是我的经典选择，但现在我想要让我感觉更加吸引人的单品。非常适合想要看起来既优雅又诱人的你。',
+        'why_release': '我想要交换这件经典单品，因为我在寻找能让我感觉更加迷人的东西。这件衣服一直是我的经典选择，但现在我想要让我感觉更加吸引人和诱人的单品。非常适合想要看起来既优雅又绝对不可抗拒的你。',
         'user': {
             'name': 'Amira Al-Suwaidi',
             'avatar': 'https://i.pravatar.cc/150?img=35',
@@ -220,7 +220,7 @@ CLOTHES_DATA_ZH = [
         'cover': '/static/clothes-middle-east/item10.png',
         'condition': '优秀',
         'size': 'L',
-        'why_release': '我想要交换这套个性装，因为我想要让我感觉更加不可抗拒的东西。这件衣服一直是我吸引注意力的大胆选择，现在我想用它换取让我感觉更加迷人的单品。适合想要看起来惊艳诱人的你。',
+        'why_release': '我想要交换这套个性装，因为我想要让我感觉更加不可抗拒的东西。这件衣服一直是我吸引眼球的大胆选择，现在我想用它换取让我感觉更加迷人的单品。适合想要看起来惊艳绝对性感的你。',
         'user': {
             'name': 'Yasmin Al-Qasimi',
             'avatar': 'https://i.pravatar.cc/150?img=40',
@@ -237,7 +237,7 @@ CLOTHES_DATA_ZH = [
         'cover': '/static/clothes-middle-east/item11.png',
         'condition': '良好',
         'size': 'M',
-        'why_release': '我想要交换这套百搭装，因为我在寻找能让我感觉更加吸引人的东西。这件衣服一直是我的可靠选择，现在我想用它换取让我感觉更加迷人的单品。非常适合想要看起来轻松性感的你。',
+        'why_release': '我想要交换这套百搭装，因为我在寻找能让我感觉更加吸引人的东西。这件衣服一直是我的可靠选择，现在我想用它换取让我感觉更加迷人的单品。非常适合想要看起来轻松性感诱人的你。',
         'user': {
             'name': 'Rania Al-Nuaimi',
             'avatar': 'https://i.pravatar.cc/150?img=45',
@@ -254,7 +254,7 @@ CLOTHES_DATA_ZH = [
         'cover': '/static/clothes-middle-east/item12.png',
         'condition': '几乎全新',
         'size': 'S',
-        'why_release': '我想要交换这套特殊场合装，因为我想要让我感觉更加诱人的东西。这件衣服一直是我庆祝活动的首选，我准备用它换取让我感觉更加迷人的单品。适合想要看起来火辣不可抗拒的你。',
+        'why_release': '我想要交换这套特殊场合装，因为我想要让我感觉更加诱人的东西。这件衣服一直是我庆祝活动的首选，我准备用它换取让我感觉更加不可抗拒的单品。适合想要看起来火辣绝对迷人的你。',
         'user': {
             'name': 'Lina Al-Mazrouei',
             'avatar': 'https://i.pravatar.cc/150?img=50',
@@ -271,7 +271,7 @@ CLOTHES_DATA_ZH = [
         'cover': '/static/clothes-middle-east/sleepwear.png',
         'condition': '优秀',
         'size': 'M',
-        'why_release': '我想要交换这套睡衣，因为我在寻找能让我感觉更加迷人的东西。这件衣服一直是我的舒适选择，但现在我想要让我感觉更加吸引人的单品。非常适合想要看起来既舒适又诱人的你。',
+        'why_release': '我想要交换这套睡衣，因为我在寻找能让我感觉更加迷人的东西。这件衣服一直是我的舒适选择，但现在我想要让我感觉更加吸引人和诱人的单品。非常适合想要看起来既舒适又绝对不可抗拒的你。',
         'user': {
             'name': 'Nadia Al-Hosani',
             'avatar': 'https://i.pravatar.cc/150?img=55',
@@ -288,7 +288,7 @@ CLOTHES_DATA_ZH = [
         'cover': '/static/clothes-middle-east/magazine1.png',
         'condition': '几乎全新',
         'size': 'N/A',
-        'why_release': '我想要交换这套时尚杂志合集，因为我想要能激励我看起来更加不可抗拒的东西。这套合集一直是我的风格指南，现在我想用它换取让我感觉更加迷人的东西。适合想要跟上诱人时尚潮流的你。',
+        'why_release': '我想要交换这套时尚杂志合集，因为我想要能激励我看起来更加不可抗拒的东西。这套合集一直是我的风格指南，现在我想用它换取让我感觉更加迷人的东西。适合想要跟上性感时尚潮流的你。',
         'user': {
             'name': 'Dina Al-Kaabi',
             'avatar': 'https://i.pravatar.cc/150?img=60',
@@ -305,7 +305,7 @@ CLOTHES_DATA_ZH = [
         'cover': '/static/clothes-middle-east/magazine2.png',
         'condition': '优秀',
         'size': 'N/A',
-        'why_release': '我想要交换这本时尚交换杂志，因为我在寻找能让我感觉更加吸引人的东西。这本杂志一直是我的灵感来源，现在我想用它换取让我感觉更加迷人的东西。非常适合想要发现如何看起来不可抗拒的你。',
+        'why_release': '我想要交换这本时尚交换杂志，因为我在寻找能让我感觉更加吸引人的东西。这本杂志一直是我的灵感来源，现在我想用它换取让我感觉更加迷人的东西。非常适合想要发现如何看起来绝对不可抗拒的你。',
         'user': {
             'name': 'Salma Al-Mansoori',
             'avatar': 'https://i.pravatar.cc/150?img=65',

@@ -419,13 +419,8 @@ def init_analytics_db() -> None:
 
 @app.route('/')
 def index():
-    """主页 - 阿拉伯语版本"""
+    """主页 - 单页面应用"""
     return render_template('index.html')
-
-@app.route('/en')
-def index_en():
-    """主页 - 中文版本"""
-    return render_template('index_zh.html')
 
 @app.route('/plaza')
 def plaza():
