@@ -673,11 +673,26 @@ def admin_stats():
         except Exception:
             book_title = None
         
+        # 格式化时间（如果是 ISO 格式，转换为可读格式）
+        created_at = e.get('created_at', '')
+        if created_at and 'T' in str(created_at):
+            try:
+                from datetime import datetime
+                dt_str = str(created_at).replace('Z', '+00:00')
+                if '+' in dt_str or dt_str.endswith('Z'):
+                    dt = datetime.fromisoformat(dt_str)
+                else:
+                    dt = datetime.fromisoformat(dt_str)
+                created_at = dt.strftime('%Y-%m-%d %H:%M:%S')
+            except Exception:
+                # 如果解析失败，使用原始值
+                pass
+        
         recent_submits.append({
-            'created_at': e.get('created_at'),
+            'created_at': created_at or '未知时间',
             'book_id': e.get('book_id'),
-            'book_title': book_title,
-            'story_snippet': extra.get('story_snippet') or '',
+            'book_title': book_title or (f"衣服 #{e.get('book_id')}" if e.get('book_id') else '未指定'),
+            'story_snippet': extra.get('story_snippet') or '无故事内容',
             'story_length': extra.get('story_length') or 0,
             'has_image': bool(extra.get('has_image')),
             # 内部使用完整 IP，便于校验
