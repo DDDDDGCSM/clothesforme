@@ -158,10 +158,13 @@ def _init_database_if_available():
             # 添加 project_type 字段（如果不存在）
             try:
                 cursor.execute('ALTER TABLE book_exchange_events ADD COLUMN IF NOT EXISTS project_type VARCHAR(20)')
-                # 将旧数据（NULL 值）标记为 'book'，新数据默认为 'clothes'
-                cursor.execute('UPDATE book_exchange_events SET project_type = \'book\' WHERE project_type IS NULL')
+                # 将今天之前的所有数据标记为 'book'（旧数据）
+                from datetime import date
+                today = date.today().isoformat()
+                cursor.execute('UPDATE book_exchange_events SET project_type = \'book\' WHERE DATE(created_at) < %s OR project_type IS NULL', (today,))
                 # 设置默认值为 'clothes'（只影响新插入的数据）
                 cursor.execute('ALTER TABLE book_exchange_events ALTER COLUMN project_type SET DEFAULT \'clothes\'')
+                conn.commit()
             except Exception as e:
                 print(f'⚠️ 更新 project_type 字段时出错: {e}')
                 pass  # 字段可能已存在或更新失败
@@ -290,8 +293,11 @@ def get_events(event_type: Optional[str] = None, limit: int = None, project_type
     if db_conn:
         try:
             cursor = db_conn.cursor()
-            query = 'SELECT id, event_type, book_id, anon_id, extra, ip, user_agent, created_at FROM book_exchange_events WHERE project_type = %s'
-            params = [project_type]
+            # 只统计今天及之后的数据
+            from datetime import date
+            today = date.today().isoformat()
+            query = 'SELECT id, event_type, book_id, anon_id, extra, ip, user_agent, created_at FROM book_exchange_events WHERE project_type = %s AND DATE(created_at) >= %s'
+            params = [project_type, today]
             if event_type:
                 query += ' AND event_type = %s'
                 params.append(event_type)
@@ -346,7 +352,10 @@ def count_events(event_type: str, project_type: str = 'clothes') -> int:
     if db_conn:
         try:
             cursor = db_conn.cursor()
-            cursor.execute('SELECT COUNT(*) FROM book_exchange_events WHERE event_type = %s AND project_type = %s', (event_type, project_type))
+            # 只统计今天及之后的数据
+            from datetime import date
+            today = date.today().isoformat()
+            cursor.execute('SELECT COUNT(*) FROM book_exchange_events WHERE event_type = %s AND project_type = %s AND DATE(created_at) >= %s', (event_type, project_type, today))
             count = cursor.fetchone()[0]
             cursor.close()
             return count
@@ -382,7 +391,10 @@ def get_distinct_ips(event_type: str, project_type: str = 'clothes') -> set:
     if db_conn:
         try:
             cursor = db_conn.cursor()
-            cursor.execute('SELECT DISTINCT ip FROM book_exchange_events WHERE event_type = %s AND project_type = %s AND ip IS NOT NULL AND ip != %s', (event_type, project_type, ''))
+            # 只统计今天及之后的数据
+            from datetime import date
+            today = date.today().isoformat()
+            cursor.execute('SELECT DISTINCT ip FROM book_exchange_events WHERE event_type = %s AND project_type = %s AND DATE(created_at) >= %s AND ip IS NOT NULL AND ip != %s', (event_type, project_type, today, ''))
             ips = {row[0] for row in cursor.fetchall()}
             cursor.close()
             return ips
@@ -411,6 +423,9 @@ def get_daily_stats(days: int = 30, project_type: str = 'clothes'):
     if db_conn:
         try:
             cursor = db_conn.cursor()
+            # 只统计今天及之后的数据
+            from datetime import date
+            today = date.today().isoformat()
             cursor.execute('''
                 SELECT DATE(created_at) as day,
                        COUNT(*) as pv,
@@ -418,11 +433,11 @@ def get_daily_stats(days: int = 30, project_type: str = 'clothes'):
                 FROM book_exchange_events
                 WHERE event_type = 'page_view'
                   AND project_type = %s
-                  AND created_at >= CURRENT_DATE - make_interval(days => %s)
+                  AND DATE(created_at) >= %s
                 GROUP BY day
                 ORDER BY day DESC
                 LIMIT %s
-            ''', (project_type, days, days))
+            ''', (project_type, today, days))
             rows = cursor.fetchall()
             result = [{'day': str(row[0]), 'pv': row[1], 'uv': row[2]} for row in rows]
             cursor.close()
@@ -696,8 +711,8 @@ def admin_stats():
         'share_count': count_events('share', project_type=project_type),
         'exchange_request_count': count_events('exchange_request', project_type=project_type),
         'telegram_click_count': count_events('telegram_click', project_type=project_type) + count_events('whatsapp_click', project_type=project_type),  # 兼容旧数据
-        'clothes_view_count': total_clothes_views,
-        'clothes_view_unique_items': len(viewed_clothes_ids),
+        'book_view_count': total_clothes_views,  # 保持模板字段名兼容
+        'book_view_unique_books': len(viewed_clothes_ids),  # 保持模板字段名兼容
     }
     
     # 按天聚合 PV/UV（最近30天，只查询衣服项目的数据）
