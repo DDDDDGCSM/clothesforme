@@ -4,7 +4,7 @@
 """
 import json
 from clothes_data import CLOTHES_DATA
-from translations import AR_TRANSLATIONS, ZH_TRANSLATIONS, CLOTHES_DATA_ZH, CLOTHES_DATA_AR
+from translations import AR_TRANSLATIONS, EN_TRANSLATIONS, ZH_TRANSLATIONS, CLOTHES_DATA_ZH, CLOTHES_DATA_AR
 
 def generate_template(lang='ar', translations=None, clothes_data=None):
     """生成Telegram版本的UI模板"""
@@ -12,13 +12,22 @@ def generate_template(lang='ar', translations=None, clothes_data=None):
         dir_attr = 'ltr'
         lang_attr = 'zh-CN'
         is_rtl = False
+    elif lang == 'en':
+        dir_attr = 'ltr'
+        lang_attr = 'en'
+        is_rtl = False
     else:
         dir_attr = 'rtl'
         lang_attr = 'ar'
         is_rtl = True
     
     if translations is None:
-        translations = AR_TRANSLATIONS
+        if lang == 'en':
+            translations = EN_TRANSLATIONS
+        elif lang == 'zh':
+            translations = ZH_TRANSLATIONS
+        else:
+            translations = AR_TRANSLATIONS
     if clothes_data is None:
         # 根据语言选择对应的数据
         if lang == 'ar':
@@ -1208,6 +1217,11 @@ if __name__ == '__main__':
     with open('templates/index.html', 'w', encoding='utf-8') as f:
         f.write(ar_html)
     print('✅ 已生成Telegram版本UI模板（阿拉伯语）')
+    
+    en_html = generate_template('en', EN_TRANSLATIONS, CLOTHES_DATA)
+    with open('templates/index_en.html', 'w', encoding='utf-8') as f:
+        f.write(en_html)
+    print('✅ 已生成Telegram版本UI模板（英文）')
     
     zh_html = generate_template('zh', ZH_TRANSLATIONS, CLOTHES_DATA_ZH)
     with open('templates/index_zh.html', 'w', encoding='utf-8') as f:

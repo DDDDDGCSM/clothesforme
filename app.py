@@ -609,6 +609,11 @@ def index():
 
 @app.route('/en')
 def index_en():
+    """主页 - 英文版本"""
+    return render_template('index_en.html')
+
+@app.route('/zh')
+def index_zh():
     """主页 - 中文版本"""
     return render_template('index_zh.html')
 

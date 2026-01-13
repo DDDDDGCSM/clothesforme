@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 多语言翻译数据
-支持阿拉伯语（默认）和中文
+支持阿拉伯语（默认）、英文、中文
 """
 
 # 阿拉伯语翻译（默认）
@@ -34,6 +34,36 @@ AR_TRANSLATIONS = {
     'language_switcher_url': '/en'
 }
 
+# 英文翻译
+EN_TRANSLATIONS = {
+    'site_title': 'Desire Exchange - Trade Anything',
+    'site_subtitle': 'You can swap anything you crave here',
+    'exchange_clothes': 'Exchange Clothes',
+    'share_stories': 'Share Stories',
+    'build_community': 'Build Community',
+    'request_exchange': 'Request Exchange',
+    'why_sharing': 'Why I want to swap this',
+    'completed_exchanges': 'Completed exchanges',
+    'send_request': 'Send Request',
+    'request_sent': 'Request sent successfully!',
+    'contact_owner': 'Contact the owner',
+    'next_step_guide': '✅ Your request is saved! Click the Telegram button below to contact the owner directly.',
+    'share': 'Share',
+    'items': 'items',
+    'item': 'item',
+    'by': 'by',
+    'trusted_member': '⭐ Trusted member',
+    'new_member': '🌙 New member',
+    'request_sent_success': '✅ Request sent! We will notify you when the user replies.',
+    'write_story': 'Tell us why you want this item and what you will swap...',
+    'upload_photo': 'Tap to upload a photo',
+    'whatsapp_number': '+1 742 666 4481',
+    'telegram_number': '+17426664481',
+    'contact_telegram': 'Contact via Telegram',
+    'language_switcher': 'العربية',
+    'language_switcher_url': '/'
+}
+
 # 中文翻译
 ZH_TRANSLATIONS = {
     'site_title': '欲望交换 - Desire Exchange',
@@ -59,7 +89,7 @@ ZH_TRANSLATIONS = {
     'upload_photo': '点击上传照片',
     'whatsapp_number': '+1 742 666 4481',
     'telegram_number': '+17426664481',
-    'contact_telegram': 'تواصل عبر تيليجرام',
+    'contact_telegram': '联系 Telegram',
     'language_switcher': 'العربية',
     'language_switcher_url': '/'
 }
