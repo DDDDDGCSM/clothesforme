@@ -443,10 +443,8 @@ def count_events(event_type: str, project_type: str = 'clothes') -> int:
                         except Exception:
                             continue
                 else:
+                    # book 项目保持原有逻辑
                     count += 1
-            elif e['event_type'] == event_type and e.get('project_type') == project_type:
-                # book 项目保持原有逻辑
-                count += 1
         return count
 
 def get_distinct_anon_ids(event_type: str) -> set:
