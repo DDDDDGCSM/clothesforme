@@ -345,9 +345,39 @@ def get_events(event_type: Optional[str] = None, limit: int = None, project_type
     # 回退到内存存储
     storage = get_analytics_storage()
     with storage['lock']:
+        from datetime import date, timedelta, datetime
+        yesterday = date.today() - timedelta(days=1)
+        exclude_dates = {'2026-01-09', '2026-01-10'}
+        
         events = storage['events']
-        # 只查询指定项目类型的数据（旧数据如果没有 project_type，默认为 'book'，不包含在 'clothes' 查询中）
+        # 只查询指定项目类型的数据
         events = [e for e in events if e.get('project_type') == project_type]
+        
+        # 对于 clothes 项目：只显示昨天及之后的数据，排除9号和10号
+        if project_type == 'clothes':
+            filtered_events = []
+            for e in events:
+                created_at = e.get('created_at', '')
+                if created_at:
+                    try:
+                        # 解析日期
+                        if isinstance(created_at, str):
+                            if 'T' in created_at:
+                                dt = datetime.fromisoformat(created_at.replace('Z', '+00:00'))
+                            else:
+                                dt = datetime.fromisoformat(created_at)
+                            event_date = dt.date()
+                        else:
+                            event_date = created_at.date() if hasattr(created_at, 'date') else date.today()
+                        
+                        # 只保留昨天及之后，且不是9号和10号的数据
+                        if event_date >= yesterday and event_date.isoformat() not in exclude_dates:
+                            filtered_events.append(e)
+                    except Exception:
+                        # 如果日期解析失败，跳过这条记录
+                        continue
+            events = filtered_events
+        
         if event_type:
             events = [e for e in events if e['event_type'] == event_type]
         if limit:
@@ -387,9 +417,37 @@ def count_events(event_type: str, project_type: str = 'clothes') -> int:
     # 回退到内存存储
     storage = get_analytics_storage()
     with storage['lock']:
-        return sum(1 for e in storage['events'] 
-                  if e['event_type'] == event_type 
-                  and e.get('project_type') == project_type)
+        from datetime import date, timedelta, datetime
+        yesterday = date.today() - timedelta(days=1)
+        exclude_dates = {'2026-01-09', '2026-01-10'}
+        
+        count = 0
+        for e in storage['events']:
+            if e['event_type'] == event_type and e.get('project_type') == project_type:
+                # 对于 clothes 项目：只统计昨天及之后的数据，排除9号和10号
+                if project_type == 'clothes':
+                    created_at = e.get('created_at', '')
+                    if created_at:
+                        try:
+                            if isinstance(created_at, str):
+                                if 'T' in created_at:
+                                    dt = datetime.fromisoformat(created_at.replace('Z', '+00:00'))
+                                else:
+                                    dt = datetime.fromisoformat(created_at)
+                                event_date = dt.date()
+                            else:
+                                event_date = created_at.date() if hasattr(created_at, 'date') else date.today()
+                            
+                            if event_date >= yesterday and event_date.isoformat() not in exclude_dates:
+                                count += 1
+                        except Exception:
+                            continue
+                else:
+                    count += 1
+            elif e['event_type'] == event_type and e.get('project_type') == project_type:
+                # book 项目保持原有逻辑
+                count += 1
+        return count
 
 def get_distinct_anon_ids(event_type: str) -> set:
     """（旧）获取独立访客 ID 集合，暂保留以兼容后续升级"""
@@ -436,12 +494,35 @@ def get_distinct_ips(event_type: str, project_type: str = 'clothes') -> set:
     # 回退到内存存储
     storage = get_analytics_storage()
     with storage['lock']:
+        from datetime import date, timedelta, datetime
+        yesterday = date.today() - timedelta(days=1)
+        exclude_dates = {'2026-01-09', '2026-01-10'}
+        
         ips = set()
         for e in storage['events']:
             if (e['event_type'] == event_type 
                 and e.get('project_type') == project_type 
                 and e.get('ip')):
-                ips.add(e['ip'])
+                # 对于 clothes 项目：只统计昨天及之后的数据，排除9号和10号
+                if project_type == 'clothes':
+                    created_at = e.get('created_at', '')
+                    if created_at:
+                        try:
+                            if isinstance(created_at, str):
+                                if 'T' in created_at:
+                                    dt = datetime.fromisoformat(created_at.replace('Z', '+00:00'))
+                                else:
+                                    dt = datetime.fromisoformat(created_at)
+                                event_date = dt.date()
+                            else:
+                                event_date = created_at.date() if hasattr(created_at, 'date') else date.today()
+                            
+                            if event_date >= yesterday and event_date.isoformat() not in exclude_dates:
+                                ips.add(e['ip'])
+                        except Exception:
+                            continue
+                else:
+                    ips.add(e['ip'])
         return ips
 
 def get_daily_stats(days: int = 30, project_type: str = 'clothes'):
