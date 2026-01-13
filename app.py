@@ -294,11 +294,9 @@ def get_events(event_type: Optional[str] = None, limit: int = None, project_type
     if db_conn:
         try:
             cursor = db_conn.cursor()
-            # 只统计今天及之后的数据
-            from datetime import date
-            today = date.today().isoformat()
-            query = 'SELECT id, event_type, book_id, anon_id, extra, ip, user_agent, created_at FROM book_exchange_events WHERE project_type = %s AND DATE(created_at) >= %s'
-            params = [project_type, today]
+            # 只查询指定项目类型的数据（不按日期过滤，因为已经通过 project_type 区分了）
+            query = 'SELECT id, event_type, book_id, anon_id, extra, ip, user_agent, created_at FROM book_exchange_events WHERE project_type = %s'
+            params = [project_type]
             if event_type:
                 query += ' AND event_type = %s'
                 params.append(event_type)
@@ -353,10 +351,8 @@ def count_events(event_type: str, project_type: str = 'clothes') -> int:
     if db_conn:
         try:
             cursor = db_conn.cursor()
-            # 只统计今天及之后的数据
-            from datetime import date
-            today = date.today().isoformat()
-            cursor.execute('SELECT COUNT(*) FROM book_exchange_events WHERE event_type = %s AND project_type = %s AND DATE(created_at) >= %s', (event_type, project_type, today))
+            # 只统计指定项目类型的数据（不按日期过滤，因为已经通过 project_type 区分了）
+            cursor.execute('SELECT COUNT(*) FROM book_exchange_events WHERE event_type = %s AND project_type = %s', (event_type, project_type))
             count = cursor.fetchone()[0]
             cursor.close()
             return count
@@ -392,10 +388,8 @@ def get_distinct_ips(event_type: str, project_type: str = 'clothes') -> set:
     if db_conn:
         try:
             cursor = db_conn.cursor()
-            # 只统计今天及之后的数据
-            from datetime import date
-            today = date.today().isoformat()
-            cursor.execute('SELECT DISTINCT ip FROM book_exchange_events WHERE event_type = %s AND project_type = %s AND DATE(created_at) >= %s AND ip IS NOT NULL AND ip != %s', (event_type, project_type, today, ''))
+            # 只统计指定项目类型的数据（不按日期过滤，因为已经通过 project_type 区分了）
+            cursor.execute('SELECT DISTINCT ip FROM book_exchange_events WHERE event_type = %s AND project_type = %s AND ip IS NOT NULL AND ip != %s', (event_type, project_type, ''))
             ips = {row[0] for row in cursor.fetchall()}
             cursor.close()
             return ips
@@ -424,9 +418,7 @@ def get_daily_stats(days: int = 30, project_type: str = 'clothes'):
     if db_conn:
         try:
             cursor = db_conn.cursor()
-            # 只统计今天及之后的数据
-            from datetime import date
-            today = date.today().isoformat()
+            # 只统计指定项目类型的数据（不按日期过滤，因为已经通过 project_type 区分了）
             cursor.execute('''
                 SELECT DATE(created_at) as day,
                        COUNT(*) as pv,
@@ -434,11 +426,11 @@ def get_daily_stats(days: int = 30, project_type: str = 'clothes'):
                 FROM book_exchange_events
                 WHERE event_type = 'page_view'
                   AND project_type = %s
-                  AND DATE(created_at) >= %s
+                  AND created_at >= CURRENT_DATE - make_interval(days => %s)
                 GROUP BY day
                 ORDER BY day DESC
                 LIMIT %s
-            ''', (project_type, today, days))
+            ''', (project_type, days, days))
             rows = cursor.fetchall()
             result = [{'day': str(row[0]), 'pv': row[1], 'uv': row[2]} for row in rows]
             cursor.close()
