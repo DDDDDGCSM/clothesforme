@@ -52,6 +52,37 @@ def generate_template(lang='ar', translations=None, clothes_data=None):
     telegram_color_dark = '#006699'
     telegram_color_light = '#00a0e0'
     
+    # 语言切换 HTML：根据当前语言展示两个入口
+    if lang == 'ar':
+        # 阿语：显示 English + Español
+        lang_switcher_html = """
+    <div class="lang-switcher">
+        <a href="/en" onclick="trackEvent('language_switch', { extra: { target_lang: '/en' } });">English</a>
+        <a href="/es" onclick="trackEvent('language_switch', { extra: { target_lang: '/es' } });">Español</a>
+    </div>"""
+    elif lang == 'en':
+        # 英语：显示 العربية + Español
+        lang_switcher_html = """
+    <div class="lang-switcher">
+        <a href="/" onclick="trackEvent('language_switch', { extra: { target_lang: '/' } });">العربية</a>
+        <a href="/es" onclick="trackEvent('language_switch', { extra: { target_lang: '/es' } });">Español</a>
+    </div>"""
+    elif lang == 'es':
+        # 西语：显示 العربية + English
+        lang_switcher_html = """
+    <div class="lang-switcher">
+        <a href="/" onclick="trackEvent('language_switch', { extra: { target_lang: '/' } });">العربية</a>
+        <a href="/en" onclick="trackEvent('language_switch', { extra: { target_lang: '/en' } });">English</a>
+    </div>"""
+    elif lang == 'zh':
+        # 中文：只显示返回阿语（按之前“隐藏中文入口”的约定）
+        lang_switcher_html = """
+    <div class="lang-switcher">
+        <a href="/" onclick="trackEvent('language_switch', { extra: { target_lang: '/' } });">العربية</a>
+    </div>"""
+    else:
+        lang_switcher_html = ""
+
     html = f'''<!DOCTYPE html>
 <html lang="{lang_attr}" dir="{dir_attr}">
 <head>
@@ -152,22 +183,28 @@ def generate_template(lang='ar', translations=None, clothes_data=None):
             top: 15px;
             {'right' if is_rtl else 'left'}: 15px;
             z-index: 1001;
+            display: flex;
+            gap: 8px;
+        }}
+
+        .lang-switcher a {{
             background: rgba(26, 26, 26, 0.95);
             backdrop-filter: blur(20px);
             border: 2px solid var(--primary);
-            padding: 10px 18px;
-            border-radius: 50px;
+            padding: 8px 14px;
+            border-radius: 999px;
             text-decoration: none;
             color: var(--primary);
             font-weight: 800;
-            font-size: 13px;
+            font-size: 12px;
             transition: all 0.3s;
             box-shadow: var(--shadow-gold);
             text-transform: uppercase;
             letter-spacing: 1px;
+            white-space: nowrap;
         }}
 
-        .lang-switcher:hover {{
+        .lang-switcher a:hover {{
             background: var(--gold-gradient);
             color: var(--dark);
             transform: translateY(-2px);
@@ -870,10 +907,8 @@ def generate_template(lang='ar', translations=None, clothes_data=None):
     </style>
 </head>
 <body>
-    <a href="{translations['language_switcher_url']}" class="lang-switcher" onclick="trackEvent('language_switch', {{ extra: {{ target_lang: '{translations['language_switcher_url']}' }} }});">
-        {translations['language_switcher']}
-    </a>
-
+    {lang_switcher_html}
+    
     <div class="container">
         <div class="header">
             <h1>👗 {translations['site_title']}</h1>
