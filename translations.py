@@ -30,9 +30,9 @@ AR_TRANSLATIONS = {
     'whatsapp_number': '+1 742 666 4481',
     'telegram_number': '+17426664481',
     'contact_telegram': 'تواصل عبر تيليجرام',
-    # 语言切换：阿语 -> 西语
-    'language_switcher': 'Español',
-    'language_switcher_url': '/es'
+    # 语言切换：阿语 -> 英语 -> 西语（循环）
+    'language_switcher': 'English',
+    'language_switcher_url': '/en'
 }
 
 # 英文翻译
@@ -61,7 +61,7 @@ EN_TRANSLATIONS = {
     'whatsapp_number': '+1 742 666 4481',
     'telegram_number': '+17426664481',
     'contact_telegram': 'Contact via Telegram',
-    # 语言切换：英语 -> 西语
+    # 语言切换：英语 -> 西语 -> 阿语（循环）
     'language_switcher': 'Español',
     'language_switcher_url': '/es'
 }
@@ -92,7 +92,7 @@ ES_TRANSLATIONS = {
     'whatsapp_number': '+1 742 666 4481',
     'telegram_number': '+17426664481',
     'contact_telegram': 'Contactar por Telegram',
-    # 语言切换：西语 -> 阿语
+    # 语言切换：西语 -> 阿语 -> 英语（循环）
     'language_switcher': 'العربية',
     'language_switcher_url': '/'
 }
@@ -409,7 +409,7 @@ CLOTHES_DATA_AR = [
     {
         'id': 2,
         'title': 'طقم صيفي كاجوال',
-        'category': 'عادي',
+        'category': 'Casual',
         'cover': '/static/clothes-middle-east/item2.png',
         'condition': 'ممتاز',
         'size': 'S',
@@ -425,7 +425,7 @@ CLOTHES_DATA_AR = [
     },
     {
         'id': 3,
-        'title': 'طقم عمل أنيق',
+        'title': 'Atuendo profesional elegante',
         'category': 'عمل',
         'cover': '/static/clothes-middle-east/item3.png',
         'condition': 'كالجديد',
@@ -442,8 +442,8 @@ CLOTHES_DATA_AR = [
     },
     {
         'id': 4,
-        'title': 'طقم ستريت ستايل عصري',
-        'category': 'عادي',
+        'title': 'Conjunto de estilo callejero moderno',
+        'category': 'Casual',
         'cover': '/static/clothes-middle-east/item4.png',
         'condition': 'جيد',
         'size': 'M',
@@ -459,8 +459,8 @@ CLOTHES_DATA_AR = [
     },
     {
         'id': 5,
-        'title': 'ملابس بيت مريحة',
-        'category': 'عادي',
+        'title': 'Ropa de casa cómoda',
+        'category': 'Casual',
         'cover': '/static/clothes-middle-east/item5.png',
         'condition': 'ممتاز',
         'size': 'S',
@@ -476,7 +476,7 @@ CLOTHES_DATA_AR = [
     },
     {
         'id': 6,
-        'title': 'فستان أنيق للمناسبات',
+        'title': 'Vestido elegante para ocasiones',
         'category': 'فستان',
         'cover': '/static/clothes-middle-east/item6.png',
         'condition': 'كالجديد',
@@ -493,8 +493,8 @@ CLOTHES_DATA_AR = [
     },
     {
         'id': 7,
-        'title': 'بلوزة كاجوال أنيقة',
-        'category': 'عادي',
+        'title': 'Blusa casual elegante',
+        'category': 'Casual',
         'cover': '/static/clothes-middle-east/item7.png',
         'condition': 'جيد',
         'size': 'L',
@@ -510,8 +510,8 @@ CLOTHES_DATA_AR = [
     },
     {
         'id': 8,
-        'title': 'طقم عصري أنيق',
-        'category': 'عادي',
+        'title': 'Conjunto moderno elegante',
+        'category': 'Casual',
         'cover': '/static/clothes-middle-east/item8.png',
         'condition': 'ممتاز',
         'size': 'M',
@@ -527,8 +527,8 @@ CLOTHES_DATA_AR = [
     },
     {
         'id': 9,
-        'title': 'قطعة كلاسيكية أبدية',
-        'category': 'عادي',
+        'title': 'Pieza clásica eterna',
+        'category': 'Casual',
         'cover': '/static/clothes-middle-east/item9.png',
         'condition': 'كالجديد',
         'size': 'S',
@@ -544,8 +544,8 @@ CLOTHES_DATA_AR = [
     },
     {
         'id': 10,
-        'title': 'طقم موضة جريء',
-        'category': 'عادي',
+        'title': 'Conjunto de moda audaz',
+        'category': 'Casual',
         'cover': '/static/clothes-middle-east/item10.png',
         'condition': 'ممتاز',
         'size': 'L',
@@ -561,8 +561,8 @@ CLOTHES_DATA_AR = [
     },
     {
         'id': 11,
-        'title': 'طقم يومي متعدد الاستخدامات',
-        'category': 'عادي',
+        'title': 'Conjunto diario versátil',
+        'category': 'Casual',
         'cover': '/static/clothes-middle-east/item11.png',
         'condition': 'جيد',
         'size': 'M',
@@ -646,3 +646,5 @@ CLOTHES_DATA_AR = [
     }
 ]
 
+# 衣服数据的西班牙语翻译
+CLOTHES_DATA_ES = [{"id": 1, "title": "Traje de baño elegante", "category": "Traje de baño", "cover": "/static/clothes-middle-east/item1.png", "condition": "Como nuevo", "size": "M", "why_release": "Quiero intercambiar este traje de baño impresionante porque busco algo que haga que todas las miradas se vuelvan hacia mí en la playa. Esta pieza ha sido mi arma secreta para atraer atención, y estoy lista para intercambiarla por algo que me haga sentir aún más irresistible. Perfecto para alguien que quiere verse absolutamente cautivador.", "user": {"name": "Fatima Al-Mansoori", "avatar": "https://i.pravatar.cc/150?img=1", "trust_level": "trusted", "trust_badge": "⭐ Miembro de confianza"}, "has_story": True, "verified": True}, {"id": 2, "title": "Conjunto casual de verano", "category": "Casual", "cover": "/static/clothes-middle-east/item2.png", "condition": "Excelente", "size": "S", "why_release": "Quiero intercambiar este conjunto casual porque busco algo que capture tu atención instantáneamente. Esta pieza ha sido mi favorita para hacer una declaración audaz, y estoy lista para cambiarla por algo que me haga sentir aún más seductora. Ideal para alguien que quiere verse con un estilo relajado y seductor.", "user": {"name": "Layla Hassan", "avatar": "https://i.pravatar.cc/150?img=5", "trust_level": "new", "trust_badge": "🌙 Nuevo miembro"}, "has_story": True, "verified": False}, {"id": 3, "title": "Atuendo profesional elegante", "category": "Profesional", "cover": "/static/clothes-middle-east/item3.png", "condition": "Como nuevo", "size": "L", "why_release": "Quiero intercambiar este atuendo profesional porque busco algo que me haga sentir poderosa e irresistible. Este conjunto ha sido mi impulsor de confianza, y ahora quiero intercambiarlo por algo que me haga sentir aún más deseable. Perfecto para alguien que quiere verse tanto profesional como absolutamente cautivador.", "user": {"name": "Noor Al-Zahra", "avatar": "https://i.pravatar.cc/150?img=9", "trust_level": "trusted", "trust_badge": "⭐ Miembro de confianza"}, "has_story": True, "verified": True}, {"id": 4, "title": "Conjunto de estilo callejero moderno", "category": "Casual", "cover": "/static/clothes-middle-east/item4.png", "condition": "Bueno", "size": "M", "why_release": "Quiero intercambiar este conjunto de moda porque busco algo que me haga sentir más seductora. Esta pieza ha sido mi favorita para llamar la atención, y estoy lista para cambiarla por algo que me haga sentir aún más irresistible. Ideal para alguien que quiere verse con un estilo relajado, sexy y seductor.", "user": {"name": "Aisha Mohammed", "avatar": "https://i.pravatar.cc/150?img=12", "trust_level": "trusted", "trust_badge": "⭐ Miembro de confianza"}, "has_story": True, "verified": True}, {"id": 5, "title": "Ropa de casa cómoda", "category": "Casual", "cover": "/static/clothes-middle-east/item5.png", "condition": "Excelente", "size": "S", "why_release": "Quiero intercambiar este conjunto cómodo porque busco algo que me haga sentir más atractiva. Esta pieza ha sido mi elección cómoda, pero ahora quiero algo que me haga sentir aún más atractiva y seductora. Perfecto para alguien que quiere verse cómodo y absolutamente irresistible.", "user": {"name": "Mariam Al-Rashid", "avatar": "https://i.pravatar.cc/150?img=15", "trust_level": "new", "trust_badge": "🌙 Nuevo miembro"}, "has_story": True, "verified": False}, {"id": 6, "title": "Vestido elegante para ocasiones", "category": "Vestido", "cover": "/static/clothes-middle-east/item6.png", "condition": "Como nuevo", "size": "M", "why_release": "Quiero intercambiar este vestido elegante porque busco algo que me haga sentir más irresistible. Esta pieza ha sido mi arma secreta para ocasiones especiales, y ahora quiero cambiarla por algo que me haga sentir aún más cautivadora. Ideal para alguien que quiere verse impresionante y absolutamente seductor.", "user": {"name": "Zainab Al-Khalifa", "avatar": "https://i.pravatar.cc/150?img=20", "trust_level": "trusted", "trust_badge": "⭐ Miembro de confianza"}, "has_story": True, "verified": True}, {"id": 7, "title": "Blusa casual elegante", "category": "Casual", "cover": "/static/clothes-middle-east/item7.png", "condition": "Bueno", "size": "L", "why_release": "Quiero intercambiar esta camisa casual porque busco algo que me haga sentir más atractiva. Esta pieza ha sido mi favorita para lucir increíble, y ahora quiero intercambiarla por algo que me haga sentir aún más deseable. Perfecto para alguien que quiere verse con un estilo relajado, sexy y seductor.", "user": {"name": "Sara Al-Mazrouei", "avatar": "https://i.pravatar.cc/150?img=25", "trust_level": "new", "trust_badge": "🌙 Nuevo miembro"}, "has_story": False, "verified": False}, {"id": 8, "title": "Conjunto moderno elegante", "category": "Casual", "cover": "/static/clothes-middle-east/item8.png", "condition": "Excelente", "size": "M", "why_release": "Quiero intercambiar este atuendo moderno porque busco algo que me haga sentir más seductora. Esta pieza ha sido mi favorita para atraer atención, y estoy lista para cambiarla por algo que me haga sentir aún más irresistible. Ideal para alguien que quiere verse con un estilo moderno y absolutamente cautivador.", "user": {"name": "Hala Al-Dhaheri", "avatar": "https://i.pravatar.cc/150?img=30", "trust_level": "trusted", "trust_badge": "⭐ Miembro de confianza"}, "has_story": True, "verified": True}, {"id": 9, "title": "Pieza clásica eterna", "category": "Casual", "cover": "/static/clothes-middle-east/item9.png", "condition": "Como nuevo", "size": "S", "why_release": "Quiero intercambiar esta pieza clásica porque busco algo que me haga sentir más atractiva. Esta pieza ha sido mi elección clásica, pero ahora quiero algo que me haga sentir aún más atractiva y seductora. Perfecto para alguien que quiere verse elegante y absolutamente irresistible.", "user": {"name": "Amira Al-Suwaidi", "avatar": "https://i.pravatar.cc/150?img=35", "trust_level": "trusted", "trust_badge": "⭐ Miembro de confianza"}, "has_story": True, "verified": True}, {"id": 10, "title": "Conjunto de moda audaz", "category": "Casual", "cover": "/static/clothes-middle-east/item10.png", "condition": "Excelente", "size": "L", "why_release": "Quiero intercambiar este atuendo llamativo porque busco algo que me haga sentir más irresistible. Esta pieza ha sido mi elección audaz para llamar la atención, y ahora quiero cambiarla por algo que me haga sentir aún más cautivadora. Ideal para alguien que quiere verse impresionante y absolutamente seductor.", "user": {"name": "Yasmin Al-Qasimi", "avatar": "https://i.pravatar.cc/150?img=40", "trust_level": "new", "trust_badge": "🌙 Nuevo miembro"}, "has_story": True, "verified": False}, {"id": 11, "title": "Conjunto diario versátil", "category": "Casual", "cover": "/static/clothes-middle-east/item11.png", "condition": "Bueno", "size": "M", "why_release": "Quiero intercambiar este atuendo versátil porque busco algo que me haga sentir más atractiva. Esta pieza ha sido mi elección confiable, y ahora quiero intercambiarla por algo que me haga sentir aún más deseable. Perfecto para alguien que quiere verse con un estilo relajado, sexy y seductor.", "user": {"name": "Rania Al-Nuaimi", "avatar": "https://i.pravatar.cc/150?img=45", "trust_level": "trusted", "trust_badge": "⭐ Miembro de confianza"}, "has_story": True, "verified": True}, {"id": 12, "title": "Vestido elegante para ocasión especial", "category": "Vestido", "cover": "/static/clothes-middle-east/item12.png", "condition": "Como nuevo", "size": "S", "why_release": "Quiero intercambiar este atuendo para ocasión especial porque busco algo que me haga sentir más seductora. Esta pieza ha sido mi favorita para celebraciones, y estoy lista para cambiarla por algo que me haga sentir aún más irresistible. Ideal para alguien que quiere verse con un estilo moderno y absolutamente cautivador.", "user": {"name": "Lina Al-Mazrouei", "avatar": "https://i.pravatar.cc/150?img=50", "trust_level": "trusted", "trust_badge": "⭐ Miembro de confianza"}, "has_story": True, "verified": True}, {"id": 13, "title": "Pijama cómodo", "category": "Ropa de dormir", "cover": "/static/clothes-middle-east/sleepwear.png", "condition": "Excelente", "size": "M", "why_release": "Quiero intercambiar este pijama cómodo porque busco algo que me haga sentir más atractiva. Esta pieza ha sido mi elección cómoda, pero ahora quiero algo que me haga sentir aún más atractiva y seductora. Perfecto para alguien que quiere verse cómodo y absolutamente irresistible.", "user": {"name": "Nadia Al-Hosani", "avatar": "https://i.pravatar.cc/150?img=55", "trust_level": "trusted", "trust_badge": "⭐ Miembro de confianza"}, "has_story": True, "verified": True}, {"id": 14, "title": "Colección de revistas de moda", "category": "Revista", "cover": "/static/clothes-middle-east/magazine1.png", "condition": "Como nuevo", "size": "N/A", "why_release": "Quiero intercambiar esta colección de revistas de moda porque busco algo que me inspire a lucir más irresistible. Esta colección ha sido mi guía de estilo, y ahora quiero cambiarla por algo que me haga sentir aún más cautivadora. Ideal para alguien que quiere mantenerse actualizado con las tendencias de moda seductoras.", "user": {"name": "Dina Al-Kaabi", "avatar": "https://i.pravatar.cc/150?img=60", "trust_level": "trusted", "trust_badge": "⭐ Miembro de confianza"}, "has_story": True, "verified": True}, {"id": 15, "title": "Revista de moda para intercambio", "category": "Revista", "cover": "/static/clothes-middle-east/magazine2.png", "condition": "Excelente", "size": "N/A", "why_release": "Quiero intercambiar esta revista de moda porque busco algo que me haga sentir más atractiva. Esta revista ha sido mi fuente de inspiración, y ahora quiero intercambiarla por algo que me haga sentir aún más deseable. Perfecto para alguien que quiere descubrir cómo verse absolutamente irresistible.", "user": {"name": "Salma Al-Mansoori", "avatar": "https://i.pravatar.cc/150?img=65", "trust_level": "trusted", "trust_badge": "⭐ Miembro de confianza"}, "has_story": True, "verified": True}]
