@@ -159,10 +159,9 @@ def _init_database_if_available():
             # 添加 project_type 字段（如果不存在）
             try:
                 cursor.execute('ALTER TABLE book_exchange_events ADD COLUMN IF NOT EXISTS project_type VARCHAR(20)')
-                # 将今天之前的所有数据标记为 'book'（旧数据）
-                from datetime import date
-                today = date.today().isoformat()
-                cursor.execute('UPDATE book_exchange_events SET project_type = \'book\' WHERE DATE(created_at) < %s OR project_type IS NULL', (today,))
+                # 只将 project_type 为 NULL 的旧数据标记为 'book'（不按日期过滤，避免误标记昨天的衣服数据）
+                # 如果数据已经有 project_type 字段，保持原样
+                cursor.execute('UPDATE book_exchange_events SET project_type = \'book\' WHERE project_type IS NULL')
                 # 设置默认值为 'clothes'（只影响新插入的数据）
                 cursor.execute('ALTER TABLE book_exchange_events ALTER COLUMN project_type SET DEFAULT \'clothes\'')
                 conn.commit()
