@@ -4,13 +4,17 @@
 """
 import json
 from clothes_data import CLOTHES_DATA
-from translations import AR_TRANSLATIONS, EN_TRANSLATIONS, ZH_TRANSLATIONS, CLOTHES_DATA_ZH, CLOTHES_DATA_AR
+from translations import AR_TRANSLATIONS, EN_TRANSLATIONS, ES_TRANSLATIONS, ZH_TRANSLATIONS, CLOTHES_DATA_ZH, CLOTHES_DATA_AR
 
 def generate_template(lang='ar', translations=None, clothes_data=None):
     """生成Telegram版本的UI模板"""
     if lang == 'zh':
         dir_attr = 'ltr'
         lang_attr = 'zh-CN'
+        is_rtl = False
+    elif lang == 'es':
+        dir_attr = 'ltr'
+        lang_attr = 'es'
         is_rtl = False
     elif lang == 'en':
         dir_attr = 'ltr'
@@ -24,6 +28,8 @@ def generate_template(lang='ar', translations=None, clothes_data=None):
     if translations is None:
         if lang == 'en':
             translations = EN_TRANSLATIONS
+        elif lang == 'es':
+            translations = ES_TRANSLATIONS
         elif lang == 'zh':
             translations = ZH_TRANSLATIONS
         else:
@@ -34,6 +40,8 @@ def generate_template(lang='ar', translations=None, clothes_data=None):
             clothes_data = CLOTHES_DATA_AR
         elif lang == 'zh':
             clothes_data = CLOTHES_DATA_ZH
+        elif lang == 'es':
+            clothes_data = CLOTHES_DATA  # 使用默认英文数据
         else:
             clothes_data = CLOTHES_DATA
     
@@ -1222,6 +1230,11 @@ if __name__ == '__main__':
     with open('templates/index_en.html', 'w', encoding='utf-8') as f:
         f.write(en_html)
     print('✅ 已生成Telegram版本UI模板（英文）')
+    
+    es_html = generate_template('es', ES_TRANSLATIONS, CLOTHES_DATA)
+    with open('templates/index_es.html', 'w', encoding='utf-8') as f:
+        f.write(es_html)
+    print('✅ 已生成Telegram版本UI模板（西班牙语）')
     
     zh_html = generate_template('zh', ZH_TRANSLATIONS, CLOTHES_DATA_ZH)
     with open('templates/index_zh.html', 'w', encoding='utf-8') as f:

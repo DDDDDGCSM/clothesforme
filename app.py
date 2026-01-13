@@ -612,6 +612,11 @@ def index_en():
     """主页 - 英文版本"""
     return render_template('index_en.html')
 
+@app.route('/es')
+def index_es():
+    """主页 - 西班牙语版本"""
+    return render_template('index_es.html')
+
 @app.route('/zh')
 def index_zh():
     """主页 - 中文版本"""

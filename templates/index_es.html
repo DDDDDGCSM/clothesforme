@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="es" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>تبادل الإغراء - Exchange Desire</title>
+    <title>Intercambio de Deseos - Cambia lo que quieras</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👗</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,7 +55,7 @@
             content: '';
             position: fixed;
             top: -300px;
-            right: -300px;
+            left: -300px;
             width: 800px;
             height: 800px;
             background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
@@ -69,7 +69,7 @@
             content: '';
             position: fixed;
             bottom: -300px;
-            left: -300px;
+            right: -300px;
             width: 700px;
             height: 700px;
             background: radial-gradient(circle, rgba(255, 107, 157, 0.12) 0%, transparent 70%);
@@ -96,7 +96,7 @@
         .lang-switcher {
             position: fixed;
             top: 15px;
-            right: 15px;
+            left: 15px;
             z-index: 1001;
             background: rgba(26, 26, 26, 0.95);
             backdrop-filter: blur(20px);
@@ -531,7 +531,7 @@
         .modal-close {
             position: absolute;
             top: 20px;
-            left: 20px;
+            right: 20px;
             background: rgba(212, 175, 55, 0.2);
             border: 2px solid var(--primary);
             font-size: 28px;
@@ -816,14 +816,14 @@
     </style>
 </head>
 <body>
-    <a href="/es" class="lang-switcher" onclick="trackEvent('language_switch', { extra: { target_lang: '/es' } });">
-        Español
+    <a href="/" class="lang-switcher" onclick="trackEvent('language_switch', { extra: { target_lang: '/' } });">
+        العربية
     </a>
 
     <div class="container">
         <div class="header">
-            <h1>👗 تبادل الإغراء - Exchange Desire</h1>
-            <p>هنا يمكنك تبادل أي شيء تريده</p>
+            <h1>👗 Intercambio de Deseos - Cambia lo que quieras</h1>
+            <p>Aquí puedes intercambiar cualquier cosa que desees</p>
         </div>
 
         <div class="clothes-list-container">
@@ -833,34 +833,34 @@
 
     <div class="fixed-bottom-btn">
         <button class="request-btn" onclick="openModal()">
-            👗 طلب التبادل
+            👗 Solicitar intercambio
         </button>
     </div>
 
     <div class="modal" id="exchangeModal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal()">&times;</button>
-            <h2 class="modal-title">طلب التبادل</h2>
+            <h2 class="modal-title">Solicitar intercambio</h2>
             
             <div class="form-group">
-                <label>لماذا أريد تبادل هذا:</label>
-                <textarea id="userStory" placeholder="اكتب هنا لماذا تريد هذا العنصر وما العنصر الذي تريد تبادله..."></textarea>
+                <label>Por qué quiero intercambiar esto:</label>
+                <textarea id="userStory" placeholder="Cuenta por qué quieres este artículo y qué ofreces a cambio..."></textarea>
             </div>
 
             <div class="form-group">
-                <label>اضغط لرفع صورة:</label>
+                <label>Toca para subir una foto:</label>
                 <div class="image-upload-area" id="imageUploadArea" onclick="document.getElementById('itemImageInput').click()">
                     <div class="upload-icon">📷</div>
-                    <p style="color: var(--text-secondary); font-size: 15px;">اضغط لرفع صورة</p>
+                    <p style="color: var(--text-secondary); font-size: 15px;">Toca para subir una foto</p>
                     <img id="uploadedImagePreview" class="uploaded-image" style="display: none;">
                 </div>
                 <input type="file" id="itemImageInput" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
             </div>
             
             <div class="telegram-display" id="telegramDisplay" style="display: none; margin-top: 28px; padding: 28px; background: linear-gradient(135deg, rgba(0, 136, 204, 0.15) 0%, rgba(0, 136, 204, 0.08) 100%); border-radius: 20px; text-align: center; border: 2px solid rgba(0, 136, 204, 0.3);">
-                <p style="color: #0088cc; font-weight: 900; margin-bottom: 14px; font-size: 18px; text-transform: uppercase; letter-spacing: 1px;">تم إرسال الطلب بنجاح!</p>
-                <p style="color: var(--text-secondary); font-size: 15px; margin-bottom: 20px; line-height: 1.6;">✅ تم حفظ طلبك! الآن اضغط على زر Telegram أدناه للتواصل مع صاحب العنصر مباشرة.</p>
-                <p style="color: var(--text-secondary); font-size: 15px; margin-bottom: 18px;">اتصل بصاحب العنصر:</p>
+                <p style="color: #0088cc; font-weight: 900; margin-bottom: 14px; font-size: 18px; text-transform: uppercase; letter-spacing: 1px;">¡Solicitud enviada con éxito!</p>
+                <p style="color: var(--text-secondary); font-size: 15px; margin-bottom: 20px; line-height: 1.6;">✅ ¡Solicitud guardada! Pulsa el botón de Telegram para contactar directamente al propietario.</p>
+                <p style="color: var(--text-secondary); font-size: 15px; margin-bottom: 18px;">Contactar al propietario:</p>
                 <a href="https://t.me/17426664481" target="_blank" class="telegram-link" id="telegramLink" onclick="openTelegram(items[currentItemIndex].id); return true;" style="display: inline-flex; align-items: center; gap: 12px; color: #0088cc; text-decoration: none; font-weight: 900; font-size: 20px; margin-top: 18px; padding: 18px 32px; background: rgba(26, 26, 26, 0.9); border-radius: 50px; transition: all 0.3s; box-shadow: 0 8px 32px rgba(0, 136, 204, 0.4); border: 2px solid #0088cc;">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.12l-6.87 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z"/>
@@ -870,11 +870,11 @@
             </div>
 
             <button class="submit-btn" onclick="submitExchange()" id="submitBtn">
-                🤝 إرسال الطلب
+                🤝 Enviar solicitud
             </button>
 
             <div class="success-message" id="successMessage" style="display: none; margin-top: 28px; padding: 28px; background: linear-gradient(135deg, rgba(0, 136, 204, 0.15) 0%, rgba(0, 136, 204, 0.08) 100%); border-radius: 20px; color: #0088cc; text-align: center; font-size: 17px; font-weight: 900; border: 2px solid rgba(0, 136, 204, 0.3); text-transform: uppercase; letter-spacing: 1px;">
-                ✅ تم إرسال الطلب! سنخطرك عندما يرد المستخدم.
+                ✅ ✅ Solicitud enviada. Te avisaremos cuando respondan.
             </div>
         </div>
     </div>
@@ -883,265 +883,265 @@
         const items = [
                 {
                                 "id": 1,
-                                "title": "مايوه أنيق",
-                                "category": "ملابس السباحة",
+                                "title": "Stylish Swimsuit",
+                                "category": "Swimwear",
                                 "cover": "/static/clothes-middle-east/item1.png",
-                                "condition": "كالجديد",
+                                "condition": "Like New",
                                 "size": "M",
-                                "why_release": "أريد تبادل هذه البدلة السباحة المذهلة لأنني أبحث عن شيء سيجعل كل الرؤوس تلتفت في الشاطئ. هذه القطعة كانت سلاحي السري لجذب الانتباه، وأنا مستعدة لتبادلها بشيء سيجعلني أشعر بأنني لا تقاوم أكثر. مثالية لشخص يريد أن يبدو جذابًا تمامًا.",
+                                "why_release": "I'm trading this stunning swimsuit because I want something that will make every head turn at the beach. This piece has been my secret weapon for attracting attention, and I'm ready to exchange it for something that will make me feel even more irresistible. Perfect for someone who wants to look absolutely captivating.",
                                 "user": {
                                                 "name": "Fatima Al-Mansoori",
                                                 "avatar": "https://i.pravatar.cc/150?img=1",
                                                 "trust_level": "trusted",
-                                                "trust_badge": "⭐ عضو موثوق"
+                                                "trust_badge": "⭐ Trusted Member"
                                 },
                                 "has_story": true,
                                 "verified": true
                 },
                 {
                                 "id": 2,
-                                "title": "طقم صيفي كاجوال",
-                                "category": "عادي",
+                                "title": "Casual Summer Outfit",
+                                "category": "Casual",
                                 "cover": "/static/clothes-middle-east/item2.png",
-                                "condition": "ممتاز",
+                                "condition": "Excellent",
                                 "size": "S",
-                                "why_release": "أريد تبادل هذا الزي العادي لأنني أبحث عن شيء سيلفت انتباهك على الفور. هذه القطعة كانت خياري المفضل لإبداء تصريح جريء، وأنا مستعدة لتبادلها بشيء سيجعلني أشعر بأنني أكثر إغراءً. مثالية لشخص يريد أن يبدو جذابًا بسهولة.",
+                                "why_release": "I want to exchange this casual outfit because I'm looking for something that will catch your eye instantly. This piece has been my go-to for making a bold statement, and I'm ready to swap it for something that will make me feel even more alluring. Ideal for someone who wants to look effortlessly seductive.",
                                 "user": {
                                                 "name": "Layla Hassan",
                                                 "avatar": "https://i.pravatar.cc/150?img=5",
                                                 "trust_level": "new",
-                                                "trust_badge": "🌙 عضو جديد"
+                                                "trust_badge": "🌙 New Member"
                                 },
                                 "has_story": true,
                                 "verified": false
                 },
                 {
                                 "id": 3,
-                                "title": "طقم عمل أنيق",
-                                "category": "عمل",
+                                "title": "Professional Business Attire",
+                                "category": "Business",
                                 "cover": "/static/clothes-middle-east/item3.png",
-                                "condition": "كالجديد",
+                                "condition": "Like New",
                                 "size": "L",
-                                "why_release": "أريد تبادل هذه الملابس الاحترافية لأنني أبحث عن شيء سيجعلني أشعر بالقوة وعدم المقاومة. هذا الزي كان معزز ثقتي، والآن أريد تبادله بشيء سيجعلني أشعر بأنني أكثر جاذبية. مثالية لشخص يريد أن يبدو احترافيًا وجذابًا تمامًا.",
+                                "why_release": "I'm trading this professional attire because I want something that will make me feel powerful and irresistible. This outfit has been my confidence booster, and now I want to exchange it for something that will make me feel even more desirable. Perfect for someone who wants to look both professional and absolutely captivating.",
                                 "user": {
                                                 "name": "Noor Al-Zahra",
                                                 "avatar": "https://i.pravatar.cc/150?img=9",
                                                 "trust_level": "trusted",
-                                                "trust_badge": "⭐ عضو موثوق"
+                                                "trust_badge": "⭐ Trusted Member"
                                 },
                                 "has_story": true,
                                 "verified": true
                 },
                 {
                                 "id": 4,
-                                "title": "طقم ستريت ستايل عصري",
-                                "category": "عادي",
+                                "title": "Trendy Street Style Outfit",
+                                "category": "Casual",
                                 "cover": "/static/clothes-middle-east/item4.png",
-                                "condition": "جيد",
+                                "condition": "Good",
                                 "size": "M",
-                                "why_release": "أريد تبادل هذا الزي العصري لأنني أبحث عن شيء سيجعلني أشعر بأنني أكثر إغراءً. هذه القطعة كانت المفضلة لدي لجذب الانتباه، وأنا مستعدة لتبادلها بشيء سيجعلني أشعر بأنني لا تقاوم أكثر. مثالية لشخص يريد أن يبدو ساخنًا وجذابًا.",
+                                "why_release": "I want to exchange this trendy outfit because I'm seeking something that will make me feel more seductive. This piece has been my favorite for turning heads, and I'm ready to trade it for something that will make me feel even more irresistible. Ideal for someone who wants to look effortlessly hot and alluring.",
                                 "user": {
                                                 "name": "Aisha Mohammed",
                                                 "avatar": "https://i.pravatar.cc/150?img=12",
                                                 "trust_level": "trusted",
-                                                "trust_badge": "⭐ عضو موثوق"
+                                                "trust_badge": "⭐ Trusted Member"
                                 },
                                 "has_story": true,
                                 "verified": true
                 },
                 {
                                 "id": 5,
-                                "title": "ملابس بيت مريحة",
-                                "category": "عادي",
+                                "title": "Comfortable Home Wear",
+                                "category": "Casual",
                                 "cover": "/static/clothes-middle-east/item5.png",
-                                "condition": "ممتاز",
+                                "condition": "Excellent",
                                 "size": "S",
-                                "why_release": "أريد تبادل هذه الملابس المريحة لأنني أبحث عن شيء سيجعلني أشعر بأنني أكثر جاذبية. هذه القطعة كانت خياري المريح، لكن الآن أريد شيئًا سيجعلني أشعر بأنني أكثر جاذبية وإغراءً. مثالية لشخص يريد أن يبدو مريحًا ولا يقاوم تمامًا.",
+                                "why_release": "I'm trading this comfortable wear because I want something that will make me feel more desirable. This piece has been my comfort choice, but now I want something that will make me feel more attractive and captivating. Perfect for someone who wants to look both comfortable and absolutely irresistible.",
                                 "user": {
                                                 "name": "Mariam Al-Rashid",
                                                 "avatar": "https://i.pravatar.cc/150?img=15",
                                                 "trust_level": "new",
-                                                "trust_badge": "🌙 عضو جديد"
+                                                "trust_badge": "🌙 New Member"
                                 },
                                 "has_story": true,
                                 "verified": false
                 },
                 {
                                 "id": 6,
-                                "title": "فستان أنيق للمناسبات",
-                                "category": "فستان",
+                                "title": "Elegant Formal Dress",
+                                "category": "Dress",
                                 "cover": "/static/clothes-middle-east/item6.png",
-                                "condition": "كالجديد",
+                                "condition": "Like New",
                                 "size": "M",
-                                "why_release": "أريد تبادل هذا الفستان الأنيق لأنني أبحث عن شيء سيجعلني أشعر بأنني أكثر عدم مقاومة. هذه القطعة كانت سلاحي السري للمناسبات الخاصة، والآن أريد تبادلها بشيء سيجعلني أشعر بأنني أكثر جاذبية. مثالية لشخص يريد أن يبدو مذهلًا وجذابًا تمامًا.",
+                                "why_release": "I want to exchange this elegant dress because I'm looking for something that will make me feel more irresistible. This piece has been my secret weapon for special occasions, and now I want to trade it for something that will make me feel even more captivating. Ideal for someone who wants to look stunning and absolutely seductive.",
                                 "user": {
                                                 "name": "Zainab Al-Khalifa",
                                                 "avatar": "https://i.pravatar.cc/150?img=20",
                                                 "trust_level": "trusted",
-                                                "trust_badge": "⭐ عضو موثوق"
+                                                "trust_badge": "⭐ Trusted Member"
                                 },
                                 "has_story": true,
                                 "verified": true
                 },
                 {
                                 "id": 7,
-                                "title": "بلوزة كاجوال أنيقة",
-                                "category": "عادي",
+                                "title": "Stylish Casual Top",
+                                "category": "Casual",
                                 "cover": "/static/clothes-middle-east/item7.png",
-                                "condition": "جيد",
+                                "condition": "Good",
                                 "size": "L",
-                                "why_release": "أريد تبادل هذا القميص العادي لأنني أبحث عن شيء سيجعلني أشعر بأنني أكثر جاذبية. هذه القطعة كانت خياري المفضل للظهور بشكل رائع، والآن أريد تبادلها بشيء سيجعلني أشعر بأنني أكثر جاذبية. مثالية لشخص يريد أن يبدو جذابًا بسهولة.",
+                                "why_release": "I'm trading this casual top because I want something that will make me feel more attractive. This piece has been my go-to for looking amazing, and now I want to exchange it for something that will make me feel even more desirable. Perfect for someone who wants to look effortlessly sexy and alluring.",
                                 "user": {
                                                 "name": "Sara Al-Mazrouei",
                                                 "avatar": "https://i.pravatar.cc/150?img=25",
                                                 "trust_level": "new",
-                                                "trust_badge": "🌙 عضو جديد"
+                                                "trust_badge": "🌙 New Member"
                                 },
                                 "has_story": false,
                                 "verified": false
                 },
                 {
                                 "id": 8,
-                                "title": "طقم عصري أنيق",
-                                "category": "عادي",
+                                "title": "Chic Modern Outfit",
+                                "category": "Casual",
                                 "cover": "/static/clothes-middle-east/item8.png",
-                                "condition": "ممتاز",
+                                "condition": "Excellent",
                                 "size": "M",
-                                "why_release": "أريد تبادل هذا الزي العصري لأنني أبحث عن شيء سيجعلني أشعر بأنني أكثر إغراءً. هذه القطعة كانت المفضلة لدي لجذب الانتباه، وأنا مستعدة لتبادلها بشيء سيجعلني أشعر بأنني لا تقاوم أكثر. مثالية لشخص يريد أن يبدو ساخنًا وجذابًا تمامًا.",
+                                "why_release": "I want to exchange this modern outfit because I'm seeking something that will make me feel more seductive. This piece has been my favorite for attracting attention, and I'm ready to swap it for something that will make me feel even more irresistible. Ideal for someone who wants to look hot and absolutely captivating.",
                                 "user": {
                                                 "name": "Hala Al-Dhaheri",
                                                 "avatar": "https://i.pravatar.cc/150?img=30",
                                                 "trust_level": "trusted",
-                                                "trust_badge": "⭐ عضو موثوق"
+                                                "trust_badge": "⭐ Trusted Member"
                                 },
                                 "has_story": true,
                                 "verified": true
                 },
                 {
                                 "id": 9,
-                                "title": "قطعة كلاسيكية أبدية",
-                                "category": "عادي",
+                                "title": "Classic Timeless Piece",
+                                "category": "Casual",
                                 "cover": "/static/clothes-middle-east/item9.png",
-                                "condition": "كالجديد",
+                                "condition": "Like New",
                                 "size": "S",
-                                "why_release": "أريد تبادل هذه القطعة الكلاسيكية لأنني أبحث عن شيء سيجعلني أشعر بأنني أكثر جاذبية. هذه القطعة كانت خياري الكلاسيكي، لكن الآن أريد شيئًا سيجعلني أشعر بأنني أكثر جاذبية وإغراءً. مثالية لشخص يريد أن يبدو أنيقًا ولا يقاوم تمامًا.",
+                                "why_release": "I'm trading this timeless piece because I want something that will make me feel more desirable. This piece has been my classic choice, but now I want something that will make me feel more attractive and alluring. Perfect for someone who wants to look both elegant and absolutely irresistible.",
                                 "user": {
                                                 "name": "Amira Al-Suwaidi",
                                                 "avatar": "https://i.pravatar.cc/150?img=35",
                                                 "trust_level": "trusted",
-                                                "trust_badge": "⭐ عضو موثوق"
+                                                "trust_badge": "⭐ Trusted Member"
                                 },
                                 "has_story": true,
                                 "verified": true
                 },
                 {
                                 "id": 10,
-                                "title": "طقم موضة جريء",
-                                "category": "عادي",
+                                "title": "Fashion-Forward Statement Outfit",
+                                "category": "Casual",
                                 "cover": "/static/clothes-middle-east/item10.png",
-                                "condition": "ممتاز",
+                                "condition": "Excellent",
                                 "size": "L",
-                                "why_release": "أريد تبادل هذا الزي التصريحي لأنني أبحث عن شيء سيجعلني أشعر بأنني أكثر عدم مقاومة. هذه القطعة كانت خياري الجريء لجذب الانتباه، والآن أريد تبادلها بشيء سيجعلني أشعر بأنني أكثر جاذبية. مثالية لشخص يريد أن يبدو مذهلًا وجذابًا تمامًا.",
+                                "why_release": "I want to exchange this statement outfit because I'm looking for something that will make me feel more irresistible. This piece has been my bold choice for turning heads, and now I want to trade it for something that will make me feel even more captivating. Ideal for someone who wants to look stunning and absolutely seductive.",
                                 "user": {
                                                 "name": "Yasmin Al-Qasimi",
                                                 "avatar": "https://i.pravatar.cc/150?img=40",
                                                 "trust_level": "new",
-                                                "trust_badge": "🌙 عضو جديد"
+                                                "trust_badge": "🌙 New Member"
                                 },
                                 "has_story": true,
                                 "verified": false
                 },
                 {
                                 "id": 11,
-                                "title": "طقم يومي متعدد الاستخدامات",
-                                "category": "عادي",
+                                "title": "Versatile Everyday Outfit",
+                                "category": "Casual",
                                 "cover": "/static/clothes-middle-east/item11.png",
-                                "condition": "جيد",
+                                "condition": "Good",
                                 "size": "M",
-                                "why_release": "أريد تبادل هذا الزي متعدد الاستخدامات لأنني أبحث عن شيء سيجعلني أشعر بأنني أكثر جاذبية. هذه القطعة كانت خياري الموثوق، والآن أريد تبادلها بشيء سيجعلني أشعر بأنني أكثر جاذبية. مثالية لشخص يريد أن يبدو جذابًا بسهولة.",
+                                "why_release": "I'm trading this versatile outfit because I want something that will make me feel more attractive. This piece has been my reliable choice, and now I want to exchange it for something that will make me feel even more desirable. Perfect for someone who wants to look effortlessly sexy and alluring.",
                                 "user": {
                                                 "name": "Rania Al-Nuaimi",
                                                 "avatar": "https://i.pravatar.cc/150?img=45",
                                                 "trust_level": "trusted",
-                                                "trust_badge": "⭐ عضو موثوق"
+                                                "trust_badge": "⭐ Trusted Member"
                                 },
                                 "has_story": true,
                                 "verified": true
                 },
                 {
                                 "id": 12,
-                                "title": "فستان مناسبة خاصة أنيق",
-                                "category": "فستان",
+                                "title": "Elegant Special Occasion Outfit",
+                                "category": "Dress",
                                 "cover": "/static/clothes-middle-east/item12.png",
-                                "condition": "كالجديد",
+                                "condition": "Like New",
                                 "size": "S",
-                                "why_release": "أريد تبادل هذا الزي للمناسبات الخاصة لأنني أبحث عن شيء سيجعلني أشعر بأنني أكثر إغراءً. هذه القطعة كانت خياري المفضل للاحتفالات، وأنا مستعدة لتبادلها بشيء سيجعلني أشعر بأنني لا تقاوم أكثر. مثالية لشخص يريد أن يبدو ساخنًا وجذابًا تمامًا.",
+                                "why_release": "I want to exchange this special occasion outfit because I'm seeking something that will make me feel more seductive. This piece has been my go-to for celebrations, and I'm ready to swap it for something that will make me feel even more irresistible. Ideal for someone who wants to look hot and absolutely captivating.",
                                 "user": {
                                                 "name": "Lina Al-Mazrouei",
                                                 "avatar": "https://i.pravatar.cc/150?img=50",
                                                 "trust_level": "trusted",
-                                                "trust_badge": "⭐ عضو موثوق"
+                                                "trust_badge": "⭐ Trusted Member"
                                 },
                                 "has_story": true,
                                 "verified": true
                 },
                 {
                                 "id": 13,
-                                "title": "بيجامة مريحة",
-                                "category": "ملابس النوم",
+                                "title": "Comfortable Sleepwear Set",
+                                "category": "Sleepwear",
                                 "cover": "/static/clothes-middle-east/sleepwear.png",
-                                "condition": "ممتاز",
+                                "condition": "Excellent",
                                 "size": "M",
-                                "why_release": "أريد تبادل مجموعة ملابس النوم هذه لأنني أبحث عن شيء سيجعلني أشعر بأنني أكثر جاذبية. هذه القطعة كانت خياري المريح، لكن الآن أريد شيئًا سيجعلني أشعر بأنني أكثر جاذبية وإغراءً. مثالية لشخص يريد أن يبدو مريحًا ولا يقاوم تمامًا.",
+                                "why_release": "I'm trading this sleepwear set because I want something that will make me feel more desirable. This piece has been my comfort choice, but now I want something that will make me feel more attractive and alluring. Perfect for someone who wants to look both comfortable and absolutely irresistible.",
                                 "user": {
                                                 "name": "Nadia Al-Hosani",
                                                 "avatar": "https://i.pravatar.cc/150?img=55",
                                                 "trust_level": "trusted",
-                                                "trust_badge": "⭐ عضو موثوق"
+                                                "trust_badge": "⭐ Trusted Member"
                                 },
                                 "has_story": true,
                                 "verified": true
                 },
                 {
                                 "id": 14,
-                                "title": "مجموعة مجلات أزياء",
-                                "category": "مجلة",
+                                "title": "Fashion Magazine Collection",
+                                "category": "Magazine",
                                 "cover": "/static/clothes-middle-east/magazine1.png",
-                                "condition": "كالجديد",
+                                "condition": "Like New",
                                 "size": "N/A",
-                                "why_release": "أريد تبادل مجموعة مجلات الموضة هذه لأنني أبحث عن شيء سيلهمني لأبدو أكثر عدم مقاومة. هذه المجموعة كانت دليلي للأسلوب، والآن أريد تبادلها بشيء سيجعلني أشعر بأنني أكثر جاذبية. مثالية لشخص يريد أن يبقى محدثًا بموضات جذابة.",
+                                "why_release": "I want to exchange this fashion magazine collection because I'm looking for something that will inspire me to look more irresistible. This collection has been my style guide, and now I want to trade it for something that will make me feel even more captivating. Ideal for someone who wants to stay updated with seductive fashion trends.",
                                 "user": {
                                                 "name": "Dina Al-Kaabi",
                                                 "avatar": "https://i.pravatar.cc/150?img=60",
                                                 "trust_level": "trusted",
-                                                "trust_badge": "⭐ عضو موثوق"
+                                                "trust_badge": "⭐ Trusted Member"
                                 },
                                 "has_story": true,
                                 "verified": true
                 },
                 {
                                 "id": 15,
-                                "title": "مجلة أزياء للتبادل",
-                                "category": "مجلة",
+                                "title": "Fashion Exchange Magazine",
+                                "category": "Magazine",
                                 "cover": "/static/clothes-middle-east/magazine2.png",
-                                "condition": "ممتاز",
+                                "condition": "Excellent",
                                 "size": "N/A",
-                                "why_release": "أريد تبادل مجلة تبادل الموضة هذه لأنني أبحث عن شيء سيجعلني أشعر بأنني أكثر جاذبية. هذه المجلة كانت مصدر إلهامي، والآن أريد تبادلها بشيء سيجعلني أشعر بأنني أكثر جاذبية. مثالية لشخص يريد أن يكتشف فن الظهور بشكل لا يقاوم تمامًا.",
+                                "why_release": "I'm trading this fashion exchange magazine because I want something that will make me feel more attractive. This magazine has been my inspiration, and now I want to exchange it for something that will make me feel even more desirable. Perfect for someone who wants to discover the art of looking absolutely irresistible.",
                                 "user": {
                                                 "name": "Salma Al-Mansoori",
                                                 "avatar": "https://i.pravatar.cc/150?img=65",
                                                 "trust_level": "trusted",
-                                                "trust_badge": "⭐ عضو موثوق"
+                                                "trust_badge": "⭐ Trusted Member"
                                 },
                                 "has_story": true,
                                 "verified": true
                 }
 ];
         const translations = {
-            'why_sharing': 'لماذا أريد تبادل هذا',
-            'share': 'مشاركة',
-            'write_story': 'اكتب هنا لماذا تريد هذا العنصر وما العنصر الذي تريد تبادله...',
-            'upload_photo': 'اضغط لرفع صورة',
+            'why_sharing': 'Por qué quiero intercambiar esto',
+            'share': 'Compartir',
+            'write_story': 'Cuenta por qué quieres este artículo y qué ofreces a cambio...',
+            'upload_photo': 'Toca para subir una foto',
             'telegram_number': '+17426664481'
         };
         let currentItemIndex = 0;
@@ -1330,11 +1330,11 @@
             });
             
             if (!story || story.length < 10) {
-                alert('اكتب هنا لماذا تريد هذا العنصر وما العنصر الذي تريد تبادله...');
+                alert('Cuenta por qué quieres este artículo y qué ofreces a cambio...');
                 return;
             }
             if (!uploadedImage) {
-                alert('اضغط لرفع صورة');
+                alert('Toca para subir una foto');
                 return;
             }
             

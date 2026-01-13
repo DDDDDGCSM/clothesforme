@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 多语言翻译数据
-支持阿拉伯语（默认）、英文、中文
+支持阿拉伯语（默认）、英文、西班牙语、中文
 """
 
 # 阿拉伯语翻译（默认）
@@ -30,8 +30,9 @@ AR_TRANSLATIONS = {
     'whatsapp_number': '+1 742 666 4481',
     'telegram_number': '+17426664481',
     'contact_telegram': 'تواصل عبر تيليجرام',
-    'language_switcher': 'English',
-    'language_switcher_url': '/en'
+    # 语言切换：阿语 -> 西语
+    'language_switcher': 'Español',
+    'language_switcher_url': '/es'
 }
 
 # 英文翻译
@@ -60,6 +61,38 @@ EN_TRANSLATIONS = {
     'whatsapp_number': '+1 742 666 4481',
     'telegram_number': '+17426664481',
     'contact_telegram': 'Contact via Telegram',
+    # 语言切换：英语 -> 西语
+    'language_switcher': 'Español',
+    'language_switcher_url': '/es'
+}
+
+# 西班牙语翻译
+ES_TRANSLATIONS = {
+    'site_title': 'Intercambio de Deseos - Cambia lo que quieras',
+    'site_subtitle': 'Aquí puedes intercambiar cualquier cosa que desees',
+    'exchange_clothes': 'Intercambiar ropa',
+    'share_stories': 'Compartir historias',
+    'build_community': 'Construir comunidad',
+    'request_exchange': 'Solicitar intercambio',
+    'why_sharing': 'Por qué quiero intercambiar esto',
+    'completed_exchanges': 'Intercambios completados',
+    'send_request': 'Enviar solicitud',
+    'request_sent': '¡Solicitud enviada con éxito!',
+    'contact_owner': 'Contactar al propietario',
+    'next_step_guide': '✅ ¡Solicitud guardada! Pulsa el botón de Telegram para contactar directamente al propietario.',
+    'share': 'Compartir',
+    'items': 'artículos',
+    'item': 'artículo',
+    'by': 'por',
+    'trusted_member': '⭐ Miembro de confianza',
+    'new_member': '🌙 Nuevo miembro',
+    'request_sent_success': '✅ Solicitud enviada. Te avisaremos cuando respondan.',
+    'write_story': 'Cuenta por qué quieres este artículo y qué ofreces a cambio...',
+    'upload_photo': 'Toca para subir una foto',
+    'whatsapp_number': '+1 742 666 4481',
+    'telegram_number': '+17426664481',
+    'contact_telegram': 'Contactar por Telegram',
+    # 语言切换：西语 -> 阿语
     'language_switcher': 'العربية',
     'language_switcher_url': '/'
 }
@@ -90,6 +123,7 @@ ZH_TRANSLATIONS = {
     'whatsapp_number': '+1 742 666 4481',
     'telegram_number': '+17426664481',
     'contact_telegram': '联系 Telegram',
+    # 隐藏中文入口：不再作为其他语言的切换目标，中文页保留返回阿语
     'language_switcher': 'العربية',
     'language_switcher_url': '/'
 }
