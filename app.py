@@ -293,9 +293,24 @@ def get_events(event_type: Optional[str] = None, limit: int = None, project_type
     if db_conn:
         try:
             cursor = db_conn.cursor()
-            # 只查询指定项目类型的数据（不按日期过滤，因为已经通过 project_type 区分了）
-            query = 'SELECT id, event_type, book_id, anon_id, extra, ip, user_agent, created_at FROM book_exchange_events WHERE project_type = %s'
-            params = [project_type]
+            # 对于 clothes 项目：只查询昨天及之后的数据，排除9号和10号
+            # 对于 book 项目：查询所有数据（保持原有逻辑）
+            from datetime import date, timedelta
+            yesterday = date.today() - timedelta(days=1)
+            
+            if project_type == 'clothes':
+                # 排除 2026-01-09 和 2026-01-10，只显示昨天及之后
+                query = '''SELECT id, event_type, book_id, anon_id, extra, ip, user_agent, created_at 
+                          FROM book_exchange_events 
+                          WHERE project_type = %s 
+                            AND DATE(created_at) >= %s
+                            AND DATE(created_at) NOT IN ('2026-01-09', '2026-01-10')'''
+                params = [project_type, yesterday]
+            else:
+                # book 项目保持原有逻辑
+                query = 'SELECT id, event_type, book_id, anon_id, extra, ip, user_agent, created_at FROM book_exchange_events WHERE project_type = %s'
+                params = [project_type]
+            
             if event_type:
                 query += ' AND event_type = %s'
                 params.append(event_type)
@@ -350,8 +365,19 @@ def count_events(event_type: str, project_type: str = 'clothes') -> int:
     if db_conn:
         try:
             cursor = db_conn.cursor()
-            # 只统计指定项目类型的数据（不按日期过滤，因为已经通过 project_type 区分了）
-            cursor.execute('SELECT COUNT(*) FROM book_exchange_events WHERE event_type = %s AND project_type = %s', (event_type, project_type))
+            # 对于 clothes 项目：只统计昨天及之后的数据，排除9号和10号
+            # 对于 book 项目：统计所有数据（保持原有逻辑）
+            from datetime import date, timedelta
+            yesterday = date.today() - timedelta(days=1)
+            
+            if project_type == 'clothes':
+                cursor.execute('''SELECT COUNT(*) FROM book_exchange_events 
+                                 WHERE event_type = %s AND project_type = %s 
+                                   AND DATE(created_at) >= %s
+                                   AND DATE(created_at) NOT IN ('2026-01-09', '2026-01-10')''', 
+                               (event_type, project_type, yesterday))
+            else:
+                cursor.execute('SELECT COUNT(*) FROM book_exchange_events WHERE event_type = %s AND project_type = %s', (event_type, project_type))
             count = cursor.fetchone()[0]
             cursor.close()
             return count
@@ -387,8 +413,20 @@ def get_distinct_ips(event_type: str, project_type: str = 'clothes') -> set:
     if db_conn:
         try:
             cursor = db_conn.cursor()
-            # 只统计指定项目类型的数据（不按日期过滤，因为已经通过 project_type 区分了）
-            cursor.execute('SELECT DISTINCT ip FROM book_exchange_events WHERE event_type = %s AND project_type = %s AND ip IS NOT NULL AND ip != %s', (event_type, project_type, ''))
+            # 对于 clothes 项目：只统计昨天及之后的数据，排除9号和10号
+            # 对于 book 项目：统计所有数据（保持原有逻辑）
+            from datetime import date, timedelta
+            yesterday = date.today() - timedelta(days=1)
+            
+            if project_type == 'clothes':
+                cursor.execute('''SELECT DISTINCT ip FROM book_exchange_events 
+                                 WHERE event_type = %s AND project_type = %s 
+                                   AND ip IS NOT NULL AND ip != %s
+                                   AND DATE(created_at) >= %s
+                                   AND DATE(created_at) NOT IN ('2026-01-09', '2026-01-10')''', 
+                               (event_type, project_type, '', yesterday))
+            else:
+                cursor.execute('SELECT DISTINCT ip FROM book_exchange_events WHERE event_type = %s AND project_type = %s AND ip IS NOT NULL AND ip != %s', (event_type, project_type, ''))
             ips = {row[0] for row in cursor.fetchall()}
             cursor.close()
             return ips
@@ -417,19 +455,38 @@ def get_daily_stats(days: int = 30, project_type: str = 'clothes'):
     if db_conn:
         try:
             cursor = db_conn.cursor()
-            # 只统计指定项目类型的数据（不按日期过滤，因为已经通过 project_type 区分了）
-            cursor.execute('''
-                SELECT DATE(created_at) as day,
-                       COUNT(*) as pv,
-                       COUNT(DISTINCT ip) as uv
-                FROM book_exchange_events
-                WHERE event_type = 'page_view'
-                  AND project_type = %s
-                  AND created_at >= CURRENT_DATE - make_interval(days => %s)
-                GROUP BY day
-                ORDER BY day DESC
-                LIMIT %s
-            ''', (project_type, days, days))
+            # 对于 clothes 项目：只统计昨天及之后的数据，排除9号和10号
+            # 对于 book 项目：统计所有数据（保持原有逻辑）
+            from datetime import date, timedelta
+            yesterday = date.today() - timedelta(days=1)
+            
+            if project_type == 'clothes':
+                cursor.execute('''
+                    SELECT DATE(created_at) as day,
+                           COUNT(*) as pv,
+                           COUNT(DISTINCT ip) as uv
+                    FROM book_exchange_events
+                    WHERE event_type = 'page_view'
+                      AND project_type = %s
+                      AND DATE(created_at) >= %s
+                      AND DATE(created_at) NOT IN ('2026-01-09', '2026-01-10')
+                    GROUP BY day
+                    ORDER BY day DESC
+                    LIMIT %s
+                ''', (project_type, yesterday, days))
+            else:
+                cursor.execute('''
+                    SELECT DATE(created_at) as day,
+                           COUNT(*) as pv,
+                           COUNT(DISTINCT ip) as uv
+                    FROM book_exchange_events
+                    WHERE event_type = 'page_view'
+                      AND project_type = %s
+                      AND created_at >= CURRENT_DATE - make_interval(days => %s)
+                    GROUP BY day
+                    ORDER BY day DESC
+                    LIMIT %s
+                ''', (project_type, days, days))
             rows = cursor.fetchall()
             result = [{'day': str(row[0]), 'pv': row[1], 'uv': row[2]} for row in rows]
             cursor.close()
