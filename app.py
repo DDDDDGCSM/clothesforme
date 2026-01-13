@@ -877,6 +877,45 @@ def admin_stats():
             day_stat['pv'] = day_stat['pv'] + 11
             day_stat['uv'] = day_stat['uv'] + 5
 
+    # 按语言拆分 PV/UV（基于 page_view 事件）
+    # 仍然保留 total_pv/total_uv 作为整体视角，这里只是额外增加一个维度
+    lang_events = get_events('page_view', project_type=project_type)
+    lang_stats_map: Dict[str, Dict[str, Any]] = {}
+    for e in lang_events:
+        extra = e.get('extra') or {}
+        lang = extra.get('lang') or 'unknown'
+        ip = e.get('ip') or ''
+        if lang not in lang_stats_map:
+            lang_stats_map[lang] = {'pv': 0, 'uv_ips': set()}
+        lang_stats_map[lang]['pv'] += 1
+        if ip:
+            lang_stats_map[lang]['uv_ips'].add(ip)
+
+    # 转成模板友好的结构
+    lang_stats = []
+    # 让 ar/en/es 排在前面，其他（包括历史无语言标记的unknown）在后面
+    lang_order = ['ar', 'en', 'es', 'zh']
+    for key in sorted(lang_stats_map.keys(), key=lambda x: (x not in lang_order, lang_order.index(x) if x in lang_order else 999, x)):
+        item = lang_stats_map[key]
+        # 语言标签映射
+        if key == 'ar':
+            label = '阿拉伯语 (ar)'
+        elif key == 'en':
+            label = '英语 (en)'
+        elif key == 'es':
+            label = '西班牙语 (es)'
+        elif key == 'zh':
+            label = '中文 (zh)'
+        elif key == 'unknown':
+            label = '未知 (历史无语言标记)'
+        else:
+            label = key
+        lang_stats.append({
+            'lang': label,
+            'pv': item['pv'],
+            'uv': len(item['uv_ips']),
+        })
+
     # 最近提交明细（最多 50 条，按时间倒序，只查询衣服项目的数据）
     recent_submits = []
     events = get_events('exchange_request', limit=50, project_type=project_type)
@@ -935,7 +974,14 @@ def admin_stats():
         })
 
     # 传递 token 到模板，用于生成带 token 的链接
-    return render_template('admin_stats.html', stats=stats, daily=daily, recent_submits=recent_submits, token=req_token)
+    return render_template(
+        'admin_stats.html',
+        stats=stats,
+        daily=daily,
+        recent_submits=recent_submits,
+        lang_stats=lang_stats,
+        token=req_token,
+    )
 
 @app.route('/static/<path:path>')
 def send_static(path):

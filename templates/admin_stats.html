@@ -139,6 +139,32 @@
     </div>
 
     <div class="card">
+        <h2>按语言拆分的 PV / UV（page_view）</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>语言</th>
+                    <th>PV</th>
+                    <th>UV</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in lang_stats %}
+                <tr>
+                    <td>{{ row.lang }}</td>
+                    <td>{{ row.pv }}</td>
+                    <td>{{ row.uv }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3" style="color:#6D4C41;">暂无按语言统计数据</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card">
         <h2>最近 30 天 PV / UV</h2>
         <table>
             <thead>

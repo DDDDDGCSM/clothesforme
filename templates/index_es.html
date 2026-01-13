@@ -1166,14 +1166,22 @@
             return anonId;
         }
         
+        // 当前页面语言（用于埋点按语言区分）
+        const PAGE_LANG = 'es';
+
         // 埋点函数
         function trackEvent(eventType, payload) {
             try {
+                const extra = (payload && payload.extra) ? payload.extra : {};
+                // 为所有事件统一附带语言与路径信息
+                extra.lang = PAGE_LANG;
+                extra.path = window.location ? window.location.pathname : '';
+
                 const body = {
                     event_type: eventType,
                     anon_id: getAnonId(),
                     book_id: payload?.itemId || payload?.book_id || null,
-                    extra: payload?.extra || {}
+                    extra: extra
                 };
                 
                 if (navigator.sendBeacon) {
