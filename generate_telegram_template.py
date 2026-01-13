@@ -853,7 +853,7 @@ def generate_template(lang='ar', translations=None, clothes_data=None):
     </style>
 </head>
 <body>
-    <a href="{translations['language_switcher_url']}" class="lang-switcher">
+    <a href="{translations['language_switcher_url']}" class="lang-switcher" onclick="trackEvent('language_switch', {{ extra: {{ target_lang: '{translations['language_switcher_url']}' }} }});">
         {translations['language_switcher']}
     </a>
 
@@ -896,7 +896,8 @@ def generate_template(lang='ar', translations=None, clothes_data=None):
             
             <div class="telegram-display" id="telegramDisplay" style="display: none; margin-top: 28px; padding: 28px; background: linear-gradient(135deg, rgba(0, 136, 204, 0.15) 0%, rgba(0, 136, 204, 0.08) 100%); border-radius: 20px; text-align: center; border: 2px solid rgba(0, 136, 204, 0.3);">
                 <p style="color: {telegram_color}; font-weight: 900; margin-bottom: 14px; font-size: 18px; text-transform: uppercase; letter-spacing: 1px;">{translations['request_sent']}</p>
-                <p style="color: var(--text-secondary); font-size: 15px;">{translations.get('contact_owner', '联系物品主人')}:</p>
+                <p style="color: var(--text-secondary); font-size: 15px; margin-bottom: 20px; line-height: 1.6;">{translations.get('next_step_guide', '✅ 您的申请已保存！现在请点击下方的 Telegram 按钮，直接联系物品主人。')}</p>
+                <p style="color: var(--text-secondary); font-size: 15px; margin-bottom: 18px;">{translations.get('contact_owner', '联系物品主人')}:</p>
                 <a href="https://t.me/{translations['telegram_number'].replace('+', '').replace(' ', '').replace('-', '')}" target="_blank" class="telegram-link" id="telegramLink" onclick="openTelegram(items[currentItemIndex].id); return true;" style="display: inline-flex; align-items: center; gap: 12px; color: {telegram_color}; text-decoration: none; font-weight: 900; font-size: 20px; margin-top: 18px; padding: 18px 32px; background: rgba(26, 26, 26, 0.9); border-radius: 50px; transition: all 0.3s; box-shadow: 0 8px 32px rgba(0, 136, 204, 0.4); border: 2px solid {telegram_color};">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.12l-6.87 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z"/>
@@ -1063,11 +1064,15 @@ def generate_template(lang='ar', translations=None, clothes_data=None):
         }}
 
         function openModal() {{
+            // 统计：打开交换模态框
+            trackEvent('exchange_modal_open', {{}});
             document.getElementById('exchangeModal').classList.add('active');
             document.body.style.overflow = 'hidden';
         }}
 
         function closeModal() {{
+            // 统计：关闭模态框
+            trackEvent('exchange_modal_close', {{}});
             document.getElementById('exchangeModal').classList.remove('active');
             document.body.style.overflow = 'auto';
         }}
@@ -1075,6 +1080,13 @@ def generate_template(lang='ar', translations=None, clothes_data=None):
         function handleImageUpload(event) {{
             const file = event.target.files[0];
             if (file) {{
+                // 统计：上传图片
+                trackEvent('image_upload', {{
+                    extra: {{
+                        file_size: file.size,
+                        file_type: file.type
+                    }}
+                }});
                 const reader = new FileReader();
                 reader.onload = function(e) {{
                     uploadedImage = e.target.result;
@@ -1088,7 +1100,17 @@ def generate_template(lang='ar', translations=None, clothes_data=None):
 
         function submitExchange() {{
             const story = document.getElementById('userStory').value.trim();
-            if (!story || story.length < 20) {{
+            
+            // 统计：点击提交按钮（无论是否成功）
+            trackEvent('submit_button_click', {{
+                extra: {{
+                    has_story: !!story,
+                    story_length: story.length,
+                    has_image: !!uploadedImage
+                }}
+            }});
+            
+            if (!story || story.length < 10) {{
                 alert('{translations["write_story"]}');
                 return;
             }}
@@ -1107,8 +1129,18 @@ def generate_template(lang='ar', translations=None, clothes_data=None):
                 }}
             }});
             
+            // 显示成功消息和Telegram联系方式
+            document.getElementById('successMessage').style.display = 'block';
             document.getElementById('telegramDisplay').style.display = 'block';
             document.getElementById('submitBtn').style.display = 'none';
+            
+            // 自动滚动到成功消息
+            document.getElementById('successMessage').scrollIntoView({{ behavior: 'smooth', block: 'center' }});
+            
+            // 3秒后自动打开Telegram（可选，如果用户想要更主动的引导）
+            // setTimeout(function() {{
+            //     openTelegram(items[currentItemIndex].id);
+            // }}, 2000);
         }}
 
         function openTelegram(itemId, index) {{

@@ -849,6 +849,12 @@ def admin_stats():
         'telegram_click_count': count_events('telegram_click', project_type=project_type) + count_events('whatsapp_click', project_type=project_type),  # 兼容旧数据
         'book_view_count': total_clothes_views,  # 保持模板字段名兼容
         'book_view_unique_books': len(viewed_clothes_ids),  # 保持模板字段名兼容
+        # 新增按钮统计
+        'exchange_modal_open_count': count_events('exchange_modal_open', project_type=project_type),
+        'exchange_modal_close_count': count_events('exchange_modal_close', project_type=project_type),
+        'image_upload_count': count_events('image_upload', project_type=project_type),
+        'submit_button_click_count': count_events('submit_button_click', project_type=project_type),
+        'language_switch_count': count_events('language_switch', project_type=project_type),
     }
     
     # 按天聚合 PV/UV（最近30天，只查询衣服项目的数据）
