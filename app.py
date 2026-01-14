@@ -8,12 +8,23 @@ from flask import Flask, render_template, jsonify, request, send_from_directory,
 from flask_cors import CORS
 import os
 import json
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Optional, Dict, Any
 from collections import defaultdict
 from threading import Lock
 from clothes_data import CLOTHES_DATA  # 导入衣服数据
+
+# 北京时间时区 (UTC+8)
+BEIJING_TZ = timezone(timedelta(hours=8))
+
+def get_beijing_date():
+    """获取北京时间的日期（date对象）"""
+    return datetime.now(BEIJING_TZ).date()
+
+def get_beijing_datetime():
+    """获取北京时间的datetime对象"""
+    return datetime.now(BEIJING_TZ)
 
 app = Flask(__name__, static_folder='static', static_url_path='/static')
 CORS(app)
@@ -295,19 +306,17 @@ def get_events(event_type: Optional[str] = None, limit: int = None, project_type
             cursor = db_conn.cursor()
             # 对于 clothes 项目：只查询昨天及之后的数据，排除9号和10号
             # 对于 book 项目：查询所有数据（保持原有逻辑）
-            from datetime import date, timedelta
-            yesterday = date.today() - timedelta(days=1)
+            # 使用北京时间统一处理
+            start_date = get_beijing_date() - timedelta(days=2)
             
             if project_type == 'clothes':
                 # 排除 2026-01-09 和 2026-01-10，只显示昨天及之后
-                # 修改：从"昨天"改为"今天往前推2天"，确保包含昨天的数据
-                from datetime import date, timedelta
-                start_date = date.today() - timedelta(days=2)
+                # 使用北京时间，从今天往前推2天，确保包含昨天的数据
                 query = '''SELECT id, event_type, book_id, anon_id, extra, ip, user_agent, created_at 
                           FROM book_exchange_events 
                           WHERE project_type = %s 
-                            AND DATE(created_at) >= %s
-                            AND DATE(created_at) NOT IN ('2026-01-09', '2026-01-10')'''
+                            AND DATE(created_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Shanghai') >= %s
+                            AND DATE(created_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Shanghai') NOT IN ('2026-01-09', '2026-01-10')'''
                 params = [project_type, start_date]
             else:
                 # book 项目保持原有逻辑
@@ -348,9 +357,9 @@ def get_events(event_type: Optional[str] = None, limit: int = None, project_type
     # 回退到内存存储
     storage = get_analytics_storage()
     with storage['lock']:
-        from datetime import date, timedelta, datetime
-        # 修改：从"昨天"改为"今天往前推2天"，确保包含昨天的数据
-        start_date = date.today() - timedelta(days=2)
+        from datetime import timedelta, datetime
+        # 使用北京时间，从今天往前推2天，确保包含昨天的数据
+        start_date = get_beijing_date() - timedelta(days=2)
         exclude_dates = {'2026-01-09', '2026-01-10'}
         
         events = storage['events']
@@ -364,15 +373,32 @@ def get_events(event_type: Optional[str] = None, limit: int = None, project_type
                 created_at = e.get('created_at', '')
                 if created_at:
                     try:
-                        # 解析日期
+                        # 解析日期（如果有时区信息，转换为北京时间）
                         if isinstance(created_at, str):
                             if 'T' in created_at:
+                                # 解析ISO格式时间
                                 dt = datetime.fromisoformat(created_at.replace('Z', '+00:00'))
+                                # 如果没有时区信息，假设是UTC，转换为北京时间
+                                if dt.tzinfo is None:
+                                    dt = dt.replace(tzinfo=timezone.utc)
+                                # 转换为北京时间
+                                dt = dt.astimezone(BEIJING_TZ)
                             else:
+                                # 纯日期字符串，直接解析
                                 dt = datetime.fromisoformat(created_at)
+                                if dt.tzinfo is None:
+                                    dt = dt.replace(tzinfo=BEIJING_TZ)
                             event_date = dt.date()
                         else:
-                            event_date = created_at.date() if hasattr(created_at, 'date') else date.today()
+                            # 如果是datetime对象，转换为北京时间
+                            if hasattr(created_at, 'date'):
+                                if hasattr(created_at, 'tzinfo') and created_at.tzinfo:
+                                    dt = created_at.astimezone(BEIJING_TZ)
+                                else:
+                                    dt = created_at.replace(tzinfo=BEIJING_TZ)
+                                event_date = dt.date()
+                            else:
+                                event_date = get_beijing_date()
                         
                         # 只保留昨天及之后，且不是9号和10号的数据
                         if event_date >= start_date and event_date.isoformat() not in exclude_dates:
@@ -409,8 +435,8 @@ def count_events(event_type: str, project_type: str = 'clothes') -> int:
             if project_type == 'clothes':
                 cursor.execute('''SELECT COUNT(*) FROM book_exchange_events 
                                  WHERE event_type = %s AND project_type = %s 
-                                   AND DATE(created_at) >= %s
-                                   AND DATE(created_at) NOT IN ('2026-01-09', '2026-01-10')''', 
+                                   AND DATE(created_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Shanghai') >= %s
+                                   AND DATE(created_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Shanghai') NOT IN ('2026-01-09', '2026-01-10')''', 
                                (event_type, project_type, start_date))
             else:
                 cursor.execute('SELECT COUNT(*) FROM book_exchange_events WHERE event_type = %s AND project_type = %s', (event_type, project_type))
@@ -423,9 +449,9 @@ def count_events(event_type: str, project_type: str = 'clothes') -> int:
     # 回退到内存存储
     storage = get_analytics_storage()
     with storage['lock']:
-        from datetime import date, timedelta, datetime
-        # 修改：从"昨天"改为"今天往前推2天"，确保包含昨天的数据
-        start_date = date.today() - timedelta(days=2)
+        from datetime import timedelta, datetime
+        # 使用北京时间，从今天往前推2天，确保包含昨天的数据
+        start_date = get_beijing_date() - timedelta(days=2)
         exclude_dates = {'2026-01-09', '2026-01-10'}
         
         count = 0
@@ -439,11 +465,23 @@ def count_events(event_type: str, project_type: str = 'clothes') -> int:
                             if isinstance(created_at, str):
                                 if 'T' in created_at:
                                     dt = datetime.fromisoformat(created_at.replace('Z', '+00:00'))
+                                    if dt.tzinfo is None:
+                                        dt = dt.replace(tzinfo=timezone.utc)
+                                    dt = dt.astimezone(BEIJING_TZ)
                                 else:
                                     dt = datetime.fromisoformat(created_at)
+                                    if dt.tzinfo is None:
+                                        dt = dt.replace(tzinfo=BEIJING_TZ)
                                 event_date = dt.date()
                             else:
-                                event_date = created_at.date() if hasattr(created_at, 'date') else date.today()
+                                if hasattr(created_at, 'date'):
+                                    if hasattr(created_at, 'tzinfo') and created_at.tzinfo:
+                                        dt = created_at.astimezone(BEIJING_TZ)
+                                    else:
+                                        dt = created_at.replace(tzinfo=BEIJING_TZ)
+                                    event_date = dt.date()
+                                else:
+                                    event_date = get_beijing_date()
                             
                             if event_date >= start_date and event_date.isoformat() not in exclude_dates:
                                 count += 1
@@ -478,16 +516,15 @@ def get_distinct_ips(event_type: str, project_type: str = 'clothes') -> set:
             cursor = db_conn.cursor()
             # 对于 clothes 项目：只统计昨天及之后的数据，排除9号和10号
             # 对于 book 项目：统计所有数据（保持原有逻辑）
-            from datetime import date, timedelta
-            # 修改：从"昨天"改为"今天往前推2天"，确保包含昨天的数据
-            start_date = date.today() - timedelta(days=2)
+            # 使用北京时间统一处理
+            start_date = get_beijing_date() - timedelta(days=2)
             
             if project_type == 'clothes':
                 cursor.execute('''SELECT DISTINCT ip FROM book_exchange_events 
                                  WHERE event_type = %s AND project_type = %s 
                                    AND ip IS NOT NULL AND ip != %s
-                                   AND DATE(created_at) >= %s
-                                   AND DATE(created_at) NOT IN ('2026-01-09', '2026-01-10')''', 
+                                   AND DATE(created_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Shanghai') >= %s
+                                   AND DATE(created_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Shanghai') NOT IN ('2026-01-09', '2026-01-10')''', 
                                (event_type, project_type, '', start_date))
             else:
                 cursor.execute('SELECT DISTINCT ip FROM book_exchange_events WHERE event_type = %s AND project_type = %s AND ip IS NOT NULL AND ip != %s', (event_type, project_type, ''))
@@ -500,9 +537,9 @@ def get_distinct_ips(event_type: str, project_type: str = 'clothes') -> set:
     # 回退到内存存储
     storage = get_analytics_storage()
     with storage['lock']:
-        from datetime import date, timedelta, datetime
-        # 修改：从"昨天"改为"今天往前推2天"，确保包含昨天的数据
-        start_date = date.today() - timedelta(days=2)
+        from datetime import timedelta, datetime
+        # 使用北京时间，从今天往前推2天，确保包含昨天的数据
+        start_date = get_beijing_date() - timedelta(days=2)
         exclude_dates = {'2026-01-09', '2026-01-10'}
         
         ips = set()
@@ -518,11 +555,23 @@ def get_distinct_ips(event_type: str, project_type: str = 'clothes') -> set:
                             if isinstance(created_at, str):
                                 if 'T' in created_at:
                                     dt = datetime.fromisoformat(created_at.replace('Z', '+00:00'))
+                                    if dt.tzinfo is None:
+                                        dt = dt.replace(tzinfo=timezone.utc)
+                                    dt = dt.astimezone(BEIJING_TZ)
                                 else:
                                     dt = datetime.fromisoformat(created_at)
+                                    if dt.tzinfo is None:
+                                        dt = dt.replace(tzinfo=BEIJING_TZ)
                                 event_date = dt.date()
                             else:
-                                event_date = created_at.date() if hasattr(created_at, 'date') else date.today()
+                                if hasattr(created_at, 'date'):
+                                    if hasattr(created_at, 'tzinfo') and created_at.tzinfo:
+                                        dt = created_at.astimezone(BEIJING_TZ)
+                                    else:
+                                        dt = created_at.replace(tzinfo=BEIJING_TZ)
+                                    event_date = dt.date()
+                                else:
+                                    event_date = get_beijing_date()
                             
                             if event_date >= start_date and event_date.isoformat() not in exclude_dates:
                                 ips.add(e['ip'])
@@ -545,20 +594,19 @@ def get_daily_stats(days: int = 30, project_type: str = 'clothes'):
             cursor = db_conn.cursor()
             # 对于 clothes 项目：只统计昨天及之后的数据，排除9号和10号
             # 对于 book 项目：统计所有数据（保持原有逻辑）
-            from datetime import date, timedelta
-            # 修改：从"昨天"改为"今天往前推2天"，确保包含昨天的数据
-            start_date = date.today() - timedelta(days=2)
+            # 使用北京时间统一处理
+            start_date = get_beijing_date() - timedelta(days=2)
             
             if project_type == 'clothes':
                 cursor.execute('''
-                    SELECT DATE(created_at) as day,
+                    SELECT DATE(created_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Shanghai') as day,
                            COUNT(*) as pv,
                            COUNT(DISTINCT ip) as uv
                     FROM book_exchange_events
                     WHERE event_type = 'page_view'
                       AND project_type = %s
-                      AND DATE(created_at) >= %s
-                      AND DATE(created_at) NOT IN ('2026-01-09', '2026-01-10')
+                      AND DATE(created_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Shanghai') >= %s
+                      AND DATE(created_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Shanghai') NOT IN ('2026-01-09', '2026-01-10')
                     GROUP BY day
                     ORDER BY day DESC
                     LIMIT %s
@@ -879,9 +927,8 @@ def admin_stats():
     
     # 按天聚合 PV/UV（最近30天，只查询衣服项目的数据）
     daily = get_daily_stats(30, project_type=project_type)
-    # 为每天的 PV 和 UV 也添加偏移量（仅对今天的数据）
-    from datetime import datetime, date
-    today_str = date.today().isoformat()
+    # 为每天的 PV 和 UV 也添加偏移量（仅对今天的数据，使用北京时间）
+    today_str = get_beijing_date().isoformat()
     for day_stat in daily:
         if day_stat['day'] == today_str:
             day_stat['pv'] = day_stat['pv'] + 11
