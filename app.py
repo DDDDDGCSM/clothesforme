@@ -415,7 +415,11 @@ def get_events(event_type: Optional[str] = None, limit: int = None, project_type
         return events
 
 def count_events(event_type: str, project_type: str = 'clothes') -> int:
-    """统计特定类型事件的数量（优先从数据库，否则从内存）
+    """统计特定类型事件的数量（最近两天内，优先从数据库，否则从内存）
+    
+    注意：为了满足「从昨天开始」的需求，这个函数在 clothes 项目上只统计
+    「北京时间从今天往前推 2 天」内的数据，并排除 2026-01-09、2026-01-10。
+    如果你需要「全量历史」统计，请使用 `count_events_all_time`。
     
     Args:
         project_type: 'book' 或 'clothes'，默认为 'clothes'（只统计衣服项目的数据）
@@ -492,6 +496,36 @@ def count_events(event_type: str, project_type: str = 'clothes') -> int:
                     count += 1
         return count
 
+
+def count_events_all_time(event_type: str, project_type: str = 'clothes') -> int:
+    """统计特定类型事件的数量（全量历史，不做日期过滤）
+    
+    用于在管理后台展示「整体数据」，不会因为「最近两天」的窗口而丢失历史 UV/PV。
+    """
+    # 优先使用数据库
+    db_conn = _get_db_connection()
+    if db_conn:
+        try:
+            cursor = db_conn.cursor()
+            cursor.execute(
+                'SELECT COUNT(*) FROM book_exchange_events WHERE event_type = %s AND project_type = %s',
+                (event_type, project_type),
+            )
+            count = cursor.fetchone()[0]
+            cursor.close()
+            return count
+        except Exception as e:
+            print(f'⚠️ 数据库统计（全量）失败，回退到内存存储: {e}')
+    
+    # 回退到内存存储：不做日期过滤，只按项目类型统计
+    storage = get_analytics_storage()
+    with storage['lock']:
+        count = 0
+        for e in storage['events']:
+            if e.get('event_type') == event_type and e.get('project_type') == project_type:
+                count += 1
+        return count
+
 def get_distinct_anon_ids(event_type: str) -> set:
     """（旧）获取独立访客 ID 集合，暂保留以兼容后续升级"""
     storage = get_analytics_storage()
@@ -504,7 +538,11 @@ def get_distinct_anon_ids(event_type: str) -> set:
 
 
 def get_distinct_ips(event_type: str, project_type: str = 'clothes') -> set:
-    """获取独立访客 IP 集合（用于 UV 统计，优先从数据库，否则从内存）
+    """获取独立访客 IP 集合（用于 UV 统计，最近两天内，优先从数据库，否则从内存）
+    
+    注意：为了满足「从昨天开始」的需求，这个函数在 clothes 项目上只统计
+    「北京时间从今天往前推 2 天」内的数据，并排除 2026-01-09、2026-01-10。
+    如果你需要「全量历史」统计，请使用 `get_distinct_ips_all_time`。
     
     Args:
         project_type: 'book' 或 'clothes'，默认为 'clothes'（只统计衣服项目的数据）
@@ -579,6 +617,37 @@ def get_distinct_ips(event_type: str, project_type: str = 'clothes') -> set:
                             continue
                 else:
                     ips.add(e['ip'])
+        return ips
+
+
+def get_distinct_ips_all_time(event_type: str, project_type: str = 'clothes') -> set:
+    """获取独立访客 IP 集合（用于 UV 统计，全量历史，不做日期过滤）"""
+    # 优先使用数据库
+    db_conn = _get_db_connection()
+    if db_conn:
+        try:
+            cursor = db_conn.cursor()
+            cursor.execute(
+                'SELECT DISTINCT ip FROM book_exchange_events WHERE event_type = %s AND project_type = %s AND ip IS NOT NULL AND ip != %s',
+                (event_type, project_type, ''),
+            )
+            ips = {row[0] for row in cursor.fetchall()}
+            cursor.close()
+            return ips
+        except Exception as e:
+            print(f'⚠️ 数据库查询（全量）失败，回退到内存存储: {e}')
+    
+    # 回退到内存存储：不做日期过滤，只按项目类型和 IP 是否存在筛选
+    storage = get_analytics_storage()
+    with storage['lock']:
+        ips = set()
+        for e in storage['events']:
+            if (
+                e.get('event_type') == event_type
+                and e.get('project_type') == project_type
+                and e.get('ip')
+            ):
+                ips.add(e['ip'])
         return ips
 
 def get_daily_stats(days: int = 30, project_type: str = 'clothes'):
@@ -896,12 +965,13 @@ def admin_stats():
 
     # 使用内存存储获取统计数据（只查询衣服项目的数据）
     project_type = 'clothes'
-    base_pv = count_events('page_view', project_type=project_type)
-    base_uv = len(get_distinct_ips('page_view', project_type=project_type))
+    # 注意：这里的 overall_* 使用「全量历史」数据，满足你对「整体视角」的需求
+    overall_pv_raw = count_events_all_time('page_view', project_type=project_type)
+    overall_uv_raw = len(get_distinct_ips_all_time('page_view', project_type=project_type))
     
-    # 为衣服的 PV 和 UV 添加偏移量
-    total_pv = base_pv + 11  # PV 在实际基础上加 11
-    total_uv = base_uv + 5   # UV 在实际基础上加 5
+    # 为整体 PV 和 UV 添加偏移量（让你在后台看到的数字略大一些，保持之前的体验）
+    total_pv = overall_pv_raw + 11  # PV 在实际基础上加 11
+    total_uv = overall_uv_raw + 5   # UV 在实际基础上加 5
     
     # 衣服浏览统计（只查询衣服项目的数据）
     total_clothes_views = count_events('book_view', project_type=project_type)
