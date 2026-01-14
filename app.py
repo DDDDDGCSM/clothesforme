@@ -424,7 +424,8 @@ def count_events(event_type: str, project_type: str = 'clothes') -> int:
     storage = get_analytics_storage()
     with storage['lock']:
         from datetime import date, timedelta, datetime
-        yesterday = date.today() - timedelta(days=1)
+        # 修改：从"昨天"改为"今天往前推2天"，确保包含昨天的数据
+        start_date = date.today() - timedelta(days=2)
         exclude_dates = {'2026-01-09', '2026-01-10'}
         
         count = 0
@@ -444,7 +445,7 @@ def count_events(event_type: str, project_type: str = 'clothes') -> int:
                             else:
                                 event_date = created_at.date() if hasattr(created_at, 'date') else date.today()
                             
-                            if event_date >= yesterday and event_date.isoformat() not in exclude_dates:
+                            if event_date >= start_date and event_date.isoformat() not in exclude_dates:
                                 count += 1
                         except Exception:
                             continue
