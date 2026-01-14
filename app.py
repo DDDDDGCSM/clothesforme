@@ -300,12 +300,15 @@ def get_events(event_type: Optional[str] = None, limit: int = None, project_type
             
             if project_type == 'clothes':
                 # 排除 2026-01-09 和 2026-01-10，只显示昨天及之后
+                # 修改：从"昨天"改为"今天往前推2天"，确保包含昨天的数据
+                from datetime import date, timedelta
+                start_date = date.today() - timedelta(days=2)
                 query = '''SELECT id, event_type, book_id, anon_id, extra, ip, user_agent, created_at 
                           FROM book_exchange_events 
                           WHERE project_type = %s 
                             AND DATE(created_at) >= %s
                             AND DATE(created_at) NOT IN ('2026-01-09', '2026-01-10')'''
-                params = [project_type, yesterday]
+                params = [project_type, start_date]
             else:
                 # book 项目保持原有逻辑
                 query = 'SELECT id, event_type, book_id, anon_id, extra, ip, user_agent, created_at FROM book_exchange_events WHERE project_type = %s'
@@ -346,7 +349,8 @@ def get_events(event_type: Optional[str] = None, limit: int = None, project_type
     storage = get_analytics_storage()
     with storage['lock']:
         from datetime import date, timedelta, datetime
-        yesterday = date.today() - timedelta(days=1)
+        # 修改：从"昨天"改为"今天往前推2天"，确保包含昨天的数据
+        start_date = date.today() - timedelta(days=2)
         exclude_dates = {'2026-01-09', '2026-01-10'}
         
         events = storage['events']
@@ -371,7 +375,7 @@ def get_events(event_type: Optional[str] = None, limit: int = None, project_type
                             event_date = created_at.date() if hasattr(created_at, 'date') else date.today()
                         
                         # 只保留昨天及之后，且不是9号和10号的数据
-                        if event_date >= yesterday and event_date.isoformat() not in exclude_dates:
+                        if event_date >= start_date and event_date.isoformat() not in exclude_dates:
                             filtered_events.append(e)
                     except Exception:
                         # 如果日期解析失败，跳过这条记录
@@ -398,14 +402,16 @@ def count_events(event_type: str, project_type: str = 'clothes') -> int:
             # 对于 clothes 项目：只统计昨天及之后的数据，排除9号和10号
             # 对于 book 项目：统计所有数据（保持原有逻辑）
             from datetime import date, timedelta
-            yesterday = date.today() - timedelta(days=1)
+            # 修改：从"昨天"改为"今天往前推2天"，确保包含昨天的数据
+            # 这样即使跨天，昨天的数据也不会丢失
+            start_date = date.today() - timedelta(days=2)
             
             if project_type == 'clothes':
                 cursor.execute('''SELECT COUNT(*) FROM book_exchange_events 
                                  WHERE event_type = %s AND project_type = %s 
                                    AND DATE(created_at) >= %s
                                    AND DATE(created_at) NOT IN ('2026-01-09', '2026-01-10')''', 
-                               (event_type, project_type, yesterday))
+                               (event_type, project_type, start_date))
             else:
                 cursor.execute('SELECT COUNT(*) FROM book_exchange_events WHERE event_type = %s AND project_type = %s', (event_type, project_type))
             count = cursor.fetchone()[0]
@@ -472,7 +478,8 @@ def get_distinct_ips(event_type: str, project_type: str = 'clothes') -> set:
             # 对于 clothes 项目：只统计昨天及之后的数据，排除9号和10号
             # 对于 book 项目：统计所有数据（保持原有逻辑）
             from datetime import date, timedelta
-            yesterday = date.today() - timedelta(days=1)
+            # 修改：从"昨天"改为"今天往前推2天"，确保包含昨天的数据
+            start_date = date.today() - timedelta(days=2)
             
             if project_type == 'clothes':
                 cursor.execute('''SELECT DISTINCT ip FROM book_exchange_events 
@@ -480,7 +487,7 @@ def get_distinct_ips(event_type: str, project_type: str = 'clothes') -> set:
                                    AND ip IS NOT NULL AND ip != %s
                                    AND DATE(created_at) >= %s
                                    AND DATE(created_at) NOT IN ('2026-01-09', '2026-01-10')''', 
-                               (event_type, project_type, '', yesterday))
+                               (event_type, project_type, '', start_date))
             else:
                 cursor.execute('SELECT DISTINCT ip FROM book_exchange_events WHERE event_type = %s AND project_type = %s AND ip IS NOT NULL AND ip != %s', (event_type, project_type, ''))
             ips = {row[0] for row in cursor.fetchall()}
@@ -493,7 +500,8 @@ def get_distinct_ips(event_type: str, project_type: str = 'clothes') -> set:
     storage = get_analytics_storage()
     with storage['lock']:
         from datetime import date, timedelta, datetime
-        yesterday = date.today() - timedelta(days=1)
+        # 修改：从"昨天"改为"今天往前推2天"，确保包含昨天的数据
+        start_date = date.today() - timedelta(days=2)
         exclude_dates = {'2026-01-09', '2026-01-10'}
         
         ips = set()
@@ -515,7 +523,7 @@ def get_distinct_ips(event_type: str, project_type: str = 'clothes') -> set:
                             else:
                                 event_date = created_at.date() if hasattr(created_at, 'date') else date.today()
                             
-                            if event_date >= yesterday and event_date.isoformat() not in exclude_dates:
+                            if event_date >= start_date and event_date.isoformat() not in exclude_dates:
                                 ips.add(e['ip'])
                         except Exception:
                             continue
@@ -537,7 +545,8 @@ def get_daily_stats(days: int = 30, project_type: str = 'clothes'):
             # 对于 clothes 项目：只统计昨天及之后的数据，排除9号和10号
             # 对于 book 项目：统计所有数据（保持原有逻辑）
             from datetime import date, timedelta
-            yesterday = date.today() - timedelta(days=1)
+            # 修改：从"昨天"改为"今天往前推2天"，确保包含昨天的数据
+            start_date = date.today() - timedelta(days=2)
             
             if project_type == 'clothes':
                 cursor.execute('''
@@ -552,7 +561,7 @@ def get_daily_stats(days: int = 30, project_type: str = 'clothes'):
                     GROUP BY day
                     ORDER BY day DESC
                     LIMIT %s
-                ''', (project_type, yesterday, days))
+                ''', (project_type, start_date, days))
             else:
                 cursor.execute('''
                     SELECT DATE(created_at) as day,
